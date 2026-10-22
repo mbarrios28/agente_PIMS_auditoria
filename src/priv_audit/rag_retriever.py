@@ -73,7 +73,7 @@ class Retriever:
         self.chunks = chunks
         self.textos = [c["texto"] for c in chunks]
 
-        if _SKLEARN:
+        if _SKLEARN and self.textos and any(re.search(r'\w{2,}', t) for t in self.textos):
             self._modo = "TF-IDF (scikit-learn)"
             self._vectorizer = TfidfVectorizer(ngram_range=(1, 2), min_df=1, sublinear_tf=True)
             self._matriz = self._vectorizer.fit_transform(self.textos)
@@ -87,7 +87,10 @@ class Retriever:
         """Devuelve los top_k chunks mas relevantes para la consulta."""
         resultados = []
 
-        if _SKLEARN:
+        if not self.textos:
+            return []
+
+        if hasattr(self, "_vectorizer"):
             vec = self._vectorizer.transform([consulta])
             sims = cosine_similarity(vec, self._matriz).flatten()
             indices = np.argsort(sims)[::-1][:top_k]
@@ -96,6 +99,7 @@ class Retriever:
                     resultados.append({
                         "texto":  self.chunks[i]["texto"],
                         "fuente": self.chunks[i]["fuente"],
+                        "pagina": self.chunks[i].get("pagina"),
                         "score":  float(sims[i]),
                     })
         else:
@@ -103,6 +107,7 @@ class Retriever:
                 resultados.append({
                     "texto":  self.chunks[i]["texto"],
                     "fuente": self.chunks[i]["fuente"],
+                    "pagina": self.chunks[i].get("pagina"),
                     "score":  score,
                 })
 

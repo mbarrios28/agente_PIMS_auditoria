@@ -1,8 +1,9 @@
 # src/priv_audit/schemas.py
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Literal
 
 class HallazgoAuditoria(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, str_min_length=1, str_max_length=20000)
     tabla: str = Field(
         description="Nombre de la tabla analizada."
     )
@@ -28,11 +29,12 @@ class HallazgoAuditoria(BaseModel):
         description="Medida tecnica u organizativa concreta recomendada para mitigar el riesgo."
     )
     criterio_normativo: str = Field(
-        description="OBLIGATORIO: Citar explicitamente la norma que aplica. Ejemplo: 'ISO 27701:2025, control 8.3 - Minimizacion de datos' o 'Ley 29733, Art. 13 - Datos sensibles'."
+        description="Referencia sustentada en documentos. Si no puede verificarse el artículo o control, indicar explícitamente que está pendiente de verificación."
     )
 
 class InformeAuditoria(BaseModel):
-    hallazgos: List[HallazgoAuditoria]
+    model_config = ConfigDict(str_strip_whitespace=True, str_min_length=1, str_max_length=30000)
+    hallazgos: List[HallazgoAuditoria] = Field(max_length=300)
     resumen_ejecutivo: str = Field(
         description="Resumen ejecutivo del estado general de privacidad del sistema. Incluir cantidad de hallazgos por nivel de riesgo."
     )

@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 
-load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", "..", ".env"))
 
 if not os.environ.get("GROQ_API_KEY"):
     raise ValueError("Falta la GROQ_API_KEY en el archivo .env")
@@ -12,6 +12,8 @@ if not os.environ.get("GROQ_API_KEY"):
 llm = ChatGroq(
     model="openai/gpt-oss-120b",
     temperature=0.1,
+    timeout=90,
+    max_retries=1,
     model_kwargs={"response_format": {"type": "json_object"}}
 )
 
@@ -19,4 +21,6 @@ llm = ChatGroq(
 llm_chat = ChatGroq(
     model="openai/gpt-oss-120b",
     temperature=0.2,
+    timeout=90,
+    max_retries=1,
 )

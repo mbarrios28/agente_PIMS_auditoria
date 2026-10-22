@@ -9,6 +9,7 @@ from reportlab.platypus import (
 )
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_JUSTIFY
 from datetime import datetime
+from xml.sax.saxutils import escape
 import os
 
 
@@ -131,12 +132,12 @@ def tabla_resumen_riesgos(hallazgos: list, estilos: dict):
         [
             Paragraph("ALTO", estilos["campo_valor"]),
             Paragraph(str(alto), estilos["campo_valor"]),
-            Paragraph("Requiere accion inmediata. Incumplimiento normativo directo.", estilos["campo_valor"]),
+            Paragraph("Prioridad alta de revision. Riesgo potencial pendiente de verificacion.", estilos["campo_valor"]),
         ],
         [
             Paragraph("MEDIO", estilos["campo_valor"]),
             Paragraph(str(medio), estilos["campo_valor"]),
-            Paragraph("Controles parciales. Debe subsanarse antes de la siguiente auditoria.", estilos["campo_valor"]),
+            Paragraph("Prioridad media de revision. Verificar medidas y contexto del tratamiento.", estilos["campo_valor"]),
         ],
         [
             Paragraph("BAJO", estilos["campo_valor"]),
@@ -168,12 +169,12 @@ def bloque_hallazgo(hallazgo: dict, numero: int, estilos: dict, ancho: float):
     def fila(label, valor):
         return [
             Paragraph(label, estilos["campo_label"]),
-            Paragraph(str(valor) if valor else "No especificado.", estilos["campo_valor"]),
+            Paragraph(escape(str(valor)) if valor else "No especificado.", estilos["campo_valor"]),
         ]
 
     datos = [
         [
-            Paragraph(f"Hallazgo {numero} — Tabla: {hallazgo.get('tabla', 'N/A')}", estilos["campo_label"]),
+            Paragraph(f"Hallazgo {numero} — Tabla: {escape(str(hallazgo.get('tabla', 'N/A')))}", estilos["campo_label"]),
             badge_riesgo(nivel, estilos),
         ],
         fila("Campos afectados:", campos),
@@ -188,7 +189,7 @@ def bloque_hallazgo(hallazgo: dict, numero: int, estilos: dict, ancho: float):
     col_a = 3.8 * cm
     col_b = ancho - col_a
 
-    t = Table(datos, colWidths=[col_a, col_b])
+    t = Table(datos, colWidths=[col_a, col_b], splitInRow=1)
     t.setStyle(TableStyle([
         # Fila de titulo
         ("BACKGROUND", (0, 0), (-1, 0), COLORES["encabezado"]),
@@ -234,7 +235,7 @@ def generar_pdf(hallazgos: list, resumen_ejecutivo: str, ruta_salida: str, aprob
 
     # Metadatos
     fecha = datetime.now().strftime("%d de %B de %Y, %H:%M hrs")
-    estado_txt = "APROBADO - El agente valido todos los hallazgos correctamente." if aprobado else "EMITIDO CON ADVERTENCIAS - Se alcanzo el limite de iteraciones."
+    estado_txt = "VALIDADO ESTRUCTURALMENTE - Pendiente de revision humana." if aprobado else "BORRADOR TECNICO - Pendiente de revision humana."
     meta = [
         [Paragraph("<b>Fecha de emision:</b>", estilos["campo_label"]), Paragraph(fecha, estilos["campo_valor"])],
         [Paragraph("<b>Elaborado por:</b>", estilos["campo_label"]), Paragraph("PrivAudit AI — Agente de Evaluacion de Riesgos de Privacidad", estilos["campo_valor"])],
@@ -257,7 +258,7 @@ def generar_pdf(hallazgos: list, resumen_ejecutivo: str, ruta_salida: str, aprob
     # --- Resumen ejecutivo ---
     elementos.append(HRFlowable(width="100%", thickness=1, color=COLORES["encabezado"]))
     elementos.append(Paragraph("1. Resumen Ejecutivo", estilos["seccion"]))
-    elementos.append(Paragraph(resumen_ejecutivo, estilos["resumen"]))
+    elementos.append(Paragraph(escape(resumen_ejecutivo), estilos["resumen"]))
     elementos.append(Spacer(1, 0.3 * cm))
 
     # --- Tabla de conteo de riesgos ---
@@ -277,7 +278,7 @@ def generar_pdf(hallazgos: list, resumen_ejecutivo: str, ruta_salida: str, aprob
     for i, h in enumerate(hallazgos_ordenados, 1):
         elementos.append(Spacer(1, 0.3 * cm))
         blq = bloque_hallazgo(h, i, estilos, ancho_util)
-        elementos.append(KeepTogether([blq]))
+        elementos.append(blq)
 
     # --- Pie de pagina ---
     elementos.append(Spacer(1, 0.8 * cm))

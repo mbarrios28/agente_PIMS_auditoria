@@ -45,14 +45,13 @@ def cargar_pdf(ruta: str) -> list[dict]:
     nombre = os.path.basename(ruta)
     try:
         reader = PdfReader(ruta)
-        texto_total = ""
-        for page in reader.pages:
-            texto_pagina = page.extract_text() or ""
-            texto_total += texto_pagina + " "
-        texto_total = limpiar_texto(texto_total)
-        if not texto_total.strip():
-            return []
-        return chunk_texto(texto_total, nombre)
+        chunks = []
+        for numero, page in enumerate(reader.pages, 1):
+            texto = limpiar_texto(page.extract_text() or "")
+            for fragmento in chunk_texto(texto, nombre):
+                fragmento["pagina"] = numero
+                chunks.append(fragmento)
+        return chunks
     except Exception as e:
         print(f"[RAG Loader] Advertencia: no se pudo leer {nombre}: {e}")
         return []
