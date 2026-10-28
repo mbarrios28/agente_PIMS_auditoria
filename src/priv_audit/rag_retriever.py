@@ -97,7 +97,8 @@ class Retriever:
             for i in indices:
                 if sims[i] > 0.01:
                     resultados.append({
-                        "texto":  self.chunks[i]["texto"],
+                        **self.chunks[i],
+                    "texto":  self.chunks[i]["texto"],
                         "fuente": self.chunks[i]["fuente"],
                         "pagina": self.chunks[i].get("pagina"),
                         "score":  float(sims[i]),
@@ -105,6 +106,7 @@ class Retriever:
         else:
             for i, score in self._bm25.recuperar(consulta, top_k):
                 resultados.append({
+                    **self.chunks[i],
                     "texto":  self.chunks[i]["texto"],
                     "fuente": self.chunks[i]["fuente"],
                     "pagina": self.chunks[i].get("pagina"),

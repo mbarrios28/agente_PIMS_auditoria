@@ -1,90 +1,101 @@
-# src/priv_audit/rag_loader.py
-"""
-Carga y fragmenta los documentos de conocimiento:
-- skill_privacidad.md
-- PDFs en la carpeta ISOS/
-Devuelve una lista de chunks con metadatos.
-"""
-import os
+"""Corpus local con procedencia, identificadores y diagnóstico de extracción. Sin OCR."""
+import hashlib
+import json
 import re
+from functools import lru_cache
+from pathlib import Path
 from pypdf import PdfReader
 
-CHUNK_SIZE = 800      # caracteres por chunk
-CHUNK_OVERLAP = 150   # solapamiento entre chunks
+ROOT = Path(__file__).resolve().parents[2]
+CHUNK_SIZE = 800
+CHUNK_OVERLAP = 150
+PUBLIC = {
+    'iso_27701_2025.md': 'https://www.iso.org/standard/27701',
+    'iso_42001_2023.md': 'https://www.iso.org/standard/42001',
+    'ley_29733_peru.md': 'https://www.gob.pe/institucion/anpd/normas-legales/6554453-16-2024-jus',
+}
 
 
-def limpiar_texto(texto: str) -> str:
-    texto = re.sub(r'\s+', ' ', texto)
-    texto = texto.replace('\x00', '')
-    return texto.strip()
+def limpiar_texto(texto):
+    return re.sub(r'\s+', ' ', texto.replace('\x00', '')).strip()
 
 
-def chunk_texto(texto: str, fuente: str) -> list[dict]:
+def chunk_texto(texto, fuente):
+    return [{'texto': texto[start:start + CHUNK_SIZE].strip(), 'fuente': fuente}
+            for start in range(0, len(texto), CHUNK_SIZE - CHUNK_OVERLAP)
+            if texto[start:start + CHUNK_SIZE].strip()]
+
+
+def cargar_markdown(ruta):
+    path = Path(ruta)
+    return chunk_texto(limpiar_texto(path.read_text(encoding='utf-8')), path.name)
+
+
+def cargar_pdf(ruta):
+    path = Path(ruta)
     chunks = []
-    inicio = 0
-    while inicio < len(texto):
-        fin = inicio + CHUNK_SIZE
-        fragmento = texto[inicio:fin]
-        if fragmento.strip():
-            chunks.append({
-                "texto": fragmento.strip(),
-                "fuente": fuente,
-            })
-        inicio += CHUNK_SIZE - CHUNK_OVERLAP
+    for number, page in enumerate(PdfReader(path).pages, 1):
+        for chunk in chunk_texto(limpiar_texto(page.extract_text() or ''), path.name):
+            chunks.append(dict(chunk, pagina=number))
     return chunks
 
 
-def cargar_markdown(ruta: str) -> list[dict]:
-    with open(ruta, "r", encoding="utf-8") as f:
-        contenido = f.read()
-    nombre = os.path.basename(ruta)
-    return chunk_texto(limpiar_texto(contenido), nombre)
+def archivos_corpus():
+    return sorted([p for folder in (ROOT / 'ISOS', ROOT / 'src/priv_audit/knowledge')
+                   for p in folder.glob('*') if p.suffix.lower() in ('.pdf', '.md')
+                   and p.name != 'skill_privacidad.md'])
 
 
-def cargar_pdf(ruta: str) -> list[dict]:
-    nombre = os.path.basename(ruta)
-    try:
-        reader = PdfReader(ruta)
-        chunks = []
-        for numero, page in enumerate(reader.pages, 1):
-            texto = limpiar_texto(page.extract_text() or "")
-            for fragmento in chunk_texto(texto, nombre):
-                fragmento["pagina"] = numero
-                chunks.append(fragmento)
-        return chunks
-    except Exception as e:
-        print(f"[RAG Loader] Advertencia: no se pudo leer {nombre}: {e}")
-        return []
+def _signature():
+    paths = archivos_corpus() + [ROOT / 'ISOS/fuentes.json']
+    return tuple((str(p), p.stat().st_mtime_ns, p.stat().st_size) for p in paths if p.exists())
 
 
-def cargar_base_conocimiento() -> list[dict]:
-    """Carga todos los documentos de conocimiento disponibles."""
-    chunks = []
-    base = os.path.dirname(__file__)
-    raiz_proyecto = os.path.join(base, "..", "..")
+@lru_cache(maxsize=1)
+def _load(signature):
+    manifest_path = ROOT / 'ISOS/fuentes.json'
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    chunks, documents = [], []
+    for path in archivos_corpus():
+        error = None
+        try:
+            if path.name == 'Ley Nº 29733.pdf.pdf' and (ROOT / 'ISOS/ley_29733_smv_2025.pdf').exists():
+                extracted = []
+            else:
+                extracted = cargar_pdf(path) if path.suffix.lower() == '.pdf' else cargar_markdown(path)
+        except Exception:
+            extracted, error = [], 'No se pudo extraer texto de este archivo.'
+        historical = path.name == 'Ley Nº 29733.pdf.pdf' and (ROOT / 'ISOS/ley_29733_smv_2025.pdf').exists()
+        if historical:
+            extracted = []
+            error = 'Copia histórica excluida: se consulta el texto SMV y el nuevo reglamento oficial.'
+        info = manifest.get(path.name, {})
+        url = info.get('url') or PUBLIC.get(path.name)
+        kind = info.get('tipo_fuente', 'ficha_publica' if path.name in PUBLIC else 'sin_verificar')
+        for index, chunk in enumerate(extracted):
+            identity = f"{path.name}:{chunk.get('pagina', 0)}:{index}:{chunk['texto']}"
+            chunk.update(id=hashlib.sha256(identity.encode()).hexdigest()[:16], url=url, tipo_fuente=kind)
+        chunks.extend(extracted)
+        documents.append(dict(nombre=path.name, tipo=path.suffix[1:].upper(), bytes=path.stat().st_size,
+                              fragmentos=len(extracted), indexado=bool(extracted), url=url,
+                              tipo_fuente=kind, sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+                              aviso=error or (None if extracted else 'Sin texto extraíble; necesita OCR o una copia con texto.')))
+    return chunks, documents
 
-    # 1. Todos los Markdown de la carpeta knowledge/
-    carpeta_knowledge = os.path.join(base, "knowledge")
-    if os.path.isdir(carpeta_knowledge):
-        for archivo in sorted(os.listdir(carpeta_knowledge)):
-            if archivo.lower().endswith(".md"):
-                ruta_md = os.path.join(carpeta_knowledge, archivo)
-                c = cargar_markdown(ruta_md)
-                chunks.extend(c)
-                print(f"[RAG Loader] {archivo} -> {len(c)} chunks")
 
-    # 2. PDFs de la carpeta ISOS/
-    carpeta_isos = os.path.join(raiz_proyecto, "ISOS")
-    carpeta_isos = os.path.normpath(carpeta_isos)
-    if os.path.isdir(carpeta_isos):
-        for archivo in os.listdir(carpeta_isos):
-            if archivo.lower().endswith(".pdf"):
-                ruta_pdf = os.path.join(carpeta_isos, archivo)
-                c = cargar_pdf(ruta_pdf)
-                chunks.extend(c)
-                print(f"[RAG Loader] {archivo} -> {len(c)} chunks")
-    else:
-        print(f"[RAG Loader] Carpeta ISOS no encontrada en: {carpeta_isos}")
+def cargar_base_conocimiento():
+    return _load(_signature())[0]
 
-    print(f"[RAG Loader] Base de conocimiento lista: {len(chunks)} chunks totales.")
-    return chunks
+
+def diagnostico_documentos():
+    return _load(_signature())[1]
+
+
+@lru_cache(maxsize=1)
+def _retriever(signature):
+    from .rag_retriever import Retriever
+    return Retriever(_load(signature)[0])
+
+
+def obtener_retriever():
+    return _retriever(_signature())

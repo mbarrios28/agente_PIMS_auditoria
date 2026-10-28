@@ -36,13 +36,40 @@ def index():
 
 @app.get('/api/status')
 def status():
-    files = []
-    for folder in (ROOT / 'ISOS', ROOT / 'src/priv_audit/knowledge'):
-        for path in sorted(folder.glob('*')):
-            if path.suffix.lower() in ('.md', '.pdf'):
-                files.append(dict(nombre=path.name, tipo=path.suffix[1:].upper(), bytes=path.stat().st_size))
-    return jsonify(ai_ready=bool(os.getenv('GROQ_API_KEY')), documentos=files,
+    from src.priv_audit.rag_loader import diagnostico_documentos
+    from src.priv_audit.agent import MODEL, MAX_TURNS
+    return jsonify(ai_ready=bool(os.getenv('GROQ_API_KEY')), documentos=diagnostico_documentos(),
+                   modelo=MODEL, gemini_fallback=bool(os.getenv('GEMINI_API_KEY')), agente=True, max_turnos=MAX_TURNS,
                    demo=(ROOT / 'web/demo.sql').read_text())
+
+@app.post('/api/agent/runs')
+def start_agent_run():
+    from src.priv_audit.jobs import runs
+    from src.priv_audit.service import parse_schema
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify(error='Se esperaba un objeto JSON.'), 400
+    if not os.getenv('GROQ_API_KEY'):
+        return jsonify(error='Configura GROQ_API_KEY para ejecutar el agente.'), 400
+    task = data.get('tarea', 'auditoria')
+    objective = data.get('objetivo', '')
+    if task not in ('auditoria', 'consulta') or not isinstance(objective, str) or len(objective) > 4000:
+        return jsonify(error='Indica una tarea válida y un objetivo de hasta 4 000 caracteres.'), 400
+    if task == 'consulta' and not objective.strip():
+        return jsonify(error='Escribe el objetivo de la consulta.'), 400
+    try:
+        if task == 'auditoria':
+            parse_schema(data.get('sql'), data.get('dialect', 'mysql'))
+        key = runs.start(dict(tarea=task, objetivo=objective, sql=data.get('sql', ''), dialect=data.get('dialect', 'mysql')))
+        return jsonify(id=key, estado='pendiente'), 202
+    except ValueError as exc:
+        return jsonify(error=str(exc)), 400
+
+@app.get('/api/agent/runs/<run_id>')
+def agent_run_status(run_id):
+    from src.priv_audit.jobs import runs
+    result = runs.get(run_id)
+    return (jsonify(result), 200) if result else (jsonify(error='Ejecución no encontrada o caducada.'), 404)
 
 @app.post('/api/audit')
 def run_audit():
@@ -50,7 +77,7 @@ def run_audit():
     if not isinstance(data, dict):
         return jsonify(error='Se esperaba un objeto JSON.'), 400
     try:
-        return jsonify(audit(data.get('sql'), data.get('mode', 'local'), data.get('dialect', 'mysql')))
+        return jsonify(audit(data.get('sql'), data.get('mode', 'local'), data.get('dialect', 'mysql'), data.get('objetivo', '')))
     except ValueError as exc:
         return jsonify(error=str(exc)), 400
     except Exception:
@@ -69,17 +96,19 @@ def chat():
         if basica and not os.getenv("GROQ_API_KEY"):
             return jsonify(answer=basica, sources=[], mode="local")
         # Index is reused; conversation belongs to the browser, never shared globally.
-        from src.priv_audit.rag_loader import cargar_base_conocimiento
+        from src.priv_audit.rag_loader import obtener_retriever
         from src.priv_audit.rag_retriever import Retriever
         with index_lock:
             if not hasattr(app, 'retriever'):
-                app.retriever = Retriever(cargar_base_conocimiento())
+                app.retriever = obtener_retriever()
         contexts = [] if basica else app.retriever.recuperar(question, top_k=5)
         if not os.getenv('GROQ_API_KEY'):
             return jsonify(answer=respuesta_local(question, contexts), sources=contexts, mode='local')
         from src.priv_audit.llm import llm_chat
         messages = construir_mensajes(question, contexts, data.get('history', []))
-        return jsonify(answer=llm_chat.invoke(messages).content, sources=contexts, mode='ai')
+        response = llm_chat.invoke(messages)
+        return jsonify(answer=response.content, sources=contexts, mode='ai',
+                       provider=getattr(response, 'provider', 'groq'), model=getattr(response, 'model', None))
     except Exception:
         logging.exception('Chat failed')
         return jsonify(error='No se pudo completar la consulta. Revisa los documentos y la conexión con Groq.'), 502

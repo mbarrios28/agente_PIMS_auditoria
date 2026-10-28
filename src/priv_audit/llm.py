@@ -1,26 +1,31 @@
-# src/priv_audit/llm.py
+"""Interfaces compatibles con el chat y prototipo; Groq con respaldo acotado."""
 import os
+from pathlib import Path
+from types import SimpleNamespace
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
+from .providers import ProviderRouter, GROQ_MODEL
 
-load_dotenv(os.path.join(os.path.dirname(__file__), "..", "..", ".env"))
+load_dotenv(Path(__file__).resolve().parents[2] / '.env')
 
-if not os.environ.get("GROQ_API_KEY"):
-    raise ValueError("Falta la GROQ_API_KEY en el archivo .env")
 
-# LLM para auditoria estructurada (devuelve JSON)
-llm = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0.1,
-    timeout=90,
-    max_retries=1,
-    model_kwargs={"response_format": {"type": "json_object"}}
-)
+class FallbackChat:
+    def __init__(self, structured=False):
+        self.structured = structured
 
-# LLM para chat libre (RAG, respuestas en texto natural)
-llm_chat = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0.2,
-    timeout=90,
-    max_retries=1,
-)
+    def invoke(self, prompt):
+        if not os.getenv('GROQ_API_KEY'):
+            raise ValueError('Configura GROQ_API_KEY para usar IA.')
+        messages = [{'role':'user', 'content':prompt}] if isinstance(prompt, str) else [
+            {'role':role, 'content':content} for role, content in prompt]
+        router = ProviderRouter()
+        options = dict(model=GROQ_MODEL, messages=messages, temperature=.1 if self.structured else .2,
+                       max_completion_tokens=1500 if self.structured else 700, reasoning_effort='low')
+        if self.structured:
+            options['response_format'] = {'type':'json_object'}
+        response = router.create(**options)
+        return SimpleNamespace(content=response.choices[0].message.content or '',
+                               provider=router.provider, model=router.model, fallback=router.summary())
+
+
+llm = FallbackChat(structured=True)
+llm_chat = FallbackChat()

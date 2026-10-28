@@ -1,0 +1,26 @@
+{
+  "ley_29733_smv_2025.pdf": {
+    "url": "https://www.smv.gob.pe/Uploads/Ley_29733_vigente_2025.pdf",
+    "titulo": "SMV, Ley 29733, texto publicado en 2025",
+    "tipo_fuente": "primaria",
+    "descargado": "2026-10-28T01:46:36.411715+00:00",
+    "sha256": "a8015f476bd702bca03951e90a8be7a6f7dff6551cb1f5b13a636aea0a228c1d",
+    "paginas": 20
+  },
+  "reglamento_016_2024_JUS.pdf": {
+    "url": "https://www3.congreso.gob.pe/Docs/DGP/DIDP/files/ds_016-2024-jus.pdf",
+    "titulo": "El Peruano / Congreso, DS 016-2024-JUS",
+    "tipo_fuente": "primaria",
+    "descargado": "2026-10-28T01:49:06.364091+00:00",
+    "sha256": "364fca03b3e87398543a0fa78bbe16de5805e6d0c0d02c61416f90465541b4a9",
+    "paginas": 24
+  },
+  "2309.07864v3.pdf": {
+    "url": "https://arxiv.org/pdf/2309.07864v3",
+    "titulo": "Xi et al., 2023, survey de agentes, versión de EC1",
+    "tipo_fuente": "primaria",
+    "descargado": "2026-10-28T01:49:07.954665+00:00",
+    "sha256": "5e3b2357ff942e1a0e084ae4af3327011a651cf1f155d108065c70af369e24ac",
+    "paginas": 86
+  }
+}
