@@ -49,7 +49,7 @@ class RunStore:
             if payload['tarea'] == 'auditoria':
                 result = audit(payload['sql'], 'ai', payload['dialect'], payload['objetivo'], on_event)
             else:
-                result = PrivacyAgent(task='consulta', objective=payload['objetivo'], on_event=on_event).run()
+                result = PrivacyAgent(task=payload['tarea'], objective=payload['objetivo'], on_event=on_event).run()
             self._update(key, estado='completado', resultado=result)
         except (AgentError, ValueError) as exc:
             self._update(key, estado='error', error=str(exc))

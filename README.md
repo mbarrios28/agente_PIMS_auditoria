@@ -85,3 +85,16 @@ Límites de Google:
 Las reservas de salida se contabilizan conservadoramente según el máximo solicitado, aunque la respuesta resulte más breve; por eso un presupuesto puede agotarse antes del límite de llamadas. Los contadores están en memoria y se reinician al reiniciar el servidor: no constituyen un límite de facturación de la cuenta Google. Si se activa el respaldo, Google recibe el objetivo, contexto y resultados de herramientas necesarios para continuar.
 
 La integración de Gemini se verifica con clientes y transporte HTTP simulados, sin llamadas reales ni consumo de la clave. Su validez, permisos y cuota quedan sin comprobar. La clave permanece solo en `.env`, excluido de Git.
+
+## Evaluación de evidencia de GESTITEL
+
+En **Agente PIMS → Fuente de la tarea → Evaluar evidencia de GESTITEL**, escribe un objetivo acotado, por ejemplo revisar la primera página de la matriz de brecha y proponer evidencia a solicitar. Configura `GESTITEL_USERNAME` y `GESTITEL_PASSWORD` en `.env`. La tarea requiere Groq y admite el respaldo Gemini configurado.
+
+El modelo puede seleccionar `consultar_gestitel`, buscar respaldo documental y finalizar con citas a registros recuperados. La conexión usa exclusivamente `https://unsa.27k.pe`: inicia sesión y consulta mediante GET la matriz de brecha, las evaluaciones y el catálogo de controles. No modifica evaluaciones ni asigna niveles. Cada ejecución permite seis consultas de hasta diez registros, con páginas entre 1 y 20: la revisión es parcial y no certifica cumplimiento. Las respuestas restringidas o fallidas se comunican al agente como errores.
+
+Los registros se conservan en memoria durante la tarea y su resultado; las citas incluyen procedencia y el texto recuperado. Cada fragmento registra fecha de consulta. Solo se recuperan campos permitidos, sin responsables ni metadatos de usuarios. El texto libre de evidencia puede contener información personal introducida en GESTITEL: los registros seleccionados se envían a Groq y, si corresponde, Gemini. Solicitudes ARCOP e incidentes no están habilitados en esta integración. Los anexos de `profesor/` siguen sin indexarse automáticamente.
+
+## Material para exponer la integración
+
+- [Guía detallada de uso, arquitectura y exposición con GESTITEL](docs/guia_exposicion_GESTITEL.md).
+- [SQL ficticio de prueba para PostgreSQL](ejemplos/prueba_pims_exposicion.sql): importar desde Auditoría de privacidad. Resultado local verificado: 7 tablas, 7 observaciones, 2 altas y 5 medias. No es un volcado de GESTITEL.

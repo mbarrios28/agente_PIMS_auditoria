@@ -56,7 +56,7 @@ $('#agent-form').addEventListener('submit', async event => {
   button.disabled = true; button.textContent = 'Agente trabajando…';
   $('#agent-error').hidden = true; $('#agent-result').hidden = true; $('#consult-trace-panel').hidden = false;
   try {
-    const result = await executeAgent({tarea:'consulta', objetivo:$('#agent-objective').value}, $('#consult-trace'));
+    const result = await executeAgent({tarea:$('#agent-task').value, objetivo:$('#agent-objective').value}, $('#consult-trace'));
     const labels = {respondida:'Consulta documentada',evidencia_insuficiente:'Evidencia insuficiente',fuera_de_alcance:'Consulta fuera del alcance'};
     $('#agent-result').innerHTML = `<h2>${labels[result.estado_respuesta] || 'Resultado'}</h2>` +
       result.conclusiones.map(c => `<article class="agent-conclusion"><strong>${c.tipo === 'propuesta' ? 'Propuesta de diseño' : 'Conclusión con apoyo documental'}</strong><p>${esc(c.afirmacion)}</p>${c.referencias.map(renderReference).join('')}</article>`).join('') +
@@ -67,3 +67,5 @@ $('#agent-form').addEventListener('submit', async event => {
   finally { button.disabled = false; button.textContent = 'Ejecutar agente ↗'; }
 });
 init();
+
+$('#agent-task').addEventListener('change', () => { if ($('#agent-task').value === 'gestitel') $('#agent-objective').value = 'Revisa la primera página de la matriz de brecha de GESTITEL. Identifica evidencia pendiente y propone qué documentos solicitar y qué acciones evaluar. Busca respaldo documental, cita los registros consultados y declara el alcance parcial. No asignes niveles ni confirmes incumplimientos.'; });

@@ -53,10 +53,14 @@ def start_agent_run():
         return jsonify(error='Configura GROQ_API_KEY para ejecutar el agente.'), 400
     task = data.get('tarea', 'auditoria')
     objective = data.get('objetivo', '')
-    if task not in ('auditoria', 'consulta') or not isinstance(objective, str) or len(objective) > 4000:
+    if task not in ('auditoria', 'consulta', 'gestitel') or not isinstance(objective, str) or len(objective) > 4000:
         return jsonify(error='Indica una tarea válida y un objetivo de hasta 4 000 caracteres.'), 400
-    if task == 'consulta' and not objective.strip():
+    if task in ('consulta', 'gestitel') and not objective.strip():
         return jsonify(error='Escribe el objetivo de la consulta.'), 400
+    if task == 'gestitel':
+        from src.priv_audit.gestitel import configured
+        if not configured():
+            return jsonify(error='Configura las credenciales de GESTITEL en .env.'), 400
     try:
         if task == 'auditoria':
             parse_schema(data.get('sql'), data.get('dialect', 'mysql'))
