@@ -49,4 +49,11 @@ Ejecuta una tarea a la vez para la exposición. «Groq configurado» indica pres
 
 La suite ampliada pasó 54 pruebas. El respaldo se verificó con errores simulados de Groq, límites de llamadas/contexto/salida y un transporte HTTP simulado del SDK que comprueba ruta, parámetros y conservación de metadatos de herramientas. También se verificó que un agente completara una tarea con el proveedor de respaldo simulado y reportara su modelo.
 
-No se hicieron llamadas reales a la API Gemini. No se comprobó la validez, permisos ni cuota de la clave configurada. Los límites conservadores y su caducidad al reiniciar el proceso están documentados en README.
+No se hicieron llamadas reales a la API Gemini. No se comprobó la validez, permisos ni cuota de la clave configurada. Las cuotas locales de protección se retiraron posteriormente; el comportamiento actual está documentado en README.
+
+
+## Corrección del respaldo durante auditoría SQL — 29 de octubre de 2026
+
+Se reprodujo con llamadas reales un HTTP 400 de Gemini: las llamadas previas de Groq carecían de `thought_signature`. Las pruebas simples anteriores no incluían ese historial y por eso respondían correctamente. El router ahora transmite esas acciones y resultados como contexto textual; mantiene intactas las firmas de las llamadas generadas por Gemini.
+
+Después del cambio, el ejemplo SQL de seis tablas completó carga de skill, inspección, búsquedas, corrección de un borrador rechazado, validación y finalización. Duración aproximada: 37 segundos, cuatro llamadas Gemini, un hallazgo validado. La validación verifica estructura y evidencia; no acredita exhaustividad ni cumplimiento. La suite automática pasó 58 pruebas, incluida una regresión de la transición y conservación de firmas.

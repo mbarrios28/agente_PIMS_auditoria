@@ -6,6 +6,8 @@ from time import monotonic
 from uuid import uuid4
 from .agent import PrivacyAgent, AgentError
 from .service import audit
+from . import history
+import logging
 
 class RunStore:
     def __init__(self, workers=2, ttl=1800, max_runs=20):
@@ -50,11 +52,20 @@ class RunStore:
                 result = audit(payload['sql'], 'ai', payload['dialect'], payload['objetivo'], on_event)
             else:
                 result = PrivacyAgent(task=payload['tarea'], objective=payload['objetivo'], on_event=on_event).run()
+            history.save(payload['tarea'], payload['objetivo'] or 'Auditoría SQL', result, key=key)
             self._update(key, estado='completado', resultado=result)
         except (AgentError, ValueError) as exc:
-            self._update(key, estado='error', error=str(exc))
+            self._save_error(key, payload, str(exc))
         except Exception:
-            self._update(key, estado='error', error='La tarea no pudo completarse. Revisa la conexión y vuelve a intentarlo.')
+            self._save_error(key, payload, 'La tarea no pudo completarse. Revisa la conexión y vuelve a intentarlo.')
+
+    def _save_error(self, key, payload, error):
+        result = dict(error=error, traza=self.get(key)['traza'])
+        try:
+            history.save(payload['tarea'], payload['objetivo'] or 'Auditoría SQL', result, status='error', key=key)
+        except Exception:
+            logging.exception('No se pudo guardar la ejecución en el historial')
+        self._update(key, estado='error', error=error)
 
     def get(self, key):
         with self.lock:

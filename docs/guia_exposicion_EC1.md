@@ -80,7 +80,7 @@ La configuración del agente usa `openai/gpt-oss-120b` en Groq, temperatura 0.1 
 
 ## Auditoría: qué entra y qué sale
 
-Entrada: un esquema con `CREATE TABLE`, dialecto y objetivo adicional opcional. Se valida SQL no vacío, hasta 150 000 caracteres y un máximo de 100 tablas. La capacidad práctica del modo IA también depende del contexto y cuota del proveedor; para exponer usa el ejemplo breve.
+Entrada: un esquema con `CREATE TABLE`, dialecto y objetivo adicional opcional. Se valida SQL no vacío y un máximo de 100 tablas. No hay un tope específico de caracteres SQL; la API admite solicitudes de hasta 1 000 000 bytes, incluido el JSON. La capacidad práctica del modo IA también depende del contexto y cuota del proveedor; para exponer usa el ejemplo breve.
 
 SQLGlot interpreta tablas y columnas antes de iniciar el agente. La herramienta de inspección entrega ese resultado real. Las reglas detectan patrones de datos sensibles, credenciales, identificación/contacto y trazabilidad. Su resultado es una pista, no el veredicto definitivo.
 
@@ -187,4 +187,4 @@ En la verificación del avance, la consulta del survey se completó en unos 36 s
 
 Groq es el proveedor principal. Ante fallos temporales, cuota o respuesta vacía, el agente puede continuar con Gemini sin perder sus skills, evidencia y borradores. La actividad muestra la activación del respaldo; el chat identifica una respuesta de Gemini cuando corresponde. Google recibe el contexto necesario para continuar esa tarea.
 
-El respaldo tiene límites por solicitud, tarea y proceso, descritos en README. Si llega al presupuesto o falla Gemini, se muestra el error y no se reintenta automáticamente Google. La integración se probó con simulaciones, sin gastar la clave de Gemini; no afirmar que esa clave está validada. La duración y los resultados reales anteriores corresponden a Groq.
+El respaldo no tiene cuotas locales de consumo por solicitud, tarea ni proceso. Siguen vigentes los límites generales del agente y los del proveedor. Si falla Gemini, se muestra el error y no se reintenta automáticamente Google. La integración se probó con simulaciones, sin gastar la clave de Gemini; no afirmar que esa clave está validada. La duración y los resultados reales anteriores corresponden a Groq.

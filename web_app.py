@@ -75,13 +75,33 @@ def agent_run_status(run_id):
     result = runs.get(run_id)
     return (jsonify(result), 200) if result else (jsonify(error='Ejecución no encontrada o caducada.'), 404)
 
+@app.get('/api/history')
+def history_list():
+    from src.priv_audit.history import list_entries
+    try:
+        limit, offset = int(request.args.get('limit', 50)), int(request.args.get('offset', 0))
+        if not 1 <= limit <= 100 or offset < 0:
+            raise ValueError()
+    except ValueError:
+        return jsonify(error='Paginación inválida.'), 400
+    return jsonify(list_entries(limit, offset))
+
+@app.get('/api/history/<entry_id>')
+def history_detail(entry_id):
+    from src.priv_audit.history import get
+    entry = get(entry_id)
+    return (jsonify(entry), 200) if entry else (jsonify(error='Registro no encontrado.'), 404)
+
 @app.post('/api/audit')
 def run_audit():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
         return jsonify(error='Se esperaba un objeto JSON.'), 400
     try:
-        return jsonify(audit(data.get('sql'), data.get('mode', 'local'), data.get('dialect', 'mysql'), data.get('objetivo', '')))
+        result = audit(data.get('sql'), data.get('mode', 'local'), data.get('dialect', 'mysql'), data.get('objetivo', ''))
+        from src.priv_audit.history import save
+        save('auditoria', data.get('objetivo') or 'Auditoría SQL', result)
+        return jsonify(result)
     except ValueError as exc:
         return jsonify(error=str(exc)), 400
     except Exception:
@@ -94,11 +114,15 @@ def chat():
     question = data.get('question', '') if isinstance(data, dict) else ''
     if not isinstance(question, str) or not 1 <= len(question.strip()) <= 4000:
         return jsonify(error='Escribe una pregunta de hasta 4 000 caracteres.'), 400
+    def reply(**result):
+        from src.priv_audit.history import save
+        save('chat', question, result)
+        return jsonify(result)
     try:
         from src.priv_audit.rag_chat import construir_mensajes, respuesta_basica, respuesta_local
         basica = respuesta_basica(question)
         if basica and not os.getenv("GROQ_API_KEY"):
-            return jsonify(answer=basica, sources=[], mode="local")
+            return reply(answer=basica, sources=[], mode="local")
         # Index is reused; conversation belongs to the browser, never shared globally.
         from src.priv_audit.rag_loader import obtener_retriever
         from src.priv_audit.rag_retriever import Retriever
@@ -107,11 +131,11 @@ def chat():
                 app.retriever = obtener_retriever()
         contexts = [] if basica else app.retriever.recuperar(question, top_k=5)
         if not os.getenv('GROQ_API_KEY'):
-            return jsonify(answer=respuesta_local(question, contexts), sources=contexts, mode='local')
+            return reply(answer=respuesta_local(question, contexts), sources=contexts, mode='local')
         from src.priv_audit.llm import llm_chat
         messages = construir_mensajes(question, contexts, data.get('history', []))
         response = llm_chat.invoke(messages)
-        return jsonify(answer=response.content, sources=contexts, mode='ai',
+        return reply(answer=response.content, sources=contexts, mode='ai',
                        provider=getattr(response, 'provider', 'groq'), model=getattr(response, 'model', None))
     except Exception:
         logging.exception('Chat failed')

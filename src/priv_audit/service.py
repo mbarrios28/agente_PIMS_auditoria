@@ -9,14 +9,11 @@ from sqlglot import exp
 from .schemas import InformeAuditoria
 
 ROOT = Path(__file__).resolve().parents[2]
-MAX_SQL = 150_000
 
 
 def parse_schema(sql, dialect='mysql'):
     if not isinstance(sql, str) or not sql.strip():
         raise ValueError('Pega o carga un esquema SQL antes de continuar.')
-    if len(sql) > MAX_SQL:
-        raise ValueError('El esquema supera el límite de 150 000 caracteres.')
     if dialect not in ('mysql', 'postgres', 'sqlite', 'tsql'):
         raise ValueError('El dialecto SQL seleccionado no es compatible.')
     try:

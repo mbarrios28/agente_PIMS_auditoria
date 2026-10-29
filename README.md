@@ -47,13 +47,15 @@ RAG utiliza fragmentos de 800 caracteres con solapamiento de 150, TF-IDF y alter
 - `POST /api/agent/runs`: inicia tarea `auditoria` o `consulta`, responde 202 con ID.
 - `GET /api/agent/runs/<id>`: estado, actividad y resultado/error.
 - `POST /api/chat`: chat de apoyo.
+- `GET /api/history?limit=50&offset=0`: historial persistente paginado.
+- `GET /api/history/<id>`: resultado guardado y objetivo de la consulta.
 - `POST /api/report`: PDF de un informe estructurado.
 
-Dos tareas simultáneas; hasta 20 ejecuciones en memoria, con caducidad de terminadas a los 30 minutos. Reiniciar borra las ejecuciones. El historial de la interfaz permanece en la pestaña y desaparece al recargar. No hay almacenamiento persistente ni autenticación.
+Dos tareas simultáneas; hasta 20 ejecuciones en memoria, con caducidad de terminadas a los 30 minutos. Reiniciar borra las ejecuciones. El historial se guarda en SQLite en `data/history.sqlite3` y permanece después de recargar o reiniciar. Incluye auditorías, consultas EC1, GESTITEL y respuestas del chat; las tareas asíncronas fallidas también conservan error y traza. Desde Historial puedes abrir resultados previos y exportar otra vez los informes SQL. Las ejecuciones activas siguen en memoria: reiniciar no las reanuda. No hay autenticación.
 
 ## Privacidad y alcance
 
-Escucha en `127.0.0.1`, para uso individual local. El SQL nunca se ejecuta ni se conecta a bases de datos. En modo IA se envían a Groq el objetivo/SQL, fragmentos y resultados de herramientas; en chat, también historial reciente. Usa datos de demostración y mantén la clave en `.env`.
+Escucha en `127.0.0.1`, para uso individual local. El SQL nunca se ejecuta ni se conecta a bases de datos. No hay un límite específico de 150 000 caracteres ni de 150 KB por archivo SQL; la API conserva un máximo de 1 000 000 bytes por solicitud (incluido el JSON) y de 100 tablas por auditoría. En modo IA se envían a Groq el objetivo/SQL, fragmentos y resultados de herramientas; en chat, también historial reciente. Usa datos de demostración y mantén la clave en `.env`.
 
 La revisión del DDL no observa registros, permisos efectivos, cifrado del servidor ni procesos organizativos. Las prioridades no son incumplimientos confirmados. Ninguna cita o resultado garantiza cumplimiento; requiere revisión humana.
 
@@ -69,22 +71,17 @@ La guía personal actual está en [docs/guia_exposicion_EC1.md](docs/guia_exposi
 
 La verificación con Groq real y las limitaciones observadas están en [docs/verificacion_agente.md](docs/verificacion_agente.md). La auditoría completa del ejemplo tardó aproximadamente cuatro minutos con las pausas de cuota de esta cuenta.
 
-## Respaldo Gemini con consumo acotado
+## Respaldo Gemini sin cuotas locales de consumo
 
 Groq sigue siendo el proveedor principal. Si se configura `GEMINI_API_KEY` en `.env`, un timeout, error de conexión, respuesta vacía, HTTP 408/429 o error 5xx puede activar Gemini para continuar la misma tarea. Los errores de autenticación, formato o contexto de Groq no activan Google. Una vez activado, el agente conserva su estado y continúa con Gemini; el chat también dispone del respaldo.
 
-El modelo de respaldo por defecto es `gemini-3.5-flash-lite` y se configura con `GEMINI_MODEL`. La implementación usa la [API compatible de Google](https://ai.google.dev/gemini-api/docs/openai) mediante el SDK de compatibilidad OpenAI apuntando al endpoint de Google. Conserva los metadatos de las llamadas a herramientas. El estado y la traza muestran el proveedor utilizado.
+El modelo de respaldo por defecto es `gemini-3.5-flash-lite` y se configura con `GEMINI_MODEL`. La implementación usa la [API compatible de Google](https://ai.google.dev/gemini-api/docs/openai) mediante el SDK de compatibilidad OpenAI apuntando al endpoint de Google. Al cambiar de proveedor, transmite las acciones y resultados previos de Groq como contexto textual: esas llamadas no tienen firmas de Google. Las llamadas nuevas de Gemini conservan íntegros sus metadatos y firmas. El estado y la traza muestran el proveedor utilizado.
 
-Límites de Google:
+La aplicación no impone cuotas de solicitudes, caracteres ni tokens acumulados a Gemini, por tarea o por proceso. Tampoco recorta el contexto a 24 000 caracteres ni limita la salida a 1 536 tokens: transmite el máximo de salida solicitado por el chat o agente. Los contadores de consumo son informativos. Siguen vigentes las cuotas y capacidades de Google, el timeout de 25 segundos y los límites generales del agente (16 decisiones y 300 segundos). No hay reintentos automáticos de errores de Gemini.
 
-- Por tarea: hasta 6 solicitudes, 80 000 caracteres acumulados de contexto/esquemas y 6 000 tokens máximos de salida reservados.
-- Por solicitud: hasta 24 000 caracteres y 1 536 tokens de salida. No se recorta evidencia silenciosamente para entrar en el presupuesto.
-- Compartido entre chat y agentes: hasta 12 solicitudes, 160 000 caracteres y 12 000 tokens máximos de salida reservados por proceso del servidor.
-- Sin reintentos automáticos de errores de Gemini. Las solicitudes fallidas también consumen reserva. Al alcanzar un tope, la tarea se detiene explícitamente.
+Si se activa el respaldo, Google recibe el objetivo, contexto y resultados de herramientas necesarios para continuar.
 
-Las reservas de salida se contabilizan conservadoramente según el máximo solicitado, aunque la respuesta resulte más breve; por eso un presupuesto puede agotarse antes del límite de llamadas. Los contadores están en memoria y se reinician al reiniciar el servidor: no constituyen un límite de facturación de la cuenta Google. Si se activa el respaldo, Google recibe el objetivo, contexto y resultados de herramientas necesarios para continuar.
-
-La integración de Gemini se verifica con clientes y transporte HTTP simulados, sin llamadas reales ni consumo de la clave. Su validez, permisos y cuota quedan sin comprobar. La clave permanece solo en `.env`, excluido de Git.
+Las pruebas automáticas de Gemini usan clientes y transporte HTTP simulados. El 29 de octubre de 2026 también se hicieron solicitudes reales de diagnóstico: la clave y el modelo configurado respondieron, y se reprodujo un HTTP 400 al reenviar llamadas de Groq sin firmas Google. Tras corregir la transición, una auditoría real del ejemplo de seis tablas finalizó en 37 segundos con Groq y cuatro llamadas a Gemini; entregó un hallazgo validado. Esto comprueba el flujo, no la exhaustividad de los hallazgos ni la disponibilidad o cuota futura. La clave permanece solo en `.env`, excluido de Git.
 
 ## Evaluación de evidencia de GESTITEL
 
@@ -98,3 +95,5 @@ Los registros se conservan en memoria durante la tarea y su resultado; las citas
 
 - [Guía detallada de uso, arquitectura y exposición con GESTITEL](docs/guia_exposicion_GESTITEL.md).
 - [SQL ficticio de prueba para PostgreSQL](ejemplos/prueba_pims_exposicion.sql): importar desde Auditoría de privacidad. Resultado local verificado: 7 tablas, 7 observaciones, 2 altas y 5 medias. No es un volcado de GESTITEL.
+
+El historial conserva objetivos, respuestas, evidencias y trazas en el equipo local; no almacena claves ni credenciales de conexión. La carpeta `data/` está excluida de Git. Puedes cambiar la ubicación con `PIMS_HISTORY_DB`. Las consultas anteriores a esta mejora que ya se perdieron al recargar no se pueden recuperar.

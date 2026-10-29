@@ -201,7 +201,7 @@ RAG significa recuperar información y adjuntarla al contexto del modelo. Aquí 
 
 Los documentos se dividen en fragmentos de 800 caracteres, con solapamiento de 150. Cada búsqueda del agente puede recuperar hasta seis fragmentos. Se conservan archivo, página y procedencia cuando están disponibles.
 
-El proveedor principal es Groq con `openai/gpt-oss-120b`, según el código. Gemini es un respaldo opcional y acotado ante ciertos errores temporales. El nombre predeterminado del modelo de respaldo no garantiza disponibilidad: debe probarse con la cuenta configurada.
+El proveedor principal es Groq con `openai/gpt-oss-120b`, según el código. Gemini es un respaldo opcional sin cuotas locales de consumo ante ciertos errores temporales. El nombre predeterminado del modelo de respaldo no garantiza disponibilidad: debe probarse con la cuenta configurada.
 
 Los anexos de `profesor/` y `organized.pdf` **no se indexan automáticamente**. Que un PDF esté en la carpeta no significa que el agente lo esté usando. La sección Base de conocimiento muestra qué archivos aportan realmente fragmentos. Los PDF sin texto extraíble necesitan tratamiento adicional; no hay OCR integrado.
 

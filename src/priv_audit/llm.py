@@ -1,4 +1,4 @@
-"""Interfaces compatibles con el chat y prototipo; Groq con respaldo acotado."""
+"""Interfaces compatibles con el chat y prototipo; Groq con respaldo Gemini sin cuotas locales."""
 import os
 from pathlib import Path
 from types import SimpleNamespace
