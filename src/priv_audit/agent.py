@@ -316,6 +316,11 @@ class PrivacyAgent:
         available = []
         for tool in tools:
             name = tool['function']['name']
+            if self.risk and name == 'consultar_contexto_riesgos' and (
+                    self.risk.input.fuente != 'gestitel' or self.gestitel_reads >= 6):
+                continue
+            if self.risk and name == 'calcular_riesgo' and self.risk.methodology is None:
+                continue
             if name == 'inspeccionar_esquema' and self.inspected:
                 continue
             if name == 'aplicar_reglas_locales' and not self.inspected:

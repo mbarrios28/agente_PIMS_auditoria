@@ -88,6 +88,28 @@ class RiskTests(unittest.TestCase):
         agent.execute('finalizar_riesgos', dict(motivo='Informar limitaciones', estado='evidencia_insuficiente', riesgos=[], limitaciones=['No hay activos cargados']))
         self.assertEqual(agent.result['estado_respuesta'], 'evidencia_insuficiente')
 
+    def test_live_matrix_is_used_and_asset_reference_must_match(self):
+        agent = PrivacyAgent(task='riesgos', risk_input={'fuente':'gestitel'})
+        agent.execute('cargar_skill', {'motivo':'Preparar revisión', 'nombre':'gestion_riesgos'})
+        matrix = dict(id=2, name='Matriz de prueba', dimension=4, status='A', usage='A',
+            levels=[dict(axis=a, value=str(v)) for a in ('P','I') for v in range(1,5)],
+            risk_ranges=[dict(level=n, min_value=a, max_value=b) for n,a,b in
+                         [('L',1,3),('M',4,7),('H',8,11),('C',12,16)]])
+        def read(module, page, **kwargs):
+            rows = [matrix] if module == 'evaluation-matrices' else [dict(id=1,name='Servidor A'),dict(id=2,name='Servidor B')]
+            return dict(modulo=module,pagina=page,total=len(rows),consultado_en='2026-11-05',
+                fragmentos=[dict(id=f'{module}-{i}',modulo=module,texto=json.dumps(r),fuente=module) for i,r in enumerate(rows)])
+        with patch('src.priv_audit.gestitel.GestitelClient.read', side_effect=read):
+            for module in ('assets','evaluation-matrices'):
+                agent.execute('consultar_contexto_riesgos', dict(motivo='Recuperar contexto',modulo=module))
+        self.assertEqual(agent.risk.methodology.matriz_id, '2')
+        item = dict(self.item(), activo='Servidor A', referencias=['assets-1'])
+        with self.assertRaises(ValueError):
+            agent.execute('finalizar_riesgos', dict(motivo='Entregar propuesta',estado='propuesta',riesgos=[item],limitaciones=['Prueba']))
+        item['referencias'] = ['assets-0']
+        agent.execute('finalizar_riesgos', dict(motivo='Entregar propuesta',estado='propuesta',riesgos=[item],limitaciones=['Prueba']))
+        self.assertEqual(agent.result['riesgos'][0]['activo'], 'Servidor A')
+
     def test_api_contract_and_validation(self):
         from web_app import app
         client = app.test_client()

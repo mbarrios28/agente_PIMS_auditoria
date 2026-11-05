@@ -78,10 +78,10 @@ class RiskItem(Strict):
     amenaza: str = Field(min_length=3, max_length=500)
     vulnerabilidad: str = Field(min_length=3, max_length=500)
     consecuencia: str = Field(min_length=3, max_length=1000)
-    referencias: list[str] = Field(min_length=1, max_length=6)
+    referencias: list[str] = Field(min_length=1, max_length=6, description='IDs recuperados. En caso manual usa contexto_manual; en GESTITEL cita el fragmento del activo.')
     supuestos: list[str] = Field(max_length=8)
     informacion_faltante: list[str] = Field(max_length=8)
-    calculo_id: str | None = None
+    calculo_id: str | None = Field(default=None, description='ID devuelto por calcular_riesgo; omitir si falta información para puntuar.')
     estrategia: Literal['mitigar', 'evitar', 'compartir', 'aceptar_propuesto']
     controles_ids: list[str] = Field(default_factory=list, max_length=8)
     acciones: list[str] = Field(min_length=1, max_length=8)
