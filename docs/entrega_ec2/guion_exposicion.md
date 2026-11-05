@@ -10,7 +10,7 @@ Cari Lipe Paul Andree; Mamani Huarsaya Jorge Luis. Cualquiera debe poder ejecuta
 | 2:30–3:30 | Mostrar arquitectura: un agente, modelo, skill, herramientas, API y validación Python; explicar ciclo de acciones y resultados. |
 | 3:30–7:30 | Ejecutar el objetivo preparado. Mientras espera, explicar recuperación, matriz P×I, control consultado y manejo de pausas por cuota. |
 | 7:30–10:00 | Revisar un escenario: activo, amenaza, vulnerabilidad, consecuencia, justificación P/I, control y tratamiento. Abrir una referencia real. |
-| 10:00–11:00 | Registrar una revisión con el nombre real del expositor y observación. Aclarar que no acepta riesgo residual ni publica en GESTITEL. |
+| 10:00–11:00 | Registrar una revisión local. Preparar la vista previa del envío y mostrar la confirmación que exige el nombre y aprobación del revisor. La aceptación del riesgo residual queda fuera del flujo. |
 | 11:00–12:00 | Exportar JSON y PDF; abrir Historial. Mostrar hoja de una página y alcance normativo. |
 | 12:00–15:00 | Preguntas. Explicar limitaciones y diferenciar el contenido documentado, lo observado y lo propuesto. |
 
@@ -48,3 +48,11 @@ No es contexto manual: la instrucción identifica el alcance; los hechos se recu
 - **¿Se integra con otros agentes?** No se presupone su existencia. Consume módulos y documenta contratos de intercambio.
 - **¿Qué normativa cubre?** Apoya evaluación y propuestas de tratamiento; la tabla distingue apoyo de implementación y marca el contraste ISO pendiente.
 - **¿Qué sale del equipo?** Objetivo y fragmentos seleccionados llegan a Groq o Gemini. Credenciales de GESTITEL permanecen en el servidor.
+
+## Registro en el panel externo
+
+Después de revisar la propuesta, usa Registrar en GESTITEL → Preparar vista previa.
+El envío solo ocurre al marcar la aprobación y pulsar Confirmar envío. Para actualizar, usa el ID
+del riesgo abierto del mismo activo. Ver `docs/publicar_riesgos.md` para el alcance y las restricciones.
+Durante el ensayo de esta ampliación se verificó la vista previa contra la API real; no se envió
+un riesgo automáticamente. No presentar las pruebas simuladas como una publicación real.

@@ -21,7 +21,7 @@ esta documentación no prueba la versión desplegada en el servidor externo. La 
 no pueden sustituirse desde el cliente. Sin matriz compatible no se ofrecen cálculos.
 El servidor valida rangos y calcula el nivel; el modelo justifica los valores como estimaciones.
 Los controles solo se vinculan a registros realmente recuperados. El riesgo residual sigue pendiente
-hasta verificar las medidas. No se aceptan riesgos ni se guardan modificaciones remotas.
+hasta verificar las medidas. El modelo no acepta riesgos ni guarda modificaciones remotas por sí solo. La publicación separada requiere vista previa y confirmación explícita.
 
 ## Con qué otros agentes o módulos se relaciona
 
@@ -50,7 +50,7 @@ futuras: no se recuperan automáticamente para el agente. No se contactó a otro
 El agente busca responder: ¿qué puede pasar, a qué activo o proceso, por qué, con qué consecuencias,
 qué tan prioritario resulta bajo los criterios definidos y qué debemos hacer y verificar?
 
-## Contrato de integración v1.1
+## Contrato de integración v1.2
 
 `GET /api/risks/contract` devuelve esquemas JSON de entrada y propuesta, con fuente fija GESTITEL.
 
@@ -93,3 +93,9 @@ escenarios sin puntuación cuando falta evidencia. En Groq se respetan pausas po
 de recurrir al respaldo por otros errores temporales.
 
 La entrega de EC2 está en `docs/entrega_ec2/`, con PDF reproducible usando UNSAReport.
+
+## Publicación aprobada
+
+La aplicación también permite publicar desde el historial con vista previa y confirmación explícita.
+El ciclo del modelo conserva sus herramientas de lectura: no puede aprobar envíos.
+Este flujo amplía la versión inicial descrita arriba; ver `docs/publicar_riesgos.md` para los detalles.

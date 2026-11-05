@@ -13,3 +13,8 @@ flowchart TD
   A --> R[Propuesta o evidencia insuficiente]
   R --> H[SQLite: resultado, traza y revisión local]
   H --> E[Exportación JSON y PDF]
+
+  R --> P[Vista previa de publicación]
+  P --> U2[Confirmación explícita del revisor]
+  U2 --> GW[Gateway acotado: POST / PATCH de riesgos]
+  GW --> G

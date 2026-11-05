@@ -22,7 +22,7 @@ Requiere `GROQ_API_KEY`, `GESTITEL_USERNAME` y `GESTITEL_PASSWORD`.
 El agente consulta activos, procesos, evaluaciones de riesgos, matriz y controles mediante recursos
 permitidos de https://unsa.27k.pe. Propone escenarios, estimaciones y tratamientos con referencias,
 supuestos e información faltante. Si no hay activos suficientes, declara evidencia insuficiente.
-No escribe ni acepta riesgos en GESTITEL. La integración visual dentro de la plataforma externa
+La publicación en GESTITEL requiere vista previa y confirmación explícita; el modelo no escribe ni acepta riesgos por sí solo. La integración visual dentro de la plataforma externa
 requiere su código o un adaptador acordado con sus administradores.
 
 La interfaz contiene evaluación e historial del mismo agente. Las funciones anteriores de auditoría
@@ -38,7 +38,7 @@ de ISO 27001 y 27005; no contiene sus textos completos ni certifica cumplimiento
 - `GET /api/status`: configuración de IA y GESTITEL.
 - `POST /api/agent/runs`: inicia exclusivamente una tarea de riesgos.
 - `GET /api/agent/runs/<id>`: actividad, resultado o error.
-- `GET /api/risks/contract`: contrato v1.1, fuente fija GESTITEL.
+- `GET /api/risks/contract`: contrato v1.2, fuente fija GESTITEL.
 - `GET /api/history` y `/api/history/<id>`: historial de riesgos.
 
 ```json
@@ -76,3 +76,9 @@ Estas revisiones no aceptan riesgo residual ni escriben en GESTITEL.
 Verifica el entorno con `.venv/bin/python scripts/preparar_exposicion.py`.
 Cuando estén disponibles, incorpora las ISO autorizadas con `scripts/incorporar_iso.py`;
 las instrucciones y el contraste pendiente están en el paquete de entrega.
+
+## Registro en el panel de riesgos
+
+Desde cada propuesta puedes preparar una vista previa para crear o actualizar un riesgo.
+El envío exige aprobación y conserva trazabilidad; no acepta riesgos residuales.
+Consulta [el flujo de publicación](docs/publicar_riesgos.md) para los campos, límites y recuperación.
