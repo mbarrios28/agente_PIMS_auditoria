@@ -1,5 +1,20 @@
 # Verificación del agente de riesgos
 
+## Ajuste de alcance: fuente exclusiva GESTITEL
+
+La versión actual elimina el contexto manual y las tareas de SQL, chat y EC1 de los puntos de entrada.
+Se actualizó la suite para probar rechazos por API y agente, contexto remoto simulado, cálculo con
+matriz recuperada, historial filtrado y respaldo del proveedor. Los casos ficticios son fixtures de
+pruebas del conector, nunca opciones de la aplicación. La interfaz abre directamente el agente de riesgos.
+
+Suite actual: 39 pruebas correctas, adaptadas al único agente disponible. Sintaxis JavaScript
+correcta y comprobación HTTP real de que la aplicación no muestra campos manuales y rechaza
+una solicitud de contexto manual con HTTP 400. Los recuentos siguientes son históricos.
+
+Lo siguiente documenta los ensayos de la primera versión; los intentos manuales son antecedentes
+anteriores a la eliminación de esa función y no son instrucciones de uso actuales.
+
+
 Comprobaciones realizadas el 5 de noviembre de 2026.
 
 ## Automatizadas

@@ -21,7 +21,7 @@ class Methodology(Strict):
     version: str = Field(min_length=1, max_length=100)
     escala: int = Field(ge=2, le=10)
     formula: Literal['P*I'] = 'P*I'
-    origen: Literal['propuesta_local', 'matriz_gestitel'] = 'propuesta_local'
+    origen: Literal['matriz_gestitel'] = 'matriz_gestitel'
     matriz_id: str | None = None
     bandas: list[Band] = Field(min_length=1, max_length=10)
 
@@ -36,12 +36,6 @@ class Methodology(Strict):
         if covered != set(range(1, self.escala ** 2 + 1)):
             raise ValueError('Los rangos deben cubrir exactamente 1 hasta escala².')
         return self
-
-
-def demo_methodology():
-    return Methodology(nombre='Propuesta académica 4x4', version='1', escala=4,
-        bandas=[Band(nivel=n, minimo=a, maximo=b) for n, a, b in
-                [('BAJO', 1, 3), ('MEDIO', 4, 7), ('ALTO', 8, 11), ('CRITICO', 12, 16)]])
 
 
 def from_gestitel(row):
@@ -78,7 +72,7 @@ class RiskItem(Strict):
     amenaza: str = Field(min_length=3, max_length=500)
     vulnerabilidad: str = Field(min_length=3, max_length=500)
     consecuencia: str = Field(min_length=3, max_length=1000)
-    referencias: list[str] = Field(min_length=1, max_length=6, description='IDs recuperados. En caso manual usa contexto_manual; en GESTITEL cita el fragmento del activo.')
+    referencias: list[str] = Field(min_length=1, max_length=6, description='IDs recuperados de GESTITEL; cita el fragmento del activo evaluado.')
     supuestos: list[str] = Field(max_length=8)
     informacion_faltante: list[str] = Field(max_length=8)
     calculo_id: str | None = Field(default=None, description='ID devuelto por calcular_riesgo; omitir si falta información para puntuar.')
@@ -119,32 +113,18 @@ def calculate(args, methodology):
 
 
 class RiskInput(Strict):
-    fuente: Literal['manual', 'gestitel'] = 'manual'
-    contexto: str = Field(default='', max_length=8000)
-    metodologia: Methodology | None = None
-
-    @model_validator(mode='after')
-    def source_context(self):
-        if self.fuente == 'manual' and not self.contexto.strip():
-            raise ValueError('Escribe el contexto del activo o proceso a evaluar.')
-        if self.fuente == 'gestitel' and self.metodologia is not None:
-            raise ValueError('La metodología GESTITEL se recupera de su matriz activa.')
-        if self.metodologia and self.metodologia.origen != 'propuesta_local':
-            raise ValueError('No declares una matriz remota como configuración manual.')
-        return self
+    fuente: Literal['gestitel'] = 'gestitel'
 
 
 class RiskWorkflow:
     def __init__(self, data):
         self.input = RiskInput.model_validate(data)
-        self.methodology = (self.input.metodologia or demo_methodology()) if self.input.fuente == 'manual' else None
+        self.methodology = None
         self.calculations = {}
         self.reads = []
 
     def execute(self, agent, name, args):
         if name == 'consultar_contexto_riesgos':
-            if self.input.fuente != 'gestitel':
-                raise ValueError('Esta ejecución usa contexto manual; no consulta GESTITEL.')
             from .gestitel import GestitelClient
             if agent.gestitel_reads >= 6:
                 raise ValueError('Máximo seis páginas por ejecución.')
@@ -210,7 +190,7 @@ class RiskWorkflow:
             risks.append(dict(item.model_dump(), referencias=refs, controles=controls,
                               evaluacion=calculation, estado='pendiente_revision_humana',
                               riesgo_residual=None))
-        agent.result = dict(tipo='riesgos', version_contrato='1.0', estado_respuesta=args.estado,
+        agent.result = dict(tipo='riesgos', version_contrato='1.1', estado_respuesta=args.estado,
             riesgos=risks, metodologia=self.methodology.model_dump() if self.methodology else None,
             alcance=self.reads, fuente=self.input.fuente,
             limitaciones=args.limitaciones + [

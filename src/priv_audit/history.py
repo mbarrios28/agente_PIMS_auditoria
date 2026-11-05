@@ -36,11 +36,12 @@ def save(kind, objective, result, status='completado', key=None):
     return key
 
 
-def list_entries(limit=50, offset=0):
+def list_entries(limit=50, offset=0, kind=None):
     with connect() as db:
-        total = db.execute('SELECT COUNT(*) FROM history').fetchone()[0]
-        rows = db.execute('SELECT id, fecha, tipo, objetivo, estado FROM history '
-                          'ORDER BY fecha DESC, id DESC LIMIT ? OFFSET ?', (limit, offset)).fetchall()
+        where, params = (' WHERE tipo = ?', (kind,)) if kind else ('', ())
+        total = db.execute('SELECT COUNT(*) FROM history' + where, params).fetchone()[0]
+        rows = db.execute('SELECT id, fecha, tipo, objetivo, estado FROM history' + where +
+                          ' ORDER BY fecha DESC, id DESC LIMIT ? OFFSET ?', (*params, limit, offset)).fetchall()
     return dict(total=total, items=[dict(row) for row in rows])
 
 

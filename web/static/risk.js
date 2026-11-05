@@ -1,18 +1,5 @@
 'use strict';
 let riskReport = null;
-const demoMethod = {nombre:'Propuesta académica 4x4',version:'1',escala:4,formula:'P*I',origen:'propuesta_local',bandas:[{nivel:'BAJO',minimo:1,maximo:3},{nivel:'MEDIO',minimo:4,maximo:7},{nivel:'ALTO',minimo:8,maximo:11},{nivel:'CRITICO',minimo:12,maximo:16}]};
-$('#risk-method').value = JSON.stringify(demoMethod, null, 2);
-$('#risk-source').addEventListener('change', () => {
-  const live = $('#risk-source').value === 'gestitel';
-  $('#risk-context').required = !live;
-  $('#risk-method').disabled = live;
-});
-$('#risk-context').required = true;
-$('#risk-example').addEventListener('click', () => {
-  $('#risk-source').value = 'manual';
-  $('#risk-source').dispatchEvent(new Event('change'));
-  $('#risk-context').value = 'CASO FICTICIO. Servidor de matrículas de una universidad, necesario durante la inscripción. Almacena identificación y contacto de estudiantes. Hay copias diarias declaradas, sin prueba de restauración disponible. Acceso administrativo con contraseña; no se ha verificado MFA. No conocemos historial de incidentes, permisos efectivos ni tiempo máximo tolerable de interrupción. Proponer verificaciones; no afirmar que estos controles están ausentes.';
-});
 $('#risk-form').addEventListener('submit', async event => {
   event.preventDefault();
   const button = $('#run-risk');
@@ -23,13 +10,10 @@ $('#risk-form').addEventListener('submit', async event => {
   $('#risk-result').hidden = true;
   $('#risk-trace-panel').hidden = false;
   try {
-    const source = $('#risk-source').value;
-    const input = {fuente:source, contexto:$('#risk-context').value};
-    if (source === 'manual') input.metodologia = JSON.parse($('#risk-method').value);
-    const result = await executeAgent({tarea:'riesgos',objetivo:$('#risk-objective').value,riesgos:input}, $('#risk-trace'));
+    const result = await executeAgent({tarea:'riesgos', objetivo:$('#risk-objective').value}, $('#risk-trace'));
     renderRiskResult(result);
   } catch (error) {
-    $('#risk-error').textContent = error instanceof SyntaxError ? 'La configuración de metodología debe ser JSON válido.' : error.message;
+    $('#risk-error').textContent = error.message;
     $('#risk-error').hidden = false;
   } finally {
     button.disabled = false;

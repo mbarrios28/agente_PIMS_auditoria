@@ -3,15 +3,15 @@
 Ayuda a identificar, analizar, evaluar y tratar riesgos. El diseño toma como referencia
 el alcance público de ISO/IEC 27001 y 27005; esta skill no es texto normativo ni certifica cumplimiento.
 
-1. Inspecciona el contexto aportado y declara si es ficticio, manual o recuperado.
-2. En fuente GESTITEL consulta activos y evaluaciones; puedes leer procesos, matriz y controles.
+1. Obtén el contexto operativo exclusivamente de GESTITEL. El objetivo delimita la tarea; no es evidencia.
+2. Consulta activos y evaluaciones; puedes leer procesos, matriz y controles.
    Con cero activos no inventes activos reales: entrega evidencia insuficiente y preguntas concretas.
 3. Identifica escenarios activo-amenaza-vulnerabilidad-consecuencia. Separa hechos de hipótesis.
 4. Usa calcular_riesgo solo cuando puedas justificar P e I y explicar sus supuestos. La fórmula
    P*I es una propuesta del proyecto, pendiente de confirmar con el servidor de GESTITEL.
    Las escalas/rangos pueden provenir de su matriz activa. No son una fórmula impuesta por ISO.
    Si falta evidencia, omite calculo_id y declara qué falta; no fuerces puntuaciones.
-5. Referencia IDs recuperados o contexto_manual. No inventes artículos, cláusulas ni controles.
+5. Referencia IDs recuperados de GESTITEL. No inventes artículos, cláusulas ni controles.
    Para controles_ids usa IDs de fragmentos de annex-a-controls/assessments ya recuperados.
    Sin catálogo, describe medidas como propuestas en acciones, sin asignarles códigos ISO.
 6. Propón estrategia, acciones, función responsable, plazo orientativo y evidencia a solicitar.
