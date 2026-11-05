@@ -1,0 +1,374 @@
+{
+  "id": "5b333a75-8168-4cde-b786-56b3a6eabeda",
+  "fecha": "2026-11-05T17:29:29.352577+00:00",
+  "objetivo": "Evalúa solo ACT-HW-001, caso ficticio EC2-DEMO registrado en GESTITEL. Prepara el contexto y consulta annex-a-controls con registro_id 72. Propón un único riesgo de indisponibilidad por falla de almacenamiento sin prueba de restauración. Justifica P e I como estimaciones del ejercicio y calcula una vez. Finaliza copiando exactamente el código del activo, los IDs de referencia y calculo_id ofrecidos por las herramientas. Incluye control recuperado, acciones y evidencia a solicitar. No busques textos ISO aún no incorporados ni certifiques cumplimiento.",
+  "resultado": {
+    "tipo": "riesgos",
+    "version_contrato": "1.1",
+    "estado_respuesta": "propuesta",
+    "riesgos": [
+      {
+        "activo": "ACT-HW-001",
+        "amenaza": "Falla de almacenamiento del servidor de matrículas",
+        "vulnerabilidad": "Ausencia de pruebas documentadas de restauración de copias de seguridad",
+        "consecuencia": "Interrupción del proceso de matrícula simulada, afectando la disponibilidad del servicio crítico",
+        "referencias": [
+          {
+            "fragmento_id": "assets:1",
+            "fuente": "GESTITEL / assets / 1",
+            "cita": "{\"id\": 1, \"process\": \"EC2-DEMO\", \"process_name\": \"EC2-DEMO · Matrículas\", \"updated_at\": \"2026-11-05T17:12:23.850443Z\", \"code\": \"ACT-HW-001\", \"name\": \"EC2-DEMO-001 · Servidor de matrículas de prueba\", \"description\": \"CASO FICTICIO AUTORIZADO EC2. Sin datos personales. Servicio diario crítico para matrícula simulada. Copias diarias declaradas sin acta de restauración. En el escenario se simulan tres",
+            "url": "https://unsa.27k.pe/api/assets/1/",
+            "consultado_en": "2026-11-05T17:28:48.351198+00:00"
+          },
+          {
+            "fragmento_id": "processes:1",
+            "fuente": "GESTITEL / processes / 1",
+            "cita": "{\"id\": 1, \"updated_at\": \"2026-11-05T17:10:59.903271Z\", \"code\": \"EC2-DEMO\", \"name\": \"EC2-DEMO · Matrículas\", \"type\": \"O\", \"objective\": \"CASO FICTICIO AUTORIZADO EC2: simular matrícula sin datos de estudiantes reales. Servicio crítico en inscripción; interrupción simulada detiene el registro. Solo demostración del agente de riesgos.\", \"status\": \"A\"}",
+            "url": "https://unsa.27k.pe/api/processes/1/",
+            "consultado_en": "2026-11-05T17:28:48.523130+00:00"
+          },
+          {
+            "fragmento_id": "evaluation-matrices:2",
+            "fuente": "GESTITEL / evaluation-matrices / 2",
+            "cita": "{\"id\": 2, \"name\": \"Matriz 4x4\", \"usage\": \"A\", \"dimension\": 4, \"description\": \"Matriz balanceada — buena para tasación de activos y riesgos.\", \"status\": \"A\", \"levels\": [{\"axis\": \"I\", \"position\": 1, \"name\": \"Insignificante\", \"value\": \"1.00\", \"description\": \"Sin impacto significativo\"}, {\"axis\": \"I\", \"position\": 2, \"name\": \"Menor\", \"value\": \"2.00\", \"description\": \"Impacto recuperable a corto plazo\"},",
+            "url": "https://unsa.27k.pe/api/evaluation-matrices/2/",
+            "consultado_en": "2026-11-05T17:28:48.704849+00:00"
+          },
+          {
+            "fragmento_id": "annex-a-controls:72",
+            "fuente": "GESTITEL / annex-a-controls / 72",
+            "cita": "{\"id\": 72, \"code\": \"A.8.13\", \"name\": \"Copia de seguridad de la información\", \"group_name\": \"Controles tecnológicos\", \"source_standard\": \"ISO27001_2022\", \"source_standard_display\": \"ISO/IEC 27001:2022\", \"description\": \"Mantener y verificar copias de respaldo.\", \"law_29733_applies\": true, \"law_29733_articles\": [\"Art. 9\"], \"law_29733_explanation\": \"Impone la obligación de garantizar la conservación y",
+            "url": "https://unsa.27k.pe/api/annex-a-controls/72/",
+            "consultado_en": "2026-11-05T17:28:49.908353+00:00"
+          }
+        ],
+        "supuestos": [
+          "Se asume que la disponibilidad del activo es 4 (catastrófico) según registro",
+          "Se asume que la probabilidad alta (3) corresponde a tres fallas al año"
+        ],
+        "informacion_faltante": [
+          "Frecuencia real de pruebas de restauración",
+          "Resultados de pruebas anteriores"
+        ],
+        "calculo_id": "f3855a07627c8f697334abf4",
+        "estrategia": "mitigar",
+        "controles_ids": [
+          "annex-a-controls:72"
+        ],
+        "acciones": [
+          "Implementar pruebas periódicas de restauración de copias de seguridad",
+          "Documentar resultados y tiempos de recuperación",
+          "Asegurar que las copias se almacenen en medios redundantes",
+          "Definir SLA de disponibilidad máximo 4 horas"
+        ],
+        "responsable_propuesto": "Equipo de Infraestructura de TI",
+        "plazo_propuesto": "3 meses",
+        "evidencia_a_solicitar": [
+          "Registros de pruebas de restauración de backups",
+          "Informes de verificación de integridad de copias",
+          "Plan de continuidad del servicio"
+        ],
+        "requiere_eipd": false,
+        "controles": [
+          {
+            "fragmento_id": "annex-a-controls:72",
+            "fuente": "GESTITEL / annex-a-controls / 72",
+            "cita": "{\"id\": 72, \"code\": \"A.8.13\", \"name\": \"Copia de seguridad de la información\", \"group_name\": \"Controles tecnológicos\", \"source_standard\": \"ISO27001_2022\", \"source_standard_display\": \"ISO/IEC 27001:2022\", \"description\": \"Mantener y verificar copias de respaldo.\", \"law_29733_applies\": true, \"law_29733_articles\": [\"Art. 9\"], \"law_29733_explanation\": \"Impone la obligación de garantizar la conservación y"
+          }
+        ],
+        "evaluacion": {
+          "probabilidad": 3,
+          "impacto": 4,
+          "puntaje": 12,
+          "nivel": "CRITICO",
+          "justificacion_probabilidad": "Se simulan tres fallas de almacenamiento al año, lo que corresponde a una probabilidad alta (valor 3) según la matriz 4x4.",
+          "justificacion_impacto": "El activo tiene disponibilidad valorada como 4 (catastrófico) en la descripción, indicando que una interrupción prolongada afecta gravemente la operación de matrícula.",
+          "metodologia": {
+            "nombre": "Matriz 4x4",
+            "version": "2026-10-21T21:45:53.011379Z",
+            "escala": 4,
+            "formula": "P*I",
+            "origen": "matriz_gestitel",
+            "matriz_id": "2",
+            "bandas": [
+              {
+                "nivel": "BAJO",
+                "minimo": 1,
+                "maximo": 3
+              },
+              {
+                "nivel": "MEDIO",
+                "minimo": 4,
+                "maximo": 7
+              },
+              {
+                "nivel": "ALTO",
+                "minimo": 8,
+                "maximo": 11
+              },
+              {
+                "nivel": "CRITICO",
+                "minimo": 12,
+                "maximo": 16
+              }
+            ]
+          },
+          "estado": "estimacion_propuesta",
+          "procedencia_formula": "GESTITEL, Anexo 04, páginas PDF 6 y 10; Anexo 02, diccionario de riesgos.",
+          "calculo_id": "f3855a07627c8f697334abf4"
+        },
+        "estado": "pendiente_revision_humana",
+        "riesgo_residual": null
+      }
+    ],
+    "metodologia": {
+      "nombre": "Matriz 4x4",
+      "version": "2026-10-21T21:45:53.011379Z",
+      "escala": 4,
+      "formula": "P*I",
+      "origen": "matriz_gestitel",
+      "matriz_id": "2",
+      "bandas": [
+        {
+          "nivel": "BAJO",
+          "minimo": 1,
+          "maximo": 3
+        },
+        {
+          "nivel": "MEDIO",
+          "minimo": 4,
+          "maximo": 7
+        },
+        {
+          "nivel": "ALTO",
+          "minimo": 8,
+          "maximo": 11
+        },
+        {
+          "nivel": "CRITICO",
+          "minimo": 12,
+          "maximo": 16
+        }
+      ]
+    },
+    "alcance": [
+      {
+        "modulo": "assets",
+        "pagina": 1,
+        "total": 1,
+        "consultado_en": "2026-11-05T17:28:48.351198+00:00",
+        "busqueda": "",
+        "registro_id": null
+      },
+      {
+        "modulo": "processes",
+        "pagina": 1,
+        "total": 1,
+        "consultado_en": "2026-11-05T17:28:48.523130+00:00",
+        "busqueda": "",
+        "registro_id": null
+      },
+      {
+        "modulo": "evaluation-matrices",
+        "pagina": 1,
+        "total": 3,
+        "consultado_en": "2026-11-05T17:28:48.704849+00:00",
+        "busqueda": "",
+        "registro_id": null
+      },
+      {
+        "modulo": "annex-a-controls",
+        "pagina": 1,
+        "total": 1,
+        "consultado_en": "2026-11-05T17:28:49.908353+00:00",
+        "busqueda": "",
+        "registro_id": 72
+      }
+    ],
+    "fuente": "gestitel",
+    "limitaciones": [
+      "Datos de respaldo de copias no verificadas",
+      "Falta evidencia de pruebas de restauración",
+      "P*I coincide con Anexo 04 de GESTITEL, páginas 6 y 10; no demuestra que el despliegue coincida con esa versión.",
+      "Las puntuaciones y tratamientos requieren revisión; no se acepta riesgo residual automáticamente.",
+      "No se escribieron registros en GESTITEL. Las referencias no prueban suficiencia semántica."
+    ],
+    "traza": [
+      {
+        "numero": 1,
+        "herramienta": "iniciar",
+        "estado": "completado",
+        "motivo": "Resolver el objetivo con herramientas acotadas.",
+        "resultado": "Tarea iniciada; esperando selección del modelo.",
+        "segundos": 17.25
+      },
+      {
+        "numero": 2,
+        "herramienta": "cargar_skill",
+        "estado": "ejecutando",
+        "motivo": "Necesario para ejecutar el procedimiento de gestión de riesgos",
+        "resultado": "Ejecutando herramienta seleccionada por el modelo.",
+        "segundos": 18.3
+      },
+      {
+        "numero": 3,
+        "herramienta": "cargar_skill",
+        "estado": "completado",
+        "motivo": "Necesario para ejecutar el procedimiento de gestión de riesgos",
+        "resultado": "Skill cargada: gestion_riesgos",
+        "segundos": 18.3
+      },
+      {
+        "numero": 4,
+        "herramienta": "preparar_contexto_riesgos",
+        "estado": "ejecutando",
+        "motivo": "Preparar contexto para evaluar activo ACT-HW-001 caso EC2-DEMO",
+        "resultado": "Ejecutando herramienta seleccionada por el modelo.",
+        "segundos": 18.91
+      },
+      {
+        "numero": 5,
+        "herramienta": "preparar_contexto_riesgos",
+        "estado": "completado",
+        "motivo": "Preparar contexto para evaluar activo ACT-HW-001 caso EC2-DEMO",
+        "resultado": "3 fragmentos recuperados para: contexto base",
+        "segundos": 21.06
+      },
+      {
+        "numero": 6,
+        "herramienta": "consultar_contexto_riesgos",
+        "estado": "ejecutando",
+        "motivo": "Obtener control de copia de seguridad para activo",
+        "resultado": "Ejecutando herramienta seleccionada por el modelo.",
+        "segundos": 22.07
+      },
+      {
+        "numero": 7,
+        "herramienta": "consultar_contexto_riesgos",
+        "estado": "completado",
+        "motivo": "Obtener control de copia de seguridad para activo",
+        "resultado": "1 fragmentos recuperados para: annex-a-controls",
+        "segundos": 22.27
+      },
+      {
+        "numero": 8,
+        "herramienta": "cuota_groq",
+        "estado": "esperando",
+        "motivo": "Respetar la cuota temporal del proveedor.",
+        "resultado": "Groq solicitó una pausa; se reintentará en 10 segundos.",
+        "segundos": 22.54
+      },
+      {
+        "numero": 9,
+        "herramienta": "calcular_riesgo",
+        "estado": "ejecutando",
+        "motivo": "Evaluación de riesgo de indisponibilidad por falla de almacenamiento sin prueba de restauración",
+        "resultado": "Ejecutando herramienta seleccionada por el modelo.",
+        "segundos": 33.75
+      },
+      {
+        "numero": 10,
+        "herramienta": "calcular_riesgo",
+        "estado": "completado",
+        "motivo": "Evaluación de riesgo de indisponibilidad por falla de almacenamiento sin prueba de restauración",
+        "resultado": "Resultado entregado.",
+        "segundos": 33.75
+      },
+      {
+        "numero": 11,
+        "herramienta": "cuota_groq",
+        "estado": "esperando",
+        "motivo": "Respetar la cuota temporal del proveedor.",
+        "resultado": "Groq solicitó una pausa; se reintentará en 20 segundos.",
+        "segundos": 34.02
+      },
+      {
+        "numero": 12,
+        "herramienta": "cuota_groq",
+        "estado": "esperando",
+        "motivo": "Respetar la cuota temporal del proveedor.",
+        "resultado": "Groq solicitó una pausa; se reintentará en 5 segundos.",
+        "segundos": 54.46
+      },
+      {
+        "numero": 13,
+        "herramienta": "finalizar_riesgos",
+        "estado": "ejecutando",
+        "motivo": "Riesgo de indisponibilidad por falla de almacenamiento sin prueba de restauración en EC2-DEMO",
+        "resultado": "Ejecutando herramienta seleccionada por el modelo.",
+        "segundos": 61.71
+      },
+      {
+        "numero": 14,
+        "herramienta": "finalizar_riesgos",
+        "estado": "completado",
+        "motivo": "Riesgo de indisponibilidad por falla de almacenamiento sin prueba de restauración en EC2-DEMO",
+        "resultado": "Resultado entregado.",
+        "segundos": 61.71
+      }
+    ],
+    "fuentes": [
+      {
+        "id": "assets:1",
+        "modulo": "assets",
+        "texto": "{\"id\": 1, \"process\": \"EC2-DEMO\", \"process_name\": \"EC2-DEMO · Matrículas\", \"updated_at\": \"2026-11-05T17:12:23.850443Z\", \"code\": \"ACT-HW-001\", \"name\": \"EC2-DEMO-001 · Servidor de matrículas de prueba\", \"description\": \"CASO FICTICIO AUTORIZADO EC2. Sin datos personales. Servicio diario crítico para matrícula simulada. Copias diarias declaradas sin acta de restauración. En el escenario se simulan tres interrupciones por fallas de almacenamiento en un año. Sin evidencia disponible del monitoreo de copias. Interrupción máxima tolerable propuesta: cuatro horas. No representa infraestructura real.\", \"location\": \"Laboratorio ficticio EC2\", \"is_data_asset\": true, \"category\": \"1\", \"classification\": \"3\", \"usage_frequency\": null, \"confidentiality\": \"3\", \"integrity\": \"4\", \"availability\": \"4\", \"asset_value\": \"4.00\", \"purpose\": null, \"retention_period\": null, \"third_party_transfer\": false, \"cross_border_flow\": false}",
+        "fuente": "GESTITEL / assets / 1",
+        "pagina": null,
+        "url": "https://unsa.27k.pe/api/assets/1/",
+        "tipo_fuente": "registro_operativo",
+        "consultado_en": "2026-11-05T17:28:48.351198+00:00"
+      },
+      {
+        "id": "processes:1",
+        "modulo": "processes",
+        "texto": "{\"id\": 1, \"updated_at\": \"2026-11-05T17:10:59.903271Z\", \"code\": \"EC2-DEMO\", \"name\": \"EC2-DEMO · Matrículas\", \"type\": \"O\", \"objective\": \"CASO FICTICIO AUTORIZADO EC2: simular matrícula sin datos de estudiantes reales. Servicio crítico en inscripción; interrupción simulada detiene el registro. Solo demostración del agente de riesgos.\", \"status\": \"A\"}",
+        "fuente": "GESTITEL / processes / 1",
+        "pagina": null,
+        "url": "https://unsa.27k.pe/api/processes/1/",
+        "tipo_fuente": "registro_operativo",
+        "consultado_en": "2026-11-05T17:28:48.523130+00:00"
+      },
+      {
+        "id": "evaluation-matrices:2",
+        "modulo": "evaluation-matrices",
+        "texto": "{\"id\": 2, \"name\": \"Matriz 4x4\", \"usage\": \"A\", \"dimension\": 4, \"description\": \"Matriz balanceada — buena para tasación de activos y riesgos.\", \"status\": \"A\", \"levels\": [{\"axis\": \"I\", \"position\": 1, \"name\": \"Insignificante\", \"value\": \"1.00\", \"description\": \"Sin impacto significativo\"}, {\"axis\": \"I\", \"position\": 2, \"name\": \"Menor\", \"value\": \"2.00\", \"description\": \"Impacto recuperable a corto plazo\"}, {\"axis\": \"I\", \"position\": 3, \"name\": \"Mayor\", \"value\": \"3.00\", \"description\": \"Impacto severo con recuperación a largo plazo\"}, {\"axis\": \"I\", \"position\": 4, \"name\": \"Catastrófico\", \"value\": \"4.00\", \"description\": \"Impacto irreversible\"}, {\"axis\": \"P\", \"position\": 1, \"name\": \"Muy baja\", \"value\": \"1.00\", \"description\": \"Raramente ocurre\"}, {\"axis\": \"P\", \"position\": 2, \"name\": \"Baja\", \"value\": \"2.00\", \"description\": \"Podría ocurrir alguna vez\"}, {\"axis\": \"P\", \"position\": 3, \"name\": \"Alta\", \"value\": \"3.00\", \"description\": \"Ocurrirá en la mayoría de circunstancias\"}, {\"axis\": \"P\", \"position\": 4, \"name\": \"Muy alta\", \"value\": \"4.00\", \"description\": \"Se espera que ocurra frecuentemente\"}], \"risk_ranges\": [{\"level\": \"L\", \"min_value\": 1, \"max_value\": 3}, {\"level\": \"M\", \"min_value\": 4, \"max_value\": 7}, {\"level\": \"H\", \"min_value\": 8, \"max_value\": 11}, {\"level\": \"C\", \"min_value\": 12, \"max_value\": 16}], \"updated_at\": \"2026-10-21T21:45:53.011379Z\"}",
+        "fuente": "GESTITEL / evaluation-matrices / 2",
+        "pagina": null,
+        "url": "https://unsa.27k.pe/api/evaluation-matrices/2/",
+        "tipo_fuente": "registro_operativo",
+        "consultado_en": "2026-11-05T17:28:48.704849+00:00"
+      },
+      {
+        "id": "annex-a-controls:72",
+        "modulo": "annex-a-controls",
+        "texto": "{\"id\": 72, \"code\": \"A.8.13\", \"name\": \"Copia de seguridad de la información\", \"group_name\": \"Controles tecnológicos\", \"source_standard\": \"ISO27001_2022\", \"source_standard_display\": \"ISO/IEC 27001:2022\", \"description\": \"Mantener y verificar copias de respaldo.\", \"law_29733_applies\": true, \"law_29733_articles\": [\"Art. 9\"], \"law_29733_explanation\": \"Impone la obligación de garantizar la conservación y seguridad de los datos tratados.\"}",
+        "fuente": "GESTITEL / annex-a-controls / 72",
+        "pagina": null,
+        "url": "https://unsa.27k.pe/api/annex-a-controls/72/",
+        "tipo_fuente": "registro_operativo",
+        "consultado_en": "2026-11-05T17:28:49.908353+00:00"
+      }
+    ],
+    "skills": [
+      "gestion_riesgos"
+    ],
+    "modelo": "openai/gpt-oss-120b",
+    "respaldo": {
+      "proveedor_actual": "groq",
+      "modelo": "openai/gpt-oss-120b",
+      "proveedores": [
+        "groq"
+      ],
+      "llamadas_gemini": 0,
+      "caracteres_gemini": 0,
+      "salida_maxima_reservada": 0
+    },
+    "uso": {
+      "input_tokens": 13901,
+      "output_tokens": 906
+    },
+    "turnos": 5,
+    "solicitudes": 8,
+    "autonomia": "Selección de herramientas por el modelo; ejecución y validación acotadas por Python."
+  }
+}

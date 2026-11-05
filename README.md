@@ -29,7 +29,7 @@ La interfaz contiene evaluación e historial del mismo agente. Las funciones ant
 SQL, chat y consulta EC1 no se exponen por web ni API. Los registros históricos de otras funciones
 se conservan en SQLite, pero no aparecen en el historial de riesgos.
 
-La fórmula P×I es una propuesta explícita pendiente de contrastar con el backend de GESTITEL;
+La fórmula P×I coincide con la documentación técnica del profesor (Anexo 04, páginas PDF 6 y 10);
 las escalas y bandas se obtienen de su matriz activa. El diseño toma como referencia los alcances
 de ISO 27001 y 27005; no contiene sus textos completos ni certifica cumplimiento.
 
@@ -63,3 +63,16 @@ y registros seleccionados. Las credenciales permanecen en el servidor. El histor
 [Guía, relaciones entre módulos y contrato](docs/agente_riesgos.md).
 [Verificación y limitaciones](docs/verificacion_riesgos.md).
 Las guías EC1 y de exposición anteriores son antecedentes históricos, no instrucciones de la aplicación actual.
+
+## Entrega EC2 — Grupo 1
+
+La [hoja de una página](docs/entrega_ec2/main.pdf) fue preparada con UNSAReport.
+El [paquete de entrega](docs/entrega_ec2/README.md) incluye arquitectura, alcance normativo y guion.
+El caso EC2-DEMO y el activo ACT-HW-001 fueron registrados en GESTITEL con autorización, sin datos personales.
+
+La evaluación persistida permite descargar PDF y registrar revisiones locales con huella del resultado.
+Estas revisiones no aceptan riesgo residual ni escriben en GESTITEL.
+
+Verifica el entorno con `.venv/bin/python scripts/preparar_exposicion.py`.
+Cuando estén disponibles, incorpora las ISO autorizadas con `scripts/incorporar_iso.py`;
+las instrucciones y el contraste pendiente están en el paquete de entrega.

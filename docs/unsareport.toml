@@ -1,0 +1,10 @@
+[project]
+  typst_entry = "main.typ"
+  config_version = 1
+
+[scripts]
+
+[hooks]
+
+[dependencies]
+  "@unsareport/epis-lab" = "^0.2.0"

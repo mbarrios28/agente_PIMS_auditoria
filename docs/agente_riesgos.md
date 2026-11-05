@@ -16,8 +16,8 @@ El historial muestra solo ejecuciones de riesgos; los registros de funciones ant
 ## Metodología
 
 El diseño toma como referencia el alcance público de ISO/IEC 27001 y 27005. No contiene el texto
-completo de estas normas ni demuestra conformidad. P×I es una propuesta del proyecto pendiente de
-contraste con el backend externo. La matriz activa, escalas y rangos se recuperan de GESTITEL;
+completo de estas normas ni demuestra conformidad. P×I coincide con Anexo 04 del profesor, páginas PDF 6 y 10;
+esta documentación no prueba la versión desplegada en el servidor externo. La matriz activa, escalas y rangos se recuperan de GESTITEL;
 no pueden sustituirse desde el cliente. Sin matriz compatible no se ofrecen cálculos.
 El servidor valida rangos y calcula el nivel; el modelo justifica los valores como estimaciones.
 Los controles solo se vinculan a registros realmente recuperados. El riesgo residual sigue pendiente
@@ -76,3 +76,20 @@ el texto libre no garantiza anonimización completa. Los errores de acceso no si
 esté vacío. Las instrucciones incrustadas en registros no son órdenes para el agente.
 
 Ver `docs/verificacion_riesgos.md` para el alcance de las pruebas realizadas.
+
+## Revisión y exportación
+
+`POST /api/history/<id>/review` registra revisor, decisión (`revisado` o `requiere_cambios`)
+y comentario. Conserva eventos y huella del resultado sin alterarlo. Es revisión local,
+no autenticación de identidad ni aceptación corporativa. `GET /api/risks/report/<id>` exporta
+la evaluación persistida con referencias y revisiones en PDF.
+
+La preparación agrupa página 1 de activos, procesos y matrices para evitar errores de navegación.
+El detalle por `registro_id` permite recuperar un control sin cargar páginas enteras.
+Las consultas siguen limitadas a recursos fijos y seis intentos por ejecución. Algunos endpoints
+ignoran `search`; el resultado declara que el filtro es solicitado y requiere comprobar registros.
+Tras un cálculo se ofrece la finalización para evitar repetición de acciones; pueden entregarse
+escenarios sin puntuación cuando falta evidencia. En Groq se respetan pausas por cuota antes
+de recurrir al respaldo por otros errores temporales.
+
+La entrega de EC2 está en `docs/entrega_ec2/`, con PDF reproducible usando UNSAReport.

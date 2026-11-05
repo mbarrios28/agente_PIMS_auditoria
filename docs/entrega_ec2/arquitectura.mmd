@@ -1,0 +1,15 @@
+flowchart TD
+  U[Integrante / revisor] --> W[Interfaz local: objetivo, actividad, propuesta]
+  W --> F[Flask: validación, RunStore e historial]
+  F --> A[RiskAgent: ciclo LLM con Groq y respaldo Gemini]
+  A --> S[Skill de gestión de riesgos]
+  A --> T[Herramientas con argumentos validados]
+  T --> G[API GESTITEL: contexto operativo y matriz]
+  T --> C[Cálculo P × I y validación de referencias]
+  T --> D[Corpus documental: respaldo, ISO pendientes]
+  G --> A
+  C --> A
+  D --> A
+  A --> R[Propuesta o evidencia insuficiente]
+  R --> H[SQLite: resultado, traza y revisión local]
+  H --> E[Exportación JSON y PDF]

@@ -1,0 +1,67 @@
+[[scopes]]
+  name = "@unsareport"
+
+[[pkg]]
+  name = "@unsareport/epis-lab"
+  version = "0.2.0"
+  depends_on = ["@unsareport/define ^0.2.0", "@unsareport/epis-lab-theming ^0.2.0", "@unsareport/gdocs-code-block ^0.2.0"]
+
+  [[pkg.files]]
+    path = "README.md"
+    sha256 = "c2c4beed06e5281b439d7ca4f84c27c004ff7331de680de7426d55b300426508"
+
+  [[pkg.files]]
+    path = "img/abet.png"
+    sha256 = "3323246a7efb9d7cb3930bc9012a6d741f75e6641cec7bc484802c321c37ccbc"
+
+  [[pkg.files]]
+    path = "img/epis.png"
+    sha256 = "21503da115acbfa0afadc9d10d870a67cb51e0cf7e5eb07e576119486729e7e8"
+
+  [[pkg.files]]
+    path = "lib.typ"
+    sha256 = "6dfd7f3e1cb1c5b33026c68aa539b0c68a0b5b700754b01cb133a7b9501ed8ea"
+
+  [[pkg.files]]
+    path = "scripts/copy_report.ts"
+    sha256 = "636e16c6b600f7ec1671aa466179a71359f5423becd469c8bf136c4de240ea0d"
+
+[[pkg]]
+  name = "@unsareport/define"
+  version = "0.2.0"
+
+  [[pkg.files]]
+    path = "README.md"
+    sha256 = "05fc8bc56c403d1cbee82c8149301f7c92380cff0131a698695f9e877382d5da"
+
+  [[pkg.files]]
+    path = "lib.typ"
+    sha256 = "a716ed3824fb8015ab0b74c231f9c9f4fcbc2d31fce3ab5df35acc9462ac14f7"
+
+  [[pkg.files]]
+    path = "scripts/read-vars.ts"
+    sha256 = "d31f0dfa532b27e297f1ca7da48f2c87fc03eb9f73951fb742259bfd11094d95"
+
+[[pkg]]
+  name = "@unsareport/epis-lab-theming"
+  version = "0.2.0"
+
+  [[pkg.files]]
+    path = "README.md"
+    sha256 = "26e94646976c4fc34532d3ee98695abfb48c6b1fbfbb31218329ae33143b51bc"
+
+  [[pkg.files]]
+    path = "lib.typ"
+    sha256 = "442c4285a6f6df906d29c244ecd85ae2994a13c58ea11829370dc787a26850dc"
+
+[[pkg]]
+  name = "@unsareport/gdocs-code-block"
+  version = "0.2.0"
+
+  [[pkg.files]]
+    path = "README.md"
+    sha256 = "bc4dcab3868a7a111a6b952c11ff91e8cc1738695600dd3c541d76ea0d310416"
+
+  [[pkg.files]]
+    path = "lib.typ"
+    sha256 = "fb130f04f992930c96325c6d9d8eeda99d798f2035d18631011bc47ea6212aa8"
