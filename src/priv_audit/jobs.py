@@ -51,7 +51,8 @@ class RunStore:
             if payload['tarea'] == 'auditoria':
                 result = audit(payload['sql'], 'ai', payload['dialect'], payload['objetivo'], on_event)
             else:
-                result = PrivacyAgent(task=payload['tarea'], objective=payload['objetivo'], on_event=on_event).run()
+                result = PrivacyAgent(task=payload['tarea'], objective=payload['objetivo'], on_event=on_event,
+                                      risk_input=payload.get('risk_input')).run()
             history.save(payload['tarea'], payload['objetivo'] or 'Auditoría SQL', result, key=key)
             self._update(key, estado='completado', resultado=result)
         except (AgentError, ValueError) as exc:

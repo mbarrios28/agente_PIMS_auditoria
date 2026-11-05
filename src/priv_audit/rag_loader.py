@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[2]
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 150
 PUBLIC = {
+    'iso_27001_alcance.md': 'https://www.iso.org/standard/27001',
+    'iso_27005_alcance.md': 'https://www.iso.org/standard/80585.html',
     'iso_27701_2025.md': 'https://www.iso.org/standard/27701',
     'iso_42001_2023.md': 'https://www.iso.org/standard/42001',
     'ley_29733_peru.md': 'https://www.gob.pe/institucion/anpd/normas-legales/6554453-16-2024-jus',
