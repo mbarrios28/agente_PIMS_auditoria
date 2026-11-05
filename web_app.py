@@ -29,7 +29,8 @@ def too_large(error):
 
 @app.get('/')
 def index():
-    return render_template('index.html')
+    from src.priv_audit.risk import DEMO_OBJECTIVE
+    return render_template('index.html', demo_objective=DEMO_OBJECTIVE)
 
 @app.get('/api/status')
 def status():

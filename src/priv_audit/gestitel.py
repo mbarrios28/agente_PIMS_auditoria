@@ -23,7 +23,8 @@ RISK_FIELDS = FIELDS | {'category', 'process', 'location', 'classification', 'co
     'residual_score', 'residual_severity', 'response_strategy', 'is_data_privacy',
     'requires_treatment', 'review_status', 'period', 'period_name', 'is_locked',
     'usage', 'dimension', 'levels', 'risk_ranges', 'updated_at', 'process_name',
-    'usage_frequency', 'purpose', 'retention_period', 'third_party_transfer', 'cross_border_flow'}
+    'usage_frequency', 'purpose', 'retention_period', 'third_party_transfer', 'cross_border_flow',
+    'data_categories', 'role', 'legal_basis', 'purpose_detail', 'data_usage', 'disposal_method'}
 
 
 def configured():

@@ -60,8 +60,14 @@ def _load(signature):
     chunks, documents = [], []
     for path in archivos_corpus():
         error = None
+        info = manifest.get(path.name, {})
+        replacement = info.get('sustituido_por')
+        replaced = bool(replacement and (path.parent / replacement).is_file())
         try:
-            if path.name == 'Ley Nº 29733.pdf.pdf' and (ROOT / 'ISOS/ley_29733_smv_2025.pdf').exists():
+            if replaced:
+                extracted = []
+                error = 'Original conservado. Texto consultable en ' + replacement
+            elif path.name == 'Ley Nº 29733.pdf.pdf' and (ROOT / 'ISOS/ley_29733_smv_2025.pdf').exists():
                 extracted = []
             else:
                 extracted = cargar_pdf(path) if path.suffix.lower() == '.pdf' else cargar_markdown(path)
@@ -73,6 +79,8 @@ def _load(signature):
             error = 'Copia histórica excluida: se consulta el texto SMV y el nuevo reglamento oficial.'
         info = manifest.get(path.name, {})
         url = info.get('url') or PUBLIC.get(path.name)
+        if info.get('tipo_fuente') == 'norma_aportada_ocr':
+            error = 'Texto OCR: verificar citas y tablas contra la imagen original.'
         kind = info.get('tipo_fuente', 'ficha_publica' if path.name in PUBLIC else 'sin_verificar')
         for index, chunk in enumerate(extracted):
             identity = f"{path.name}:{chunk.get('pagina', 0)}:{index}:{chunk['texto']}"

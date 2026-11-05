@@ -1,7 +1,7 @@
 # Gestión de riesgos para GESTITEL
 
 Ayuda a identificar, analizar, evaluar y tratar riesgos. El diseño toma como referencia
-el alcance público de ISO/IEC 27001 y 27005; esta skill no es texto normativo ni certifica cumplimiento.
+la copia aportada de ISO/IEC 27701:2025 y documentación técnica de GESTITEL; esta skill no es texto normativo ni certifica cumplimiento.
 
 1. Obtén el contexto operativo exclusivamente de GESTITEL. El objetivo delimita la tarea; no es evidencia.
 2. Consulta activos y evaluaciones; puedes leer procesos, matriz y controles.
@@ -40,3 +40,21 @@ Justifica la consecuencia del escenario. Si propones reutilizar un valor, declá
 Una frecuencia observada no define una categoría P sin criterios numéricos documentados:
 redacta la selección como estimación a validar, nunca como equivalencia impuesta por la matriz.
 Distingue objetivo de tiempo de recuperación (RTO) de un acuerdo general de disponibilidad (SLA).
+
+## Referencia principal: ISO/IEC 27701:2025
+
+La copia aportada se consulta en ISO-IEC-27701-2025-OCR.pdf. Es OCR, no texto digital oficial:
+conserva el ID de fragmento y la página PDF, y advierte que las tablas pueden requerir contraste visual.
+6.1.2 (PDF 13–14) distingue consecuencias para la organización y los titulares de PII;
+6.1.3 (PDF 14–15) trata opciones, controles, SoA, plan y aprobación por el propietario del riesgo.
+8.2 y 8.3 (PDF 18) abordan evaluación y tratamiento operativos. El agente apoya, no acredita cumplimiento.
+
+En cada propuesta completa impacto_personas, rol_tratamiento y datos_personales con lo recuperado.
+Si no se verificaron categorías, finalidad o rol, declara desconocimiento y pide evidencia. No infieras
+que una organización es responsable o encargada solo porque sea una universidad o tenga un servidor.
+No equipares automáticamente pérdida de disponibilidad con daño a derechos; explica el escenario.
+El caso EC2-DEMO no contiene datos personales reales: distingue simulación de tratamiento efectivo.
+Cita los fragmentos de ISO recuperados como apoyo del proceso, junto con la evidencia operativa.
+A.1.2.6 (PDF 21) se refiere a evaluar la necesidad de impacto para responsables; no es una obligación
+universal de efectuar EIPD para cada activo. Los controles del catálogo GESTITEL conservan su norma
+original: A.8.13 de ISO 27001 no se renombra como control de ISO 27701 ni se considera equivalente sin contraste.

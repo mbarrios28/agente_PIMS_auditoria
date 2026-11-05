@@ -1,5 +1,6 @@
 'use strict';
 let riskReport = null;
+$('#risk-demo').addEventListener('click', () => { $('#risk-objective').value = $('#risk-demo').dataset.objective; $('#risk-objective').focus(); });
 $('#risk-form').addEventListener('submit', async event => {
   event.preventDefault();
   const button = $('#run-risk');
@@ -26,11 +27,12 @@ function riskList(title, values) {
 function renderRiskResult(result) {
   riskReport = result;
   const method = result.metodologia;
+  const hasISO = (result.fuentes || []).some(s => s.fuente === 'ISO-IEC-27701-2025-OCR.pdf');
   $('#risk-result').innerHTML = `<h2>${result.estado_respuesta === 'propuesta' ? 'Propuesta pendiente de revisión' : 'Evidencia insuficiente'}</h2><button class="secondary-button" id="risk-export">↓ Exportar propuesta JSON</button>` +
     (method ? `<p>Metodología: ${esc(method.nombre)} · Versión ${esc(method.version)} · ${esc(method.formula)} · ${esc(method.origen)}</p>` : '<p>Sin metodología recuperada; no se asignaron puntuaciones.</p>') +
     result.riesgos.map(r => `<article class="agent-conclusion"><h3>${esc(r.activo)} · ${esc(r.amenaza)}</h3><p><strong>Vulnerabilidad:</strong> ${esc(r.vulnerabilidad)}</p><p><strong>Consecuencia:</strong> ${esc(r.consecuencia)}</p>` +
       (r.evaluacion ? `<p><strong>Estimación propuesta: ${esc(r.evaluacion.nivel)} (${r.evaluacion.puntaje})</strong> · P=${r.evaluacion.probabilidad} × I=${r.evaluacion.impacto}</p><p>Probabilidad: ${esc(r.evaluacion.justificacion_probabilidad)}</p><p>Impacto: ${esc(r.evaluacion.justificacion_impacto)}</p>` : '<p>Evaluación pendiente de información.</p>') +
-      riskList('Supuestos',r.supuestos) + riskList('Información faltante',r.informacion_faltante) +
+      `<h4>${hasISO ? 'Privacidad · ISO/IEC 27701' : 'Información de privacidad pendiente'}</h4><p>Rol: ${esc(r.rol_tratamiento || 'no_determinado')}</p><p>Consecuencias para las personas: ${esc(r.impacto_personas || 'No determinado en esta evaluación.')}</p>` + riskList('Categorías de datos recuperadas',r.datos_personales) + riskList('Supuestos',r.supuestos) + riskList('Información faltante',r.informacion_faltante) +
       `<h4>Tratamiento propuesto · ${esc(r.estrategia)}</h4>` + riskList('Acciones',r.acciones) +
       `<p>Responsable propuesto: ${esc(r.responsable_propuesto)} · Plazo propuesto: ${esc(r.plazo_propuesto)}</p>` +
       riskList('Evidencia a solicitar',r.evidencia_a_solicitar) + `<p>Evaluar EIPD: ${r.requiere_eipd ? 'Sí' : 'No propuesto en esta revisión'} · Riesgo residual pendiente de verificar.</p>` +

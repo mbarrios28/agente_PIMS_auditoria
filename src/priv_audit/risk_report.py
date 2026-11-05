@@ -30,6 +30,8 @@ def build_pdf(entry, reviews):
         paragraph(f"{risk['activo']} — {risk['amenaza']}", 'Heading2')
         for field in ('vulnerabilidad', 'consecuencia', 'estrategia', 'responsable_propuesto', 'plazo_propuesto'):
             paragraph(f"{field.replace('_', ' ').capitalize()}: {risk[field]}")
+        if risk.get('impacto_personas'):
+            paragraph('Consecuencias para las personas: ' + risk['impacto_personas'])
         evaluation = risk.get('evaluacion')
         if evaluation:
             paragraph(f"Estimación propuesta: P={evaluation['probabilidad']} × I={evaluation['impacto']} = {evaluation['puntaje']} ({evaluation['nivel']})")
@@ -41,7 +43,7 @@ def build_pdf(entry, reviews):
                 paragraph('• ' + value)
         paragraph('Referencias recuperadas', 'Heading3')
         for ref in risk['referencias'] + risk.get('controles', []):
-            paragraph(ref['fuente'])
+            paragraph(ref['fuente'] + (f" · Página PDF {ref['pagina']}" if ref.get('pagina') else ''))
             paragraph(ref['cita'])
     paragraph('Alcance y limitaciones', 'Heading2')
     for item in result.get('alcance', []):

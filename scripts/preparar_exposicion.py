@@ -16,8 +16,7 @@ def main():
     pdf=ROOT/'docs/entrega_ec2/main.pdf'
     checks['hoja_una_pagina']=pdf.is_file() and len(PdfReader(pdf).pages)==1
     checks['guion_disponible']=(ROOT/'docs/entrega_ec2/guion_exposicion.md').is_file()
-    checks['normas_pendientes']=[f'ISO/IEC {n}:{y}' for n,y in [('27001','2022'),('27002','2022'),('27005','2022')]
-        if not (ROOT/'ISOS'/f'ISO-IEC-{n}-{y}-aportada.pdf').is_file()]
+    checks['normas_pendientes']=[] if (ROOT/'ISOS/ISO-IEC-27701-2025-OCR.pdf').is_file() else ['ISO/IEC 27701:2025 con OCR']
     checks['recursos']={}
     if configured():
         client=GestitelClient()

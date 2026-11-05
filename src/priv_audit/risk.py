@@ -85,6 +85,9 @@ class RiskItem(Strict):
     plazo_propuesto: str = Field(min_length=1, max_length=150)
     evidencia_a_solicitar: list[str] = Field(min_length=1, max_length=8)
     requiere_eipd: bool
+    impacto_personas: str = Field(default='No determinado; requiere verificar el tratamiento de PII.', max_length=2000)
+    rol_tratamiento: Literal['responsable','encargado','ambos','no_determinado'] = 'no_determinado'
+    datos_personales: list[str] = Field(default_factory=list, max_length=12)
 
 
 class FinishRisk(Strict):
@@ -173,7 +176,8 @@ class RiskWorkflow:
                     raise ValueError('Referencia no recuperada. Usa un ID real de: ' + ', '.join(
                         f"{c['id']} ({c['fuente']})" for c in agent.evidence.values()))
                 refs.append(dict(fragmento_id=key, fuente=chunk['fuente'], cita=chunk['texto'][:400],
-                                 url=chunk.get('url'), consultado_en=chunk.get('consultado_en')))
+                                 url=chunk.get('url'), pagina=chunk.get('pagina'), tipo_fuente=chunk.get('tipo_fuente'),
+                                 consultado_en=chunk.get('consultado_en')))
             if self.input.fuente == 'gestitel':
                 # El activo de una propuesta remota debe coincidir con un registro recuperado.
                 assets = [json.loads(c['texto']) for c in agent.evidence.values()
@@ -207,3 +211,11 @@ class RiskWorkflow:
                 'Las puntuaciones y tratamientos requieren revisión; no se acepta riesgo residual automáticamente.',
                 'No se escribieron registros en GESTITEL. Las referencias no prueban suficiencia semántica.'])
         return {'entregado': True, 'riesgos': len(risks)}
+
+
+DEMO_OBJECTIVE = ('Evalúa solo ACT-HW-001, caso ficticio EC2-DEMO almacenado en GESTITEL. '
+    'Prepara el contexto y consulta annex-a-controls con registro_id 72. '
+    'Propón un único riesgo de indisponibilidad y calcula una vez con supuestos explícitos. '
+    'Distingue consecuencias para personas e impacto organizativo; no hay PII real en el ejercicio. '
+    'Cita el activo, el control recuperado y un fragmento ISO 27701:2025 con su página. '
+    'Finaliza con tratamiento y evidencia a solicitar. No certifiques cumplimiento.')

@@ -13,7 +13,7 @@ OBJECTIVE=('Evalúa solo ACT-HW-001, caso ficticio EC2-DEMO registrado en GESTIT
  'Propón un único riesgo de indisponibilidad por falla de almacenamiento sin prueba de restauración. '
  'Justifica P e I como estimaciones del ejercicio y calcula una vez. '
  'Finaliza copiando exactamente el código del activo, los IDs de referencia y calculo_id ofrecidos por las herramientas. '
- 'Incluye control recuperado, acciones y evidencia a solicitar. No busques textos ISO aún no incorporados ni certifiques cumplimiento.')
+ 'Incluye control recuperado, acciones y evidencia a solicitar. Cita un fragmento de la ISO 27701:2025 recuperado al preparar el contexto, con su página. Distingue consecuencias para personas de impacto organizativo y declara que el caso no contiene PII real. No certifiques cumplimiento.')
 
 def main():
     load_dotenv(ROOT/'.env')

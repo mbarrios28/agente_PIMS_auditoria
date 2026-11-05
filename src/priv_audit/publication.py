@@ -171,7 +171,9 @@ def preview(entry_id, index, remote_id=None, gateway=None):
         'Supuestos: ' + '; '.join(risk['supuestos']),
         'Información faltante: ' + '; '.join(risk['informacion_faltante']),
         'Evidencia a solicitar: ' + '; '.join(risk['evidencia_a_solicitar']),
-        'Acciones propuestas: ' + '; '.join(risk['acciones']), 'Plazo propuesto: ' + risk['plazo_propuesto']])
+        'Acciones propuestas: ' + '; '.join(risk['acciones']), 'Plazo propuesto: ' + risk['plazo_propuesto'],
+        'Impacto sobre personas: ' + risk.get('impacto_personas','No determinado en esta evaluación.'),
+        'Rol del tratamiento: ' + risk.get('rol_tratamiento','no_determinado')])
     payload = dict(risk_owner=risk['responsable_propuesto'], threat=risk['amenaza'],
         vulnerability=risk['vulnerabilidad'], description=risk['consecuencia'],
         controlled_probability=risk['evaluacion']['probabilidad'], controlled_impact=risk['evaluacion']['impacto'],

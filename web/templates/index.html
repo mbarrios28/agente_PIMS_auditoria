@@ -7,7 +7,8 @@
 <div class="panel agent-task-panel"><form id="risk-form">
 <p class="data-notice">Fuente conectada: GESTITEL. El agente recupera activos, procesos, evaluaciones y la matriz activa.</p>
 <label for="risk-objective">Objetivo</label><textarea id="risk-objective" rows="2" maxlength="4000" required>Prioriza un escenario de riesgo para un activo recuperado de GESTITEL. Explica la información faltante, consulta controles pertinentes y propone tratamiento. Justifica cualquier puntuación.</textarea>
-<p class="data-notice">El contexto y los registros seleccionados se envían a Groq y, si se activa el respaldo, a Gemini. La propuesta se guarda en el historial local. La conexión a GESTITEL es de solo lectura.</p>
+<button class="secondary-button" id="risk-demo" type="button" data-objective="{{ demo_objective }}">Usar objetivo de demostración EC2</button>
+<p class="data-notice">El objetivo selecciona el caso registrado en GESTITEL; no incorpora contexto manual. El contexto y los registros seleccionados se envían a Groq y, si se activa el respaldo, a Gemini. La propuesta se guarda en el historial local. El envío de propuestas a GESTITEL requiere vista previa y confirmación.</p>
 <button class="primary-button" id="run-risk" type="submit">Preparar evaluación de riesgos ↗</button>
 <p id="risk-error" class="error" role="alert" hidden></p>
 </form></div>

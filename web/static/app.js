@@ -21,7 +21,7 @@ function sourceLink(url) {
   if(!url) return '';
   try { const parsed=new URL(url); return parsed.protocol==='https:'?`<a href="${esc(parsed.href)}" target="_blank" rel="noopener noreferrer">Abrir fuente ↗</a>`:''; } catch { return ''; }
 }
-function renderReference(ref) { return `<div class="agent-reference"><strong>${esc(ref.fuente)}</strong><blockquote>${esc(ref.cita)}</blockquote>${sourceLink(ref.url)}</div>`; }
+function renderReference(ref) { return `<div class="agent-reference"><strong>${esc(ref.fuente)}${ref.pagina ? ` · Página PDF ${esc(ref.pagina)}` : ''}</strong>${ref.tipo_fuente === 'norma_aportada_ocr' ? '<small>Texto OCR · verificar con el original</small>' : ''}<blockquote>${esc(ref.cita)}</blockquote>${sourceLink(ref.url)}</div>`; }
 function renderTrace(target,events) {
   target.innerHTML=events.map(e=>`<article class="agent-event ${esc(e.estado)}"><strong>${esc(e.herramienta)} · ${esc(e.estado)}</strong><p>${esc(e.motivo)}</p><p>${esc(e.resultado)}</p><small>${Number(e.segundos).toFixed(1)} s</small></article>`).join('');
 }
