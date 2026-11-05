@@ -97,3 +97,13 @@ Los registros se conservan en memoria durante la tarea y su resultado; las citas
 - [SQL ficticio de prueba para PostgreSQL](ejemplos/prueba_pims_exposicion.sql): importar desde Auditoría de privacidad. Resultado local verificado: 7 tablas, 7 observaciones, 2 altas y 5 medias. No es un volcado de GESTITEL.
 
 El historial conserva objetivos, respuestas, evidencias y trazas en el equipo local; no almacena claves ni credenciales de conexión. La carpeta `data/` está excluida de Git. Puedes cambiar la ubicación con `PIMS_HISTORY_DB`. Las consultas anteriores a esta mejora que ya se perdieron al recargar no se pueden recuperar.
+
+## Agente de riesgos de GESTITEL
+
+La sección **Agente de riesgos** permite evaluar contexto manual o consultar GESTITEL en solo
+lectura. Entrega escenarios, estimaciones reproducibles y tratamientos propuestos con referencias,
+supuestos e información faltante. Incluye historial y exportación JSON. No publica ni acepta riesgos
+en la plataforma externa. La fórmula P×I es una propuesta explícita pendiente de contraste con su backend.
+
+Uso, alcance ISO, contratos y relación con otros equipos: [docs/agente_riesgos.md](docs/agente_riesgos.md).
+Contrato JSON disponible en `GET /api/risks/contract`.

@@ -23,7 +23,7 @@ $('#export-pdf').addEventListener('click', async () => { if (!state.report) retu
 async function renderHistory(offset = 0) {
   const target = $('#history-list');
   target.textContent = 'Cargando historial…';
-  const labels = {auditoria:'Auditoría SQL', consulta:'Consulta EC1', gestitel:'GESTITEL', chat:'Chat de privacidad'};
+  const labels = {auditoria:'Auditoría SQL', consulta:'Consulta EC1', gestitel:'GESTITEL', riesgos:'Agente de riesgos', chat:'Chat de privacidad'};
   try {
     const page = await api(`/api/history?limit=50&offset=${offset}`);
     target.innerHTML = page.items.length ? page.items.map(item => `<article class="panel history-entry"><div><h3>${esc(labels[item.tipo] || item.tipo)} · ${esc(item.estado)}</h3><p>${esc(item.objetivo)}</p><small>${esc(new Date(item.fecha).toLocaleString('es-PE'))}</small></div><button class="secondary-button" data-history-id="${esc(item.id)}">Ver resultado ↗</button></article>`).join('') : '<div class="panel empty-state">Aún no hay consultas guardadas. Las nuevas auditorías y consultas aparecerán aquí.</div>';
@@ -38,6 +38,11 @@ async function renderHistory(offset = 0) {
           navigate('audit');
           $('#audit-trace-panel').hidden = !result.traza;
           showReport(result);
+        } else if (entry.tipo === 'riesgos' && entry.estado === 'completado') {
+          navigate('risk');
+          $('#risk-trace-panel').hidden = false;
+          renderTrace($('#risk-trace'), result.traza || []);
+          renderRiskResult(result);
         } else if (entry.tipo === 'chat') {
           navigate('chat');
           $('#messages').innerHTML = '';
@@ -66,7 +71,7 @@ async function renderHistory(offset = 0) {
 function appendMessage(role, text, sources = [], provider = null) { const message = document.createElement('article'); message.className = `message ${role}`; message.innerHTML = `<span class="message-label">${role === 'user' ? 'Tu consulta' : (provider === 'gemini' ? 'PrivAudit · Gemini (respaldo)' : 'PrivAudit · Asistente de privacidad')}</span><p>${esc(text)}</p>`; if (sources.length) { const block = document.createElement('div'); block.className = 'sources'; block.innerHTML = sources.map(source => `<details><summary>▤ ${esc(source.fuente)}${source.pagina ? ` · Página ${esc(source.pagina)}` : ''} · Relevancia ${Number(source.score).toFixed(2)}</summary><p>${esc(source.texto)}</p></details>`).join(''); message.append(block); } $('#messages').append(message); message.scrollIntoView({behavior:'smooth',block:'nearest'}); }
 $('#chat-form').addEventListener('submit', async event => { event.preventDefault(); const question = $('#question').value.trim(); if (!question || $('#send-chat').disabled) return; appendMessage('user',question); $('#question').value = ''; $('#send-chat').disabled = true; $('#send-chat').textContent = 'Consultando…'; try { const result = await api('/api/chat',{question,history:state.messages}); appendMessage('assistant',result.answer,result.sources,result.provider); state.messages.push({role:'user',content:question},{role:'assistant',content:result.answer}); } catch(error) { appendMessage('assistant',error.message); } finally { $('#send-chat').disabled = false; $('#send-chat').textContent = 'Enviar ↗'; } });
 document.querySelectorAll('[data-question]').forEach(button => button.addEventListener('click',() => { $('#question').value = button.dataset.question; $('#chat-form').requestSubmit(); }));
-async function init() { try { state.status = await api('/api/status'); $('#run-agent').disabled = !state.status.ai_ready; if(state.status.ai_ready) { $('#mode').value = 'ai'; $('#mode').dispatchEvent(new Event('change')); } $('#connection').textContent = state.status.ai_ready ? (state.status.gemini_fallback ? 'Groq · Respaldo Gemini configurado' : 'Groq configurado · Agente disponible') : 'Análisis local disponible'; if (!state.status.ai_ready) { $('#mode option[value="ai"]').disabled = true; $('#mode option[value="ai"]').textContent = 'IA · Requiere GROQ_API_KEY'; } $('#document-list').innerHTML = state.status.documentos.map(doc => `<article class="panel document-card"><span class="doc-icon">${esc(doc.tipo)}</span><h3>${esc(doc.nombre)}</h3><p>${(doc.bytes/1024).toFixed(1)} KB · ${esc(doc.tipo_fuente || 'Fuente local')}</p><span class="document-state ${doc.indexado ? '' : 'warning'}">${doc.indexado ? `${doc.fragmentos} fragmentos consultables` : esc(doc.aviso || 'Sin texto recuperable')}</span>${sourceLink(doc.url)}</article>`).join(''); } catch(error) { $('#connection').textContent = 'Servidor no disponible'; toast(error.message); } }
+async function init() { try { state.status = await api('/api/status'); $('#run-agent').disabled = !state.status.ai_ready; $('#run-risk').disabled = !state.status.ai_ready; if(state.status.ai_ready) { $('#mode').value = 'ai'; $('#mode').dispatchEvent(new Event('change')); } $('#connection').textContent = state.status.ai_ready ? (state.status.gemini_fallback ? 'Groq · Respaldo Gemini configurado' : 'Groq configurado · Agente disponible') : 'Análisis local disponible'; if (!state.status.ai_ready) { $('#mode option[value="ai"]').disabled = true; $('#mode option[value="ai"]').textContent = 'IA · Requiere GROQ_API_KEY'; } $('#document-list').innerHTML = state.status.documentos.map(doc => `<article class="panel document-card"><span class="doc-icon">${esc(doc.tipo)}</span><h3>${esc(doc.nombre)}</h3><p>${(doc.bytes/1024).toFixed(1)} KB · ${esc(doc.tipo_fuente || 'Fuente local')}</p><span class="document-state ${doc.indexado ? '' : 'warning'}">${doc.indexado ? `${doc.fragmentos} fragmentos consultables` : esc(doc.aviso || 'Sin texto recuperable')}</span>${sourceLink(doc.url)}</article>`).join(''); } catch(error) { $('#connection').textContent = 'Servidor no disponible'; toast(error.message); } }
 
 
 function sourceLink(url) {
