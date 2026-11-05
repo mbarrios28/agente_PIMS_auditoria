@@ -55,6 +55,13 @@ def build_pdf(entry, reviews):
         paragraph(f"{event['fecha']} · {event['reviewer']} · {event['decision']}")
         paragraph(event['comment'])
         paragraph('Huella de la evaluación: ' + event['result_hash'])
+    if entry.get('publicaciones'):
+        paragraph('Registro en GESTITEL', 'Heading2')
+        paragraph('Las limitaciones anteriores corresponden a la evaluación; los envíos posteriores se muestran a continuación.')
+        for publication in entry['publicaciones']:
+            paragraph(f"{publication['created_at']} · {publication['mode']} · {publication['state']}")
+            if publication.get('result'):
+                paragraph(f"Riesgo remoto: {publication['result'].get('codigo') or publication['result']['id']}")
     paragraph('La revisión local no acepta riesgo residual ni guarda cambios en GESTITEL.')
     doc = SimpleDocTemplate(output, pagesize=A4, rightMargin=42, leftMargin=42, topMargin=42, bottomMargin=42)
     def footer(canvas, document):

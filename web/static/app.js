@@ -52,7 +52,7 @@ async function renderHistory(offset=0) {
         if(entry.estado==='completado') {
           navigate('risk'); $('#risk-objective').value=entry.objetivo;
           $('#risk-error').hidden=true; $('#risk-trace-panel').hidden=false;
-          renderTrace($('#risk-trace'),entry.resultado.traza || []); renderRiskResult({...entry.resultado,ejecucion_id:entry.id,revisiones:entry.revisiones});
+          renderTrace($('#risk-trace'),entry.resultado.traza || []); renderRiskResult({...entry.resultado,ejecucion_id:entry.id,revisiones:entry.revisiones,publicaciones:entry.publicaciones});
         } else {
           $('#history-detail').hidden=false;
           $('#history-detail').innerHTML=`<h3>${esc(entry.objetivo)}</h3><p>${esc(entry.resultado.error)}</p><div id="history-error-trace"></div>`;

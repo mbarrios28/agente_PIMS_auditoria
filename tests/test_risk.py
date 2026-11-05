@@ -128,7 +128,7 @@ class RiskTests(unittest.TestCase):
     def test_api_contract_and_validation(self):
         from web_app import app
         client = app.test_client()
-        self.assertFalse(client.get('/api/risks/contract').json['escritura_gestitel'])
+        self.assertEqual(client.get('/api/risks/contract').json['escritura_gestitel'],'solo_con_vista_previa_y_confirmacion')
         with patch.dict(os.environ, {'GROQ_API_KEY':'fake','GESTITEL_USERNAME':'fake','GESTITEL_PASSWORD':'fake'}):
             response = client.post('/api/agent/runs', json={'tarea':'riesgos','objetivo':'Evaluar servidor','riesgos':{'contexto':'No permitido'}})
             self.assertEqual(response.status_code, 400)

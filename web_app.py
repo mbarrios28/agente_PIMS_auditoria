@@ -68,9 +68,9 @@ def start_agent_run():
 @app.get('/api/risks/contract')
 def risk_contract():
     from src.priv_audit.risk import RiskInput, FinishRisk
-    return jsonify(version='1.1', entrada=RiskInput.model_json_schema(),
+    return jsonify(version='1.2', entrada=RiskInput.model_json_schema(),
                    propuesta=FinishRisk.model_json_schema(), fuente='gestitel',
-                   escritura_gestitel=False, autenticacion='Servidor local; requiere gateway autenticado para producción.')
+                   escritura_gestitel='solo_con_vista_previa_y_confirmacion', autenticacion='Servidor local; requiere gateway autenticado para producción.')
 
 @app.get('/api/agent/runs/<run_id>')
 def agent_run_status(run_id):
@@ -96,7 +96,8 @@ def history_detail(entry_id):
     if not entry or entry['tipo'] != 'riesgos':
         return jsonify(error='Registro no encontrado.'), 404
     from src.priv_audit.history import reviews
-    return jsonify(dict(entry, revisiones=reviews(entry_id)))
+    from src.priv_audit.publication import publications
+    return jsonify(dict(entry, revisiones=reviews(entry_id), publicaciones=publications(entry_id)))
 
 @app.post('/api/history/<entry_id>/review')
 def review_risk(entry_id):
@@ -116,9 +117,43 @@ def risk_pdf(entry_id):
     entry = get(entry_id)
     if not entry or entry['tipo'] != 'riesgos' or entry['estado'] != 'completado':
         return jsonify(error='Evaluación no encontrada.'), 404
-    content = build_pdf(entry, reviews(entry_id))
+    from src.priv_audit.publication import publications
+    content = build_pdf(dict(entry, publicaciones=publications(entry_id)), reviews(entry_id))
     return send_file(io.BytesIO(content), mimetype='application/pdf', as_attachment=True,
                      download_name='GESTITEL-evaluacion-riesgos.pdf')
+
+@app.post('/api/history/<entry_id>/gestitel/preview')
+def publication_preview(entry_id):
+    from src.priv_audit.publication import preview
+    data=request.get_json(silent=True)
+    if not isinstance(data,dict) or set(data)-{'indice','riesgo_remoto'}:
+        return jsonify(error='Indica el escenario y, opcionalmente, el riesgo remoto a actualizar.'),400
+    try:
+        return jsonify(preview(entry_id,data.get('indice',0),data.get('riesgo_remoto')))
+    except ValueError as exc:
+        return jsonify(error=str(exc)),400
+
+@app.post('/api/gestitel/previews/<preview_id>/confirm')
+def publication_confirm(preview_id):
+    from src.priv_audit.publication import confirm
+    data=request.get_json(silent=True)
+    if not isinstance(data,dict) or set(data)!={'revisor','huella','confirmar'}:
+        return jsonify(error='Indica revisor, huella y confirmación explícita.'),400
+    try:
+        return jsonify(confirm(preview_id,data['revisor'],data['huella'],data['confirmar']))
+    except ValueError as exc:
+        return jsonify(error=str(exc)),409
+
+@app.post('/api/gestitel/previews/<preview_id>/reconcile')
+def publication_reconcile(preview_id):
+    from src.priv_audit.publication import reconcile
+    data=request.get_json(silent=True)
+    if data != {}:
+        return jsonify(error='La conciliación no acepta campos de modificación.'),400
+    try:
+        return jsonify(reconcile(preview_id))
+    except ValueError as exc:
+        return jsonify(error=str(exc)),409
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', '5000'))

@@ -1,4 +1,4 @@
-"""Consulta acotada de GESTITEL. Solo autenticación y GET a recursos permitidos."""
+"""Lectura acotada para el agente. La publicación aprobada está en publication.py."""
 import hashlib
 import json
 import os
@@ -35,7 +35,7 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
-def _request(path, token=None, payload=None):
+def _request(path, token=None, payload=None, *, method=None):
     headers = {'Accept': 'application/json'}
     if token:
         headers['Authorization'] = 'Bearer ' + token
@@ -43,7 +43,7 @@ def _request(path, token=None, payload=None):
     if payload is not None:
         headers['Content-Type'] = 'application/json'
         body = json.dumps(payload).encode()
-    request = Request(BASE + path, data=body, headers=headers)
+    request = Request(BASE + path, data=body, headers=headers, method=method)
     try:
         with build_opener(NoRedirect()).open(request, timeout=12) as response:
             if response.url.split('/')[2] != 'unsa.27k.pe':
