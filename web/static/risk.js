@@ -38,6 +38,23 @@ function renderRiskResult(result) {
     riskList('Alcance y limitaciones',result.limitaciones) +
     riskList('Páginas consultadas',result.alcance.map(a => `${a.modulo}, página ${a.pagina}, total ${a.total}, consulta ${a.consultado_en}`)) +
     '<p>La aprobación corresponde al responsable autorizado. Esta propuesta no se ha guardado en GESTITEL.</p>';
+  if (result.ejecucion_id) $('#risk-result').insertAdjacentHTML('beforeend', renderRiskReview(result));
   $('#risk-result').hidden = false;
+  const reviewForm = $('#risk-review');
+  if (reviewForm) reviewForm.onsubmit = submitRiskReview;
   $('#risk-export').onclick = () => download(new Blob([JSON.stringify(riskReport,null,2)],{type:'application/json'}),'GESTITEL-propuesta-riesgos.json');
+}
+
+function renderRiskReview(result) {
+  const events = (result.revisiones || []).map(r => `<p>${esc(r.fecha)} · ${esc(r.reviewer)} · ${esc(r.decision)}<br>${esc(r.comment)}</p>`).join('');
+  return `<p><a class="secondary-button" href="/api/risks/report/${encodeURIComponent(result.ejecucion_id)}">↓ Informe PDF</a></p><h3>Revisión humana local</h3>${events}<form id="risk-review"><label for="risk-reviewer">Nombre del revisor</label><input id="risk-reviewer" required minlength="3" maxlength="150"><label for="risk-decision">Resultado de la revisión</label><select id="risk-decision"><option value="revisado">Revisado</option><option value="requiere_cambios">Requiere cambios</option></select><label for="risk-comment">Observaciones</label><textarea id="risk-comment" required minlength="3" maxlength="1500" rows="3"></textarea><p>Este registro local no acepta riesgos ni guarda cambios en GESTITEL.</p><button class="secondary-button" type="submit">Registrar revisión</button></form>`;
+}
+async function submitRiskReview(event) {
+  event.preventDefault();
+  const button = event.currentTarget.querySelector('button'); button.disabled = true;
+  try {
+    await api(`/api/history/${encodeURIComponent(riskReport.ejecucion_id)}/review`, {revisor:$('#risk-reviewer').value,decision:$('#risk-decision').value,comentario:$('#risk-comment').value});
+    const entry = await api(`/api/history/${encodeURIComponent(riskReport.ejecucion_id)}`);
+    renderRiskResult({...entry.resultado,ejecucion_id:entry.id,revisiones:entry.revisiones}); toast('Revisión registrada.');
+  } catch(error) { toast(error.message); button.disabled = false; }
 }

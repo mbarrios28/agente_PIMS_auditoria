@@ -57,6 +57,8 @@ class RiskRead(Strict):
     modulo: Literal['assets', 'processes', 'risk-evaluations', 'evaluation-matrices',
                     'annex-a-controls', 'annex-a-assessments', 'gap-requirements']
     pagina: int = Field(default=1, ge=1, le=20)
+    registro_id: int | None = Field(default=None, ge=1, le=1000000, description='ID de registro para consultar solo ese elemento por su ruta de detalle.')
+    busqueda: str = Field(default='', max_length=120, description='Filtro opcional de búsqueda del recurso; por ejemplo ACT-HW-001 o A.8.13.')
 
 
 class Calculation(Strict):
@@ -68,7 +70,7 @@ class Calculation(Strict):
 
 
 class RiskItem(Strict):
-    activo: str = Field(min_length=1, max_length=300)
+    activo: str = Field(min_length=1, max_length=300, description='Copia el código exacto del activo recuperado; no lo resumas ni lo sustituyas por el proceso.')
     amenaza: str = Field(min_length=3, max_length=500)
     vulnerabilidad: str = Field(min_length=3, max_length=500)
     consecuencia: str = Field(min_length=3, max_length=1000)
@@ -107,7 +109,8 @@ def calculate(args, methodology):
     result = dict(probabilidad=args.probabilidad, impacto=args.impacto, puntaje=score, nivel=level,
                   justificacion_probabilidad=args.justificacion_probabilidad,
                   justificacion_impacto=args.justificacion_impacto,
-                  metodologia=methodology.model_dump(), estado='estimacion_propuesta')
+                  metodologia=methodology.model_dump(), estado='estimacion_propuesta',
+                  procedencia_formula='GESTITEL, Anexo 04, páginas PDF 6 y 10; Anexo 02, diccionario de riesgos.')
     key = hashlib.sha256(json.dumps(result, sort_keys=True).encode()).hexdigest()[:24]
     return dict(result, calculo_id=key)
 
@@ -131,9 +134,13 @@ class RiskWorkflow:
             agent.gestitel_reads += 1
             if agent.gestitel_client is None:
                 agent.gestitel_client = GestitelClient()
-            result = agent.gestitel_client.read(args.modulo, args.pagina, risk=True)
+            result = agent.gestitel_client.read(args.modulo, args.pagina, risk=True, **({'search': args.busqueda} if args.busqueda else {}),
+                                                **({'record_id': args.registro_id} if args.registro_id else {}))
+            if args.modulo == 'evaluation-matrices':
+                result['fragmentos'] = [c for c in result['fragmentos']
+                    if '[REGISTRO TRUNCADO' not in c['texto'] and json.loads(c['texto']).get('status') == 'A']
             agent.evidence.update({c['id']: c for c in result['fragmentos']})
-            self.reads.append({k: result[k] for k in ('modulo', 'pagina', 'total', 'consultado_en')})
+            self.reads.append(dict({k: result[k] for k in ('modulo', 'pagina', 'total', 'consultado_en')}, busqueda=result.get('busqueda', ''), registro_id=result.get('registro_id')))
             if args.modulo == 'evaluation-matrices':
                 active = [json.loads(c['texto']) for c in result['fragmentos']
                           if '[REGISTRO TRUNCADO' not in c['texto']]
@@ -163,7 +170,8 @@ class RiskWorkflow:
             for key in item.referencias:
                 chunk = agent.evidence.get(key)
                 if chunk is None:
-                    raise ValueError('Referencia no recuperada en esta ejecución.')
+                    raise ValueError('Referencia no recuperada. Usa un ID real de: ' + ', '.join(
+                        f"{c['id']} ({c['fuente']})" for c in agent.evidence.values()))
                 refs.append(dict(fragmento_id=key, fuente=chunk['fuente'], cita=chunk['texto'][:400],
                                  url=chunk.get('url'), consultado_en=chunk.get('consultado_en')))
             if self.input.fuente == 'gestitel':
@@ -175,7 +183,8 @@ class RiskWorkflow:
                                 if agent.evidence[k].get('modulo') == 'assets'
                                 and '[REGISTRO TRUNCADO' not in agent.evidence[k]['texto']]
                 if not match or not any(r.get('id') == m.get('id') for r in cited_assets for m in match):
-                    raise ValueError('Vincula el riesgo a un activo real recuperado y cítalo.')
+                    raise ValueError('El activo y su referencia deben coincidir. Opciones recuperadas: ' + ', '.join(
+                        f"activo={r.get('code') or r.get('id')}, referencia=assets:{r.get('id')}" for r in assets))
             controls = []
             for key in item.controles_ids:
                 chunk = agent.evidence.get(key)
@@ -184,7 +193,7 @@ class RiskWorkflow:
                 controls.append(dict(fragmento_id=key, fuente=chunk['fuente'], cita=chunk['texto'][:400]))
             calculation = self.calculations.get(item.calculo_id) if item.calculo_id else None
             if item.calculo_id and calculation is None:
-                raise ValueError('El cálculo debe haberse ejecutado con la herramienta.')
+                raise ValueError('Usa un calculo_id devuelto por la herramienta: ' + ', '.join(self.calculations))
             if not calculation and not item.informacion_faltante:
                 raise ValueError('Sin puntuación, declara la información que falta para evaluar.')
             risks.append(dict(item.model_dump(), referencias=refs, controles=controls,
@@ -194,7 +203,7 @@ class RiskWorkflow:
             riesgos=risks, metodologia=self.methodology.model_dump() if self.methodology else None,
             alcance=self.reads, fuente=self.input.fuente,
             limitaciones=args.limitaciones + [
-                'P*I es una fórmula propuesta; falta contrastarla con el backend de GESTITEL.',
+                'P*I coincide con Anexo 04 de GESTITEL, páginas 6 y 10; no demuestra que el despliegue coincida con esa versión.',
                 'Las puntuaciones y tratamientos requieren revisión; no se acepta riesgo residual automáticamente.',
                 'No se escribieron registros en GESTITEL. Las referencias no prueban suficiencia semántica.'])
         return {'entregado': True, 'riesgos': len(risks)}

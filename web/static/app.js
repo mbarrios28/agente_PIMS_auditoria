@@ -32,7 +32,7 @@ async function executeAgent(payload,target) {
   while(Date.now()<deadline) {
     const result=await api(`/api/agent/runs/${encodeURIComponent(run.id)}`);
     renderTrace(target,result.traza || []);
-    if(result.estado==='completado') return result.resultado;
+    if(result.estado==='completado') return {...result.resultado,ejecucion_id:run.id};
     if(result.estado==='error') throw new Error(result.error);
     await new Promise(resolve=>setTimeout(resolve,1200));
   }
@@ -52,7 +52,7 @@ async function renderHistory(offset=0) {
         if(entry.estado==='completado') {
           navigate('risk'); $('#risk-objective').value=entry.objetivo;
           $('#risk-error').hidden=true; $('#risk-trace-panel').hidden=false;
-          renderTrace($('#risk-trace'),entry.resultado.traza || []); renderRiskResult(entry.resultado);
+          renderTrace($('#risk-trace'),entry.resultado.traza || []); renderRiskResult({...entry.resultado,ejecucion_id:entry.id,revisiones:entry.revisiones});
         } else {
           $('#history-detail').hidden=false;
           $('#history-detail').innerHTML=`<h3>${esc(entry.objetivo)}</h3><p>${esc(entry.resultado.error)}</p><div id="history-error-trace"></div>`;

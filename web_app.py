@@ -1,6 +1,7 @@
 """Local web interface. Run: python web_app.py"""
 import os
-from flask import Flask, jsonify, render_template, request
+import io
+from flask import Flask, jsonify, render_template, request, send_file
 from dotenv import load_dotenv
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent
@@ -92,7 +93,32 @@ def history_list():
 def history_detail(entry_id):
     from src.priv_audit.history import get
     entry = get(entry_id)
-    return (jsonify(entry), 200) if entry and entry['tipo'] == 'riesgos' else (jsonify(error='Registro no encontrado.'), 404)
+    if not entry or entry['tipo'] != 'riesgos':
+        return jsonify(error='Registro no encontrado.'), 404
+    from src.priv_audit.history import reviews
+    return jsonify(dict(entry, revisiones=reviews(entry_id)))
+
+@app.post('/api/history/<entry_id>/review')
+def review_risk(entry_id):
+    from src.priv_audit.history import review
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict) or set(data) != {'revisor', 'decision', 'comentario'}:
+        return jsonify(error='Indica revisor, decisión y comentario.'), 400
+    try:
+        return jsonify(review(entry_id, data['revisor'], data['decision'], data['comentario'])), 201
+    except ValueError as exc:
+        return jsonify(error=str(exc)), 400
+
+@app.get('/api/risks/report/<entry_id>')
+def risk_pdf(entry_id):
+    from src.priv_audit.history import get, reviews
+    from src.priv_audit.risk_report import build_pdf
+    entry = get(entry_id)
+    if not entry or entry['tipo'] != 'riesgos' or entry['estado'] != 'completado':
+        return jsonify(error='Evaluación no encontrada.'), 404
+    content = build_pdf(entry, reviews(entry_id))
+    return send_file(io.BytesIO(content), mimetype='application/pdf', as_attachment=True,
+                     download_name='GESTITEL-evaluacion-riesgos.pdf')
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', '5000'))

@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>GESTITEL · Agente de riesgos</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script><script src="/static/risk.js" defer></script></head><body>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RIESGO-GESTITEL · Grupo 1</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script><script src="/static/risk.js" defer></script></head><body>
 <aside class="sidebar"><a class="brand" href="/">GESTITEL<small>Agente de riesgos</small></a><p class="nav-label">GESTIÓN DE RIESGOS</p><nav aria-label="Navegación principal"><button class="nav-item active" data-page="risk">Agente de riesgos</button><button class="nav-item" data-page="history">Historial de riesgos</button></nav><div class="sidebar-bottom"><span id="connection">Comprobando conexión…</span></div></aside>
 <div class="shell"><header><div class="breadcrumb">GESTITEL / <b id="breadcrumb">Agente de riesgos</b></div></header><main>
 <section id="page-risk" class="page">
-<div class="section-title"><div class="eyebrow">GESTITEL · GESTIÓN DE RIESGOS</div><h1>Del contexto al tratamiento<span>.</span></h1><p>Identifica escenarios, propone una evaluación y prepara acciones para la revisión del responsable.</p></div>
+<div class="section-title"><div class="eyebrow">RIESGO-GESTITEL · GRUPO 1</div><h1>Del contexto al tratamiento<span>.</span></h1><p>Identifica escenarios, propone una evaluación y prepara acciones para la revisión del responsable.</p></div>
 <div class="panel agent-task-panel"><form id="risk-form">
 <p class="data-notice">Fuente conectada: GESTITEL. El agente recupera activos, procesos, evaluaciones y la matriz activa.</p>
-<label for="risk-objective">Objetivo</label><textarea id="risk-objective" rows="2" maxlength="4000" required>Identifica hasta tres riesgos, explica la información faltante y propone controles y tratamiento. Justifica cualquier puntuación.</textarea>
+<label for="risk-objective">Objetivo</label><textarea id="risk-objective" rows="2" maxlength="4000" required>Prioriza un escenario de riesgo para un activo recuperado de GESTITEL. Explica la información faltante, consulta controles pertinentes y propone tratamiento. Justifica cualquier puntuación.</textarea>
 <p class="data-notice">El contexto y los registros seleccionados se envían a Groq y, si se activa el respaldo, a Gemini. La propuesta se guarda en el historial local. La conexión a GESTITEL es de solo lectura.</p>
 <button class="primary-button" id="run-risk" type="submit">Preparar evaluación de riesgos ↗</button>
 <p id="risk-error" class="error" role="alert" hidden></p>

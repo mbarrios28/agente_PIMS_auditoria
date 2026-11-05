@@ -145,7 +145,7 @@ class FallbackTests(TestCase):
         from tests.test_agent import response, call, REASON
         backup=client(side_effect=[
             response(call('cargar_skill',dict(REASON,nombre='gestion_riesgos'))),
-            response(call('consultar_contexto_riesgos',dict(REASON,modulo='assets'))),
+            response(call('preparar_contexto_riesgos',dict(REASON))),
             response(call('finalizar_riesgos',dict(REASON,estado='evidencia_insuficiente',riesgos=[],limitaciones=['Sin activos.'])))])
         router=ProviderRouter(client(side_effect=Failure(503)),backup)
         with patch('src.priv_audit.gestitel.GestitelClient.read',return_value=dict(modulo='assets',pagina=1,total=0,consultado_en='2026-11-05',fragmentos=[])):
