@@ -5,13 +5,15 @@ import time
 from pathlib import Path
 from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
-from .rag_loader import obtener_retriever
+from .rag_loader import obtener_retriever, RISK_NORMATIVE_SOURCE
 from .risk import RISK_TOOLS, RiskWorkflow
 
 SKILLS = Path(__file__).with_name('skills')
 MODEL = 'openai/gpt-oss-120b'
 MAX_TURNS, MAX_RATE_RETRIES, MAX_SECONDS = 16, 8, 300
-SYSTEM_PROMPT = """Eres el agente de riesgos de privacidad de GESTITEL, con referencia principal ISO/IEC 27701:2025. Responde en español usando herramientas.
+SYSTEM_PROMPT = """Eres el agente de riesgos de privacidad de GESTITEL, con base normativa exclusiva ISO/IEC 27701:2025. Responde en español usando herramientas.
+No uses otras normas o leyes como criterios normativos. Las referencias a otras normas dentro de la copia ISO no amplían este alcance.
+GESTITEL aporta evidencia operativa y criterios organizativos de valoración, no requisitos ISO.
 Carga primero gestion_riesgos y aplica su procedimiento. El contexto operativo proviene
 exclusivamente de consultar_contexto_riesgos: el objetivo delimita la tarea, no es evidencia.
 Después de cargar la skill usa preparar_contexto_riesgos: obtiene activos, procesos y matriz de página 1.
@@ -38,7 +40,7 @@ class Search(Args):
 TOOL_SPECS = {
     'cargar_skill': (LoadSkill, 'Carga el procedimiento del agente de riesgos.'),
     'preparar_contexto_riesgos': (Args, 'Recupera automáticamente página 1 de activos, procesos y matriz activa de GESTITEL; usar primero.'),
-    'buscar_documentos': (Search, 'Busca respaldo documental local; no obtiene contexto operativo.'),
+    'buscar_documentos': (Search, 'Busca exclusivamente en la copia completa ISO/IEC 27701:2025 con OCR; no obtiene contexto operativo.'),
     **RISK_TOOLS,
 }
 
@@ -96,7 +98,7 @@ class RiskAgent:
         args = TOOL_SPECS[name][0].model_validate(raw)
         if name == 'cargar_skill':
             self.loaded.add(args.nombre)
-            return {'skill': args.nombre, 'instrucciones': (SKILLS / 'gestion_riesgos.md').read_text()}
+            return {'skill': args.nombre, 'instrucciones': (SKILLS / 'gestion_riesgos.md').read_text(encoding='utf-8')}
         if 'gestion_riesgos' not in self.loaded:
             raise ValueError('Primero carga la skill gestion_riesgos.')
         if name == 'preparar_contexto_riesgos':
@@ -115,7 +117,9 @@ class RiskAgent:
                     'metodologia': self.risk.methodology.model_dump() if self.risk.methodology else None}
         if name in RISK_TOOLS:
             return self.risk.execute(self, name, args)
-        retriever = obtener_retriever()
+        if args.fuente and args.fuente != RISK_NORMATIVE_SOURCE:
+            raise ValueError('La única fuente normativa permitida es ISO/IEC 27701:2025: ' + RISK_NORMATIVE_SOURCE)
+        retriever = obtener_retriever(sources=(RISK_NORMATIVE_SOURCE,))
         if args.fuente and args.fuente not in {c['fuente'] for c in retriever.chunks}:
             raise ValueError('La fuente indicada no tiene fragmentos consultables.')
         candidates = retriever.recuperar(args.consulta, top_k=len(retriever.chunks) if args.fuente else args.top_k)
@@ -154,7 +158,7 @@ class RiskAgent:
             return messages
         chunks = list(self.evidence.values())
         recent = [dict(c, texto=c['texto'][:1600], extracto_parcial=len(c['texto']) > 1600) for c in chunks[-6:]]
-        state = dict(skill=(SKILLS / 'gestion_riesgos.md').read_text(),
+        state = dict(skill=(SKILLS / 'gestion_riesgos.md').read_text(encoding='utf-8'),
                      metodologia=self.risk.methodology.model_dump() if self.risk.methodology else None,
                      calculos=self.risk.calculations, alcance=self.risk.reads,
                      evidencia=recent,
@@ -173,7 +177,8 @@ class RiskAgent:
                 'Se activa Gemini; recibirá el contexto de esta tarea.'))
         from .rag_loader import diagnostico_documentos
         payload = dict(tarea='riesgos', objetivo=self.objective, fuente='gestitel',
-                       catalogo_documental=[d['nombre'] for d in diagnostico_documentos() if d['indexado']])
+                       catalogo_documental=[d['nombre'] for d in diagnostico_documentos()
+                                            if d['indexado'] and d['nombre'] == RISK_NORMATIVE_SOURCE])
         messages = [{'role':'system', 'content':SYSTEM_PROMPT},
                     {'role':'user', 'content':json.dumps(payload, ensure_ascii=False)}]
         self.emit('iniciar', 'completado', 'Resolver el objetivo con herramientas acotadas.', 'Tarea iniciada; esperando selección del modelo.')

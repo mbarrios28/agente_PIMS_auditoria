@@ -1,1 +1,241 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="410" viewBox="0 0 1200 410"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#47746b"/></marker></defs><rect width="1200" height="410" fill="white"/><rect x="15" y="20" width="230" height="90" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="130.0" y="47" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">Usuario / revisor</text><text x="130.0" y="70" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Objetivo de revisión</text><text x="130.0" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">No ingresa contexto manual</text><rect x="310" y="20" width="240" height="90" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="430.0" y="47" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">Interfaz + Flask</text><text x="430.0" y="70" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Valida entrada y origen</text><text x="430.0" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">RunStore: actividad asíncrona</text><rect x="620" y="20" width="250" height="90" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="745.0" y="47" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">RiskAgent + skill</text><text x="745.0" y="70" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Groq / respaldo Gemini</text><text x="745.0" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Selecciona herramientas</text><rect x="940" y="20" width="245" height="90" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="1062.5" y="47" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">Herramientas validadas</text><text x="1062.5" y="70" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Prepara contexto, consulta</text><text x="1062.5" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Calcula y finaliza</text><path d="M245 65L310 65" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M550 65L620 65" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M870 65L940 65" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><rect x="15" y="205" width="270" height="95" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="150.0" y="232" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">GESTITEL · API autenticada</text><text x="150.0" y="255" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Activos, procesos y controles</text><text x="150.0" y="275" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Matriz activa y riesgos</text><rect x="320" y="205" width="270" height="95" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="455.0" y="232" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">Motor de evaluación</text><text x="455.0" y="255" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">P × I con matriz recuperada</text><text x="455.0" y="275" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Referencias y cálculos válidos</text><rect x="625" y="205" width="270" height="95" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="760.0" y="232" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">Corpus documental</text><text x="760.0" y="255" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Respaldo técnico y normativo</text><text x="760.0" y="275" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Texto completo ISO pendiente</text><rect x="930" y="205" width="255" height="95" rx="12" fill="#eff6f3" stroke="#6b9589"/><text x="1057.5" y="232" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#193c36">Resultado persistente</text><text x="1057.5" y="255" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">Propuesta / abstención</text><text x="1057.5" y="275" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#3e5658">SQLite · revisión · JSON / PDF</text><path d="M1060 110L1060 160" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M150 160H1060" fill="none" stroke="#47746b" stroke-width="2"/><path d="M150 160L150 205" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M455 160L455 205" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M760 160L760 205" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M1060 160L1060 205" fill="none" stroke="#47746b" stroke-width="2" marker-end="url(#a)"/><path d="M455 300V347H745V110" fill="none" stroke="#47746b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#a)"/><text x="475" y="340" font-family="sans-serif" font-size="13" fill="#47746b">Resultados de herramientas → siguiente acción</text><text x="600" y="394" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#536766">Un único agente · contexto exclusivo de GESTITEL · publicación con confirmación · revisión humana</text></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 13.1.2 (20250808.2320)
+ -->
+<!-- Title: architecture Pages: 1 -->
+<svg width="1314pt" height="953pt"
+ viewBox="0.00 0.00 1314.00 953.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(25.2 928.04)">
+<title>architecture</title>
+<polygon fill="white" stroke="none" points="-25.2,25.2 -25.2,-928.04 1288.36,-928.04 1288.36,25.2 -25.2,25.2"/>
+<text xml:space="preserve" text-anchor="middle" x="272.05" y="-880.84" font-family="Arial" font-size="20.00">RIESGO&#45;GESTITEL &#160;| &#160;Arquitectura de ejecución</text>
+<text xml:space="preserve" text-anchor="middle" x="272.05" y="-856.84" font-family="Arial" font-size="20.00">Un agente · herramientas validadas · ISO/IEC 27701:2025</text>
+<g id="clust1" class="cluster">
+<title>cluster_local</title>
+<path fill="white" stroke="#cbd5e1" d="M20,-150.48C20,-150.48 917,-150.48 917,-150.48 923,-150.48 929,-156.48 929,-162.48 929,-162.48 929,-826.84 929,-826.84 929,-832.84 923,-838.84 917,-838.84 917,-838.84 20,-838.84 20,-838.84 14,-838.84 8,-832.84 8,-826.84 8,-826.84 8,-162.48 8,-162.48 8,-156.48 14,-150.48 20,-150.48"/>
+<text xml:space="preserve" text-anchor="middle" x="129.25" y="-823.14" font-family="Arial" font-size="13.00">APLICACIÓN LOCAL &#160;/ &#160;Python + Flask</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_external</title>
+<path fill="white" stroke="#cbd5e1" d="M705,-8C705,-8 1123,-8 1123,-8 1129,-8 1135,-14 1135,-20 1135,-20 1135,-110.48 1135,-110.48 1135,-116.48 1129,-122.48 1123,-122.48 1123,-122.48 705,-122.48 705,-122.48 699,-122.48 693,-116.48 693,-110.48 693,-110.48 693,-20 693,-20 693,-14 699,-8 705,-8"/>
+<text xml:space="preserve" text-anchor="middle" x="773.96" y="-106.78" font-family="Arial" font-size="13.00">SERVICIOS EXTERNOS</text>
+</g>
+<!-- ui -->
+<g id="node1" class="node">
+<title>ui</title>
+<path fill="#f8fafc" stroke="#cbd5e1" d="M714.66,-807.24C714.66,-807.24 553.34,-807.24 553.34,-807.24 547.34,-807.24 541.34,-801.24 541.34,-795.24 541.34,-795.24 541.34,-758.76 541.34,-758.76 541.34,-752.76 547.34,-746.76 553.34,-746.76 553.34,-746.76 714.66,-746.76 714.66,-746.76 720.66,-746.76 726.66,-752.76 726.66,-758.76 726.66,-758.76 726.66,-795.24 726.66,-795.24 726.66,-801.24 720.66,-807.24 714.66,-807.24"/>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-787.8" font-family="Arial" font-size="12.00" fill="#172b4d">01 &#160;Interfaz web</text>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-773.4" font-family="Arial" font-size="12.00" fill="#172b4d">Objetivo · actividad · historial</text>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-759" font-family="Arial" font-size="12.00" fill="#172b4d">JavaScript + HTML/CSS</text>
+</g>
+<!-- api -->
+<g id="node2" class="node">
+<title>api</title>
+<path fill="#eff6ff" stroke="#cbd5e1" d="M723.84,-702.76C723.84,-702.76 544.16,-702.76 544.16,-702.76 538.16,-702.76 532.16,-696.76 532.16,-690.76 532.16,-690.76 532.16,-639.88 532.16,-639.88 532.16,-633.88 538.16,-627.88 544.16,-627.88 544.16,-627.88 723.84,-627.88 723.84,-627.88 729.84,-627.88 735.84,-633.88 735.84,-639.88 735.84,-639.88 735.84,-690.76 735.84,-690.76 735.84,-696.76 729.84,-702.76 723.84,-702.76"/>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-683.32" font-family="Arial" font-size="12.00" fill="#172b4d">02 &#160;API + RunStore</text>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-668.92" font-family="Arial" font-size="12.00" fill="#172b4d">POST /api/agent/runs → 202 + ID</text>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-654.52" font-family="Arial" font-size="12.00" fill="#172b4d">GET /api/agent/runs/{id}</text>
+<text xml:space="preserve" text-anchor="middle" x="634" y="-640.12" font-family="Arial" font-size="12.00" fill="#172b4d">ThreadPoolExecutor</text>
+</g>
+<!-- ui&#45;&gt;api -->
+<g id="edge1" class="edge">
+<title>ui&#45;&gt;api</title>
+<path fill="none" stroke="#64748b" d="M634,-746.32C634,-735.6 634,-723.24 634,-711.49"/>
+<polygon fill="#64748b" stroke="#64748b" points="636.45,-711.59 634,-704.59 631.55,-711.59 636.45,-711.59"/>
+<text xml:space="preserve" text-anchor="middle" x="651.23" y="-721.76" font-family="Arial" font-size="10.00" fill="#475569">objetivo</text>
+</g>
+<!-- agent -->
+<g id="node3" class="node">
+<title>agent</title>
+<path fill="#163b52" stroke="#163b52" d="M881.67,-583.88C881.67,-583.88 732.33,-583.88 732.33,-583.88 726.33,-583.88 720.33,-577.88 720.33,-571.88 720.33,-571.88 720.33,-521 720.33,-521 720.33,-515 726.33,-509 732.33,-509 732.33,-509 881.67,-509 881.67,-509 887.67,-509 893.67,-515 893.67,-521 893.67,-521 893.67,-571.88 893.67,-571.88 893.67,-577.88 887.67,-583.88 881.67,-583.88"/>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-564.44" font-family="Arial" font-size="12.00" fill="white">03 &#160;RiskAgent</text>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-550.04" font-family="Arial" font-size="12.00" fill="white">run → tool_calls → execute</text>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-535.64" font-family="Arial" font-size="12.00" fill="white">Resultado vuelve al modelo</text>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-521.24" font-family="Arial" font-size="12.00" fill="white">16 decisiones / 300 s</text>
+</g>
+<!-- api&#45;&gt;agent -->
+<g id="edge2" class="edge">
+<title>api&#45;&gt;agent</title>
+<path fill="none" stroke="#64748b" d="M688.26,-627.66C706.44,-615.38 726.84,-601.6 745.53,-588.97"/>
+<polygon fill="#64748b" stroke="#64748b" points="746.65,-591.17 751.08,-585.22 743.91,-587.11 746.65,-591.17"/>
+<text xml:space="preserve" text-anchor="middle" x="737.08" y="-602.88" font-family="Arial" font-size="10.00" fill="#475569">tarea</text>
+</g>
+<!-- tools -->
+<g id="node5" class="node">
+<title>tools</title>
+<path fill="#eff6ff" stroke="#cbd5e1" d="M529,-453.66C529,-453.66 349,-453.66 349,-453.66 343,-453.66 337,-447.66 337,-441.66 337,-441.66 337,-405.18 337,-405.18 337,-399.18 343,-393.18 349,-393.18 349,-393.18 529,-393.18 529,-393.18 535,-393.18 541,-399.18 541,-405.18 541,-405.18 541,-441.66 541,-441.66 541,-447.66 535,-453.66 529,-453.66"/>
+<text xml:space="preserve" text-anchor="middle" x="439" y="-434.22" font-family="Arial" font-size="12.00" fill="#172b4d">04 &#160;Herramientas acotadas</text>
+<text xml:space="preserve" text-anchor="middle" x="439" y="-419.82" font-family="Arial" font-size="12.00" fill="#172b4d">Pydantic: argumentos y contratos</text>
+<text xml:space="preserve" text-anchor="middle" x="439" y="-405.42" font-family="Arial" font-size="12.00" fill="#172b4d">Disponibilidad según fase</text>
+</g>
+<!-- agent&#45;&gt;tools -->
+<g id="edge4" class="edge">
+<title>agent&#45;&gt;tools</title>
+<path fill="none" stroke="#64748b" d="M720.26,-516.91C665.36,-498.86 594.25,-475.48 537.27,-456.74"/>
+<polygon fill="#64748b" stroke="#64748b" points="538.18,-454.46 530.77,-454.6 536.65,-459.11 538.18,-454.46"/>
+<text xml:space="preserve" text-anchor="middle" x="677.27" y="-484" font-family="Arial" font-size="10.00" fill="#475569">llamada JSON</text>
+</g>
+<!-- db -->
+<g id="node9" class="node">
+<title>db</title>
+<path fill="#f1f5f9" stroke="#cbd5e1" d="M911.99,-457.44C911.99,-461.61 864.93,-465 807,-465 749.07,-465 702.01,-461.61 702.01,-457.44 702.01,-457.44 702.01,-389.4 702.01,-389.4 702.01,-385.23 749.07,-381.84 807,-381.84 864.93,-381.84 911.99,-385.23 911.99,-389.4 911.99,-389.4 911.99,-457.44 911.99,-457.44"/>
+<path fill="none" stroke="#cbd5e1" d="M911.99,-457.44C911.99,-453.27 864.93,-449.88 807,-449.88 749.07,-449.88 702.01,-453.27 702.01,-457.44"/>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-434.22" font-family="Arial" font-size="12.00" fill="#172b4d">SQLite · history.py</text>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-419.82" font-family="Arial" font-size="12.00" fill="#172b4d">Propuesta · fuentes · traza</text>
+<text xml:space="preserve" text-anchor="middle" x="807" y="-405.42" font-family="Arial" font-size="12.00" fill="#172b4d">Revisión · exportación JSON/PDF</text>
+</g>
+<!-- agent&#45;&gt;db -->
+<g id="edge8" class="edge">
+<title>agent&#45;&gt;db</title>
+<path fill="none" stroke="#64748b" d="M807,-508.8C807,-497.72 807,-485.36 807,-473.6"/>
+<polygon fill="#64748b" stroke="#64748b" points="809.45,-473.67 807,-466.67 804.55,-473.67 809.45,-473.67"/>
+<text xml:space="preserve" text-anchor="middle" x="849.25" y="-484" font-family="Arial" font-size="10.00" fill="#475569">propuesta validada</text>
+</g>
+<!-- llm -->
+<g id="node12" class="node">
+<title>llm</title>
+<path fill="#f0edfa" stroke="#bdb1df" d="M1114.67,-90.88C1114.67,-90.88 953.33,-90.88 953.33,-90.88 947.33,-90.88 941.33,-84.88 941.33,-78.88 941.33,-78.88 941.33,-28 941.33,-28 941.33,-22 947.33,-16 953.33,-16 953.33,-16 1114.67,-16 1114.67,-16 1120.67,-16 1126.67,-22 1126.67,-28 1126.67,-28 1126.67,-78.88 1126.67,-78.88 1126.67,-84.88 1120.67,-90.88 1114.67,-90.88"/>
+<text xml:space="preserve" text-anchor="middle" x="1034" y="-71.44" font-family="Arial" font-size="12.00" fill="#172b4d">Proveedor LLM</text>
+<text xml:space="preserve" text-anchor="middle" x="1034" y="-57.04" font-family="Arial" font-size="12.00" fill="#172b4d">Groq: openai/gpt&#45;oss&#45;120b</text>
+<text xml:space="preserve" text-anchor="middle" x="1034" y="-42.64" font-family="Arial" font-size="12.00" fill="#172b4d">Gemini: respaldo configurable</text>
+<text xml:space="preserve" text-anchor="middle" x="1034" y="-28.24" font-family="Arial" font-size="12.00" fill="#172b4d">Selecciona herramientas</text>
+</g>
+<!-- agent&#45;&gt;llm -->
+<g id="edge11" class="edge">
+<title>agent&#45;&gt;llm</title>
+<path fill="none" stroke="#8b73b8" d="M902.39,-522.53C1001.42,-498.76 1142,-465 1142,-465 1142,-465 1167,-424.42 1167,-424.42 1167,-424.42 1167,-424.42 1167,-187.72 1167,-187.72 1115.27,-135.89 1076.34,-96.87"/>
+<polygon fill="#8b73b8" stroke="#8b73b8" points="901.85,-520.15 895.61,-524.16 902.99,-524.91 901.85,-520.15"/>
+<polygon fill="#8b73b8" stroke="#8b73b8" points="1078.44,-95.51 1071.76,-92.28 1074.97,-98.97 1078.44,-95.51"/>
+<text xml:space="preserve" text-anchor="middle" x="1215.08" y="-297.4" font-family="Arial" font-size="10.00" fill="#475569">esquemas / tool_calls</text>
+</g>
+<!-- skill -->
+<g id="node4" class="node">
+<title>skill</title>
+<path fill="#e7f5f1" stroke="#91c9b7" d="M898.66,-695.56C898.66,-695.56 773.34,-695.56 773.34,-695.56 767.34,-695.56 761.34,-689.56 761.34,-683.56 761.34,-683.56 761.34,-647.08 761.34,-647.08 761.34,-641.08 767.34,-635.08 773.34,-635.08 773.34,-635.08 898.66,-635.08 898.66,-635.08 904.66,-635.08 910.66,-641.08 910.66,-647.08 910.66,-647.08 910.66,-683.56 910.66,-683.56 910.66,-689.56 904.66,-695.56 898.66,-695.56"/>
+<text xml:space="preserve" text-anchor="middle" x="836" y="-676.12" font-family="Arial" font-size="12.00" fill="#172b4d">Procedimiento cargado</text>
+<text xml:space="preserve" text-anchor="middle" x="836" y="-661.72" font-family="Arial" font-size="12.00" fill="#172b4d">gestion_riesgos.md</text>
+<text xml:space="preserve" text-anchor="middle" x="836" y="-647.32" font-family="Arial" font-size="12.00" fill="#172b4d">1 skill activa</text>
+</g>
+<!-- skill&#45;&gt;agent -->
+<g id="edge3" class="edge">
+<title>skill&#45;&gt;agent</title>
+<path fill="none" stroke="#24846b" d="M828.68,-634.83C825.48,-621.94 821.66,-606.53 818.12,-592.28"/>
+<polygon fill="#24846b" stroke="#24846b" points="820.51,-591.71 816.45,-585.51 815.75,-592.89 820.51,-591.71"/>
+<text xml:space="preserve" text-anchor="middle" x="847.66" y="-602.88" font-family="Arial" font-size="10.00" fill="#475569">cargar_skill</text>
+</g>
+<!-- calc -->
+<g id="node6" class="node">
+<title>calc</title>
+<path fill="#f8fafc" stroke="#cbd5e1" d="M439.01,-330.64C439.01,-330.64 256.99,-330.64 256.99,-330.64 250.99,-330.64 244.99,-324.64 244.99,-318.64 244.99,-318.64 244.99,-282.16 244.99,-282.16 244.99,-276.16 250.99,-270.16 256.99,-270.16 256.99,-270.16 439.01,-270.16 439.01,-270.16 445.01,-270.16 451.01,-276.16 451.01,-282.16 451.01,-282.16 451.01,-318.64 451.01,-318.64 451.01,-324.64 445.01,-330.64 439.01,-330.64"/>
+<text xml:space="preserve" text-anchor="middle" x="348" y="-311.2" font-family="Arial" font-size="12.00" fill="#172b4d">Cálculo y cierre · risk.py</text>
+<text xml:space="preserve" text-anchor="middle" x="348" y="-296.8" font-family="Arial" font-size="12.00" fill="#172b4d">Matriz recuperada · P × I</text>
+<text xml:space="preserve" text-anchor="middle" x="348" y="-282.4" font-family="Arial" font-size="12.00" fill="#172b4d">Bandas · calculo_id · referencias</text>
+</g>
+<!-- tools&#45;&gt;calc -->
+<g id="edge5" class="edge">
+<title>tools&#45;&gt;calc</title>
+<path fill="none" stroke="#64748b" d="M416.74,-392.82C404.18,-376.11 388.39,-355.12 375.11,-337.46"/>
+<polygon fill="#64748b" stroke="#64748b" points="377.42,-336.45 371.26,-332.33 373.51,-339.4 377.42,-336.45"/>
+</g>
+<!-- rag -->
+<g id="node7" class="node">
+<title>rag</title>
+<path fill="#e7f5f1" stroke="#91c9b7" d="M688.02,-330.64C688.02,-330.64 487.98,-330.64 487.98,-330.64 481.98,-330.64 475.98,-324.64 475.98,-318.64 475.98,-318.64 475.98,-282.16 475.98,-282.16 475.98,-276.16 481.98,-270.16 487.98,-270.16 487.98,-270.16 688.02,-270.16 688.02,-270.16 694.02,-270.16 700.02,-276.16 700.02,-282.16 700.02,-282.16 700.02,-318.64 700.02,-318.64 700.02,-324.64 694.02,-330.64 688.02,-330.64"/>
+<text xml:space="preserve" text-anchor="middle" x="588" y="-311.2" font-family="Arial" font-size="12.00" fill="#172b4d">RAG local · rag_loader/retriever</text>
+<text xml:space="preserve" text-anchor="middle" x="588" y="-296.8" font-family="Arial" font-size="12.00" fill="#172b4d">pypdf → fragmentos 800 / solape 150</text>
+<text xml:space="preserve" text-anchor="middle" x="588" y="-282.4" font-family="Arial" font-size="12.00" fill="#172b4d">TF&#45;IDF o BM25 · ID + página</text>
+</g>
+<!-- tools&#45;&gt;rag -->
+<g id="edge6" class="edge">
+<title>tools&#45;&gt;rag</title>
+<path fill="none" stroke="#24846b" d="M475.45,-392.82C496.46,-375.75 523,-354.19 545.03,-336.3"/>
+<polygon fill="#24846b" stroke="#24846b" points="546.35,-338.39 550.24,-332.07 543.26,-334.58 546.35,-338.39"/>
+</g>
+<!-- read -->
+<g id="node8" class="node">
+<title>read</title>
+<path fill="#f8fafc" stroke="#cbd5e1" d="M208.33,-337.84C208.33,-337.84 27.67,-337.84 27.67,-337.84 21.67,-337.84 15.67,-331.84 15.67,-325.84 15.67,-325.84 15.67,-274.96 15.67,-274.96 15.67,-268.96 21.67,-262.96 27.67,-262.96 27.67,-262.96 208.33,-262.96 208.33,-262.96 214.33,-262.96 220.33,-268.96 220.33,-274.96 220.33,-274.96 220.33,-325.84 220.33,-325.84 220.33,-331.84 214.33,-337.84 208.33,-337.84"/>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-318.4" font-family="Arial" font-size="12.00" fill="#172b4d">GestitelClient.read</text>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-304" font-family="Arial" font-size="12.00" fill="#172b4d">7 módulos permitidos</text>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-289.6" font-family="Arial" font-size="12.00" fill="#172b4d">Máximo 6 consultas / 10 registros</text>
+<text xml:space="preserve" text-anchor="middle" x="118" y="-275.2" font-family="Arial" font-size="12.00" fill="#172b4d">Campos seleccionados · fecha</text>
+</g>
+<!-- tools&#45;&gt;read -->
+<g id="edge7" class="edge">
+<title>tools&#45;&gt;read</title>
+<path fill="none" stroke="#64748b" d="M360.47,-392.82C319.33,-377.3 268.35,-358.08 223.78,-341.28"/>
+<polygon fill="#64748b" stroke="#64748b" points="224.65,-338.99 217.24,-338.81 222.92,-343.58 224.65,-338.99"/>
+</g>
+<!-- gestitel -->
+<g id="node13" class="node">
+<title>gestitel</title>
+<path fill="#eff6ff" stroke="#cbd5e1" d="M904.68,-83.68C904.68,-83.68 713.32,-83.68 713.32,-83.68 707.32,-83.68 701.32,-77.68 701.32,-71.68 701.32,-71.68 701.32,-35.2 701.32,-35.2 701.32,-29.2 707.32,-23.2 713.32,-23.2 713.32,-23.2 904.68,-23.2 904.68,-23.2 910.68,-23.2 916.68,-29.2 916.68,-35.2 916.68,-35.2 916.68,-71.68 916.68,-71.68 916.68,-77.68 910.68,-83.68 904.68,-83.68"/>
+<text xml:space="preserve" text-anchor="middle" x="809" y="-64.24" font-family="Arial" font-size="12.00" fill="#172b4d">GESTITEL · API HTTPS</text>
+<text xml:space="preserve" text-anchor="middle" x="809" y="-49.84" font-family="Arial" font-size="12.00" fill="#172b4d">Activos · procesos · matriz</text>
+<text xml:space="preserve" text-anchor="middle" x="809" y="-35.44" font-family="Arial" font-size="12.00" fill="#172b4d">Evaluaciones · controles · brechas</text>
+</g>
+<!-- read&#45;&gt;gestitel -->
+<g id="edge12" class="edge">
+<title>read&#45;&gt;gestitel</title>
+<path fill="none" stroke="#64748b" d="M220.7,-262.99C355.11,-215.34 588.66,-132.55 717.35,-86.93"/>
+<polygon fill="#64748b" stroke="#64748b" points="718.09,-89.27 723.87,-84.62 716.46,-84.65 718.09,-89.27"/>
+<text xml:space="preserve" text-anchor="middle" x="588.88" y="-185.72" font-family="Arial" font-size="10.00" fill="#475569">GET · contexto operativo</text>
+</g>
+<!-- approval -->
+<g id="node10" class="node">
+<title>approval</title>
+<path fill="#fff5e6" stroke="#e5b76e" d="M909,-330.64C909,-330.64 737,-330.64 737,-330.64 731,-330.64 725,-324.64 725,-318.64 725,-318.64 725,-282.16 725,-282.16 725,-276.16 731,-270.16 737,-270.16 737,-270.16 909,-270.16 909,-270.16 915,-270.16 921,-276.16 921,-282.16 921,-282.16 921,-318.64 921,-318.64 921,-324.64 915,-330.64 909,-330.64"/>
+<text xml:space="preserve" text-anchor="middle" x="823" y="-311.2" font-family="Arial" font-size="12.00" fill="#172b4d">Publicación separada</text>
+<text xml:space="preserve" text-anchor="middle" x="823" y="-296.8" font-family="Arial" font-size="12.00" fill="#172b4d">preview → confirm</text>
+<text xml:space="preserve" text-anchor="middle" x="823" y="-282.4" font-family="Arial" font-size="12.00" fill="#172b4d">Aprobación explícita del revisor</text>
+</g>
+<!-- db&#45;&gt;approval -->
+<g id="edge9" class="edge">
+<title>db&#45;&gt;approval</title>
+<path fill="none" stroke="#b67a25" stroke-dasharray="5,2" d="M812.42,-381.45C814.23,-367.71 816.25,-352.46 818.03,-338.99"/>
+<polygon fill="#b67a25" stroke="#b67a25" points="820.42,-339.62 818.91,-332.36 815.56,-338.98 820.42,-339.62"/>
+<text xml:space="preserve" text-anchor="middle" x="848.2" y="-356.84" font-family="Arial" font-size="10.00" fill="#475569">desde historial</text>
+</g>
+<!-- gateway -->
+<g id="node11" class="node">
+<title>gateway</title>
+<path fill="#fff5e6" stroke="#e5b76e" d="M908.67,-218.96C908.67,-218.96 709.33,-218.96 709.33,-218.96 703.33,-218.96 697.33,-212.96 697.33,-206.96 697.33,-206.96 697.33,-170.48 697.33,-170.48 697.33,-164.48 703.33,-158.48 709.33,-158.48 709.33,-158.48 908.67,-158.48 908.67,-158.48 914.67,-158.48 920.67,-164.48 920.67,-170.48 920.67,-170.48 920.67,-206.96 920.67,-206.96 920.67,-212.96 914.67,-218.96 908.67,-218.96"/>
+<text xml:space="preserve" text-anchor="middle" x="809" y="-199.52" font-family="Arial" font-size="12.00" fill="#172b4d">Gateway · publication.py</text>
+<text xml:space="preserve" text-anchor="middle" x="809" y="-185.12" font-family="Arial" font-size="12.00" fill="#172b4d">POST / PATCH acotados</text>
+<text xml:space="preserve" text-anchor="middle" x="809" y="-170.72" font-family="Arial" font-size="12.00" fill="#172b4d">Revalidación y lectura de verificación</text>
+</g>
+<!-- approval&#45;&gt;gateway -->
+<g id="edge10" class="edge">
+<title>approval&#45;&gt;gateway</title>
+<path fill="none" stroke="#b67a25" stroke-dasharray="5,2" d="M819.21,-269.72C817.56,-256.79 815.61,-241.49 813.85,-227.75"/>
+<polygon fill="#b67a25" stroke="#b67a25" points="816.3,-227.56 812.98,-220.93 811.44,-228.18 816.3,-227.56"/>
+<text xml:space="preserve" text-anchor="middle" x="863.8" y="-237.96" font-family="Arial" font-size="10.00" fill="#475569">confirmación humana</text>
+</g>
+<!-- gateway&#45;&gt;gestitel -->
+<g id="edge14" class="edge">
+<title>gateway&#45;&gt;gestitel</title>
+<path fill="none" stroke="#b67a25" stroke-dasharray="5,2" d="M809,-158.14C809,-138.73 809,-113.16 809,-92.28"/>
+<polygon fill="#b67a25" stroke="#b67a25" points="811.45,-92.45 809,-85.45 806.55,-92.45 811.45,-92.45"/>
+<text xml:space="preserve" text-anchor="middle" x="850.69" y="-133.48" font-family="Arial" font-size="10.00" fill="#475569">escritura aprobada</text>
+</g>
+<!-- iso -->
+<g id="node14" class="node">
+<title>iso</title>
+<polygon fill="#e7f5f1" stroke="#91c9b7" points="1123.33,-460.86 936.67,-460.86 936.67,-385.98 1129.33,-385.98 1129.33,-454.86 1123.33,-460.86"/>
+<polyline fill="none" stroke="#91c9b7" points="1123.33,-460.86 1123.33,-454.86"/>
+<polyline fill="none" stroke="#91c9b7" points="1129.33,-454.86 1123.33,-454.86"/>
+<text xml:space="preserve" text-anchor="middle" x="1033" y="-441.42" font-family="Arial" font-size="12.00" fill="#172b4d">Única fuente normativa</text>
+<text xml:space="preserve" text-anchor="middle" x="1033" y="-427.02" font-family="Arial" font-size="12.00" fill="#172b4d">ISO&#45;IEC&#45;27701&#45;2025&#45;OCR.pdf</text>
+<text xml:space="preserve" text-anchor="middle" x="1033" y="-412.62" font-family="Arial" font-size="12.00" fill="#172b4d">72 páginas PDF · anexos A–F</text>
+<text xml:space="preserve" text-anchor="middle" x="1033" y="-398.22" font-family="Arial" font-size="12.00" fill="#172b4d">Original conservado</text>
+</g>
+<!-- iso&#45;&gt;rag -->
+<g id="edge13" class="edge">
+<title>iso&#45;&gt;rag</title>
+<path fill="none" stroke="#24846b" d="M953.91,-385.52C919.11,-369.29 886,-353.84 886,-353.84 886,-353.84 712,-337.84 712,-337.84 712,-337.84 706.14,-336.12 696.98,-333.43"/>
+<polygon fill="#24846b" stroke="#24846b" points="697.83,-331.12 690.42,-331.5 696.44,-335.82 697.83,-331.12"/>
+<text xml:space="preserve" text-anchor="middle" x="947.89" y="-356.84" font-family="Arial" font-size="10.00" fill="#475569">solo esta edición</text>
+</g>
+</g>
+</svg>

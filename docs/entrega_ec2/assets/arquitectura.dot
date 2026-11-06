@@ -1,0 +1,41 @@
+digraph architecture {
+  graph [rankdir=TB, bgcolor="white", pad="0.35", nodesep="0.35", ranksep="0.45", splines=polyline,
+         fontname="Arial", fontsize=20, labelloc=t, labeljust=l,
+         label="RIESGO-GESTITEL  |  Arquitectura de ejecución\nUn agente · herramientas validadas · ISO/IEC 27701:2025"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=12, margin="0.18,0.12", color="#CBD5E1", fillcolor="#F8FAFC", fontcolor="#172B4D"];
+  edge [fontname="Arial", fontsize=10, color="#64748B", fontcolor="#475569", arrowsize=0.7];
+  subgraph cluster_local {
+    label="APLICACIÓN LOCAL  /  Python + Flask"; color="#CBD5E1"; style="rounded"; fontsize=13;
+    ui [label="01  Interfaz web\nObjetivo · actividad · historial\nJavaScript + HTML/CSS"];
+    api [label="02  API + RunStore\nPOST /api/agent/runs → 202 + ID\nGET /api/agent/runs/{id}\nThreadPoolExecutor", fillcolor="#EFF6FF"];
+    agent [label="03  RiskAgent\nrun → tool_calls → execute\nResultado vuelve al modelo\n16 decisiones / 300 s", fillcolor="#163B52", fontcolor="white", color="#163B52"];
+    skill [label="Procedimiento cargado\ngestion_riesgos.md\n1 skill activa", fillcolor="#E7F5F1", color="#91C9B7"];
+    tools [label="04  Herramientas acotadas\nPydantic: argumentos y contratos\nDisponibilidad según fase", fillcolor="#EFF6FF"];
+    calc [label="Cálculo y cierre · risk.py\nMatriz recuperada · P × I\nBandas · calculo_id · referencias"];
+    rag [label="RAG local · rag_loader/retriever\npypdf → fragmentos 800 / solape 150\nTF-IDF o BM25 · ID + página", fillcolor="#E7F5F1", color="#91C9B7"];
+    read [label="GestitelClient.read\n7 módulos permitidos\nMáximo 6 consultas / 10 registros\nCampos seleccionados · fecha"];
+    db [shape=cylinder, label="SQLite · history.py\nPropuesta · fuentes · traza\nRevisión · exportación JSON/PDF", fillcolor="#F1F5F9"];
+    approval [label="Publicación separada\npreview → confirm\nAprobación explícita del revisor", fillcolor="#FFF5E6", color="#E5B76E"];
+    gateway [label="Gateway · publication.py\nPOST / PATCH acotados\nRevalidación y lectura de verificación", fillcolor="#FFF5E6", color="#E5B76E"];
+    ui -> api [label="objetivo"];
+    api -> agent [label="tarea"];
+    skill -> agent [label="cargar_skill", color="#24846B"];
+    agent -> tools [label="llamada JSON"];
+    tools -> calc;
+    tools -> rag [color="#24846B"];
+    tools -> read;
+    agent -> db [label="propuesta validada"];
+    db -> approval [label="desde historial", style=dashed, color="#B67A25"];
+    approval -> gateway [label="confirmación humana", style=dashed, color="#B67A25"];
+  }
+  subgraph cluster_external {
+    label="SERVICIOS EXTERNOS"; color="#CBD5E1"; style="rounded"; fontsize=13;
+    llm [label="Proveedor LLM\nGroq: openai/gpt-oss-120b\nGemini: respaldo configurable\nSelecciona herramientas", fillcolor="#F0EDFA", color="#BDB1DF"];
+    gestitel [label="GESTITEL · API HTTPS\nActivos · procesos · matriz\nEvaluaciones · controles · brechas", fillcolor="#EFF6FF"];
+  }
+  iso [shape=note, label="Única fuente normativa\nISO-IEC-27701-2025-OCR.pdf\n72 páginas PDF · anexos A–F\nOriginal conservado", fillcolor="#E7F5F1", color="#91C9B7"];
+  agent -> llm [dir=both, label="esquemas / tool_calls", color="#8B73B8"];
+  read -> gestitel [label="GET · contexto operativo"];
+  iso -> rag [label="solo esta edición", color="#24846B"];
+  gateway -> gestitel [label="escritura aprobada", style=dashed, color="#B67A25"];
+}

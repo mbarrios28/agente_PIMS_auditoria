@@ -30,8 +30,10 @@ SQL, chat y consulta EC1 no se exponen por web ni API. Los registros históricos
 se conservan en SQLite, pero no aparecen en el historial de riesgos.
 
 La fórmula P×I coincide con la documentación técnica del profesor (Anexo 04, páginas PDF 6 y 10);
-las escalas y bandas se obtienen de su matriz activa. El diseño toma como referencia los alcances
-de ISO 27001 y 27005; no contiene sus textos completos ni certifica cumplimiento.
+las escalas y bandas se obtienen de su matriz activa. La base normativa es exclusivamente
+ISO/IEC 27701:2025; la copia aportada completa y su OCR están en `ISOS/`.
+La búsqueda del agente se restringe a esta edición y no certifica cumplimiento.
+Ver [cobertura e integridad de la copia](docs/integridad_iso_27701.md).
 
 ## API
 

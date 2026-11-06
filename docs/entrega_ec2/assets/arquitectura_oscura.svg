@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1080" viewBox="0 0 1400 1080" role="img" aria-labelledby="title desc">
+<title id="title">RIESGO-GESTITEL · Arquitectura del agente</title>
+<desc id="desc">Un revisor usa una interfaz Flask. RiskAgent carga gestion_riesgos, selecciona seis herramientas y consulta ISO 27701:2025 y GESTITEL. SQLite conserva el resultado. Groq es el proveedor principal y Gemini el respaldo.</desc>
+<rect width="1400" height="1080" fill="#171717"/>
+<text x="48" y="52" fill="#E7E9EC" font-family="Helvetica" font-size="27" font-weight="bold" text-anchor="start">RIESGO-GESTITEL</text>
+<text x="48" y="81" fill="#AEB4BF" font-family="Helvetica" font-size="19" font-weight="normal" text-anchor="start">Arquitectura del agente de riesgos de privacidad</text>
+<text x="1350" y="51" fill="#B2C69B" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="end">ISO/IEC 27701:2025</text>
+<text x="1350" y="78" fill="#AEB4BF" font-family="Helvetica" font-size="15" font-weight="normal" text-anchor="end">Base normativa exclusiva</text>
+<path d="M48 105H1352" stroke="#383C40"/>
+<rect x="390" y="315" width="360" height="420" rx="14" fill="#252A2E" stroke="#69AD6C" stroke-width="1.4"/>
+<rect x="400" y="325" width="178" height="31" rx="2" fill="#202325" stroke="#69AD6C" stroke-width="0.8"/>
+<g transform="translate(408,331) scale(0.375)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 13 21-10 21 10-21 10zM3 24l21 10 21-10M3 35l21 10 21-10"/></g>
+<text x="435" y="348" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="start">AGENT RUNTIME</text>
+<rect x="835" y="145" width="470" height="300" rx="14" fill="#252A2E" stroke="#5D89C3" stroke-width="1.4"/>
+<rect x="845" y="155" width="170" height="31" rx="2" fill="#202325" stroke="#5D89C3" stroke-width="0.8"/>
+<g transform="translate(853,161) scale(0.375)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M30 5a13 13 0 0 0-15 17L3 35a7 7 0 0 0 10 10l13-13A13 13 0 0 0 43 17l-9 9-12-12z"/></g>
+<text x="880" y="178" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="start">TOOLS + RAG</text>
+<rect x="835" y="480" width="470" height="172" rx="14" fill="#252A2E" stroke="#BC6464" stroke-width="1.4"/>
+<rect x="845" y="490" width="127" height="31" rx="2" fill="#202325" stroke="#BC6464" stroke-width="0.8"/>
+<g transform="translate(853,496) scale(0.375)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="8" rx="20" ry="6"/><path d="M4 8v31c0 9 40 9 40 0V8M4 23c0 9 40 9 40 0"/></g>
+<text x="880" y="513" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="start">MEMORY</text>
+<rect x="835" y="690" width="470" height="285" rx="14" fill="#252A2E" stroke="#A9AF4C" stroke-width="1.4"/>
+<rect x="845" y="700" width="255" height="31" rx="2" fill="#202325" stroke="#A9AF4C" stroke-width="0.8"/>
+<g transform="translate(853,706) scale(0.375)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v14M34 2v14M9 16h30v8a15 15 0 0 1-30 0zM24 39v8"/></g>
+<text x="880" y="723" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="start">SERVICIOS EXTERNOS</text>
+<g transform="translate(85,390) scale(0.9791666666666666)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="9" r="7"/><path d="M10 44V35a14 14 0 0 1 28 0v9"/></g>
+<text x="109" y="461" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Revisor humano</text>
+<text x="109" y="487" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Revisión y aprobación</text>
+<g transform="translate(85,620) scale(0.9791666666666666)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3h18l10 10v32H12zM30 3v11h10M19 23h14M19 30h14M19 37h10"/></g>
+<text x="109" y="694" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Objetivo de evaluación</text>
+<text x="109" y="720" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Delimita la tarea</text>
+<g transform="translate(249,512) scale(1.0)" fill="none" stroke="#DE9550" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="42" height="29" rx="3"/><path d="M24 34v9M14 44h20"/></g>
+<text x="274" y="584" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="middle">Interfaz web local</text>
+<text x="274" y="610" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="middle">Flask + JavaScript</text>
+<path d="M140 415H181Q191 415 191 425V530Q191 539 201 539H246" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="237,534 246,539 237,544" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M140 644H181Q191 644 191 634V555Q191 548 201 548H246" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="237,543 246,548 237,553" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M248 524H213Q206 524 206 517V390Q206 381 197 381H141" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="150,376 141,381 150,386" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M302 538H390" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="381,533 390,538 381,543" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="311,533 302,538 311,543" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(454,386) scale(0.9166666666666666)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 13 21-10 21 10-21 10zM3 24l21 10 21-10M3 35l21 10 21-10"/></g>
+<text x="476" y="452" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Orquestación</text>
+<text x="476" y="475" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">RunStore</text>
+<text x="476" y="498" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">ThreadPool</text>
+<g transform="translate(637,386) scale(0.9166666666666666)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7c-4-8-15-4-14 3-8-1-11 10-5 14-7 6-3 15 4 15 0 9 12 10 15 3zM24 7c4-8 15-4 14 3 8-1 11 10 5 14 7 6 3 15-4 15 0 9-12 10-15 3zM12 14c5-2 8 3 7 7M9 29c5-3 10 1 9 7M36 14c-5-2-8 3-7 7M39 29c-5-3-10 1-9 7"/></g>
+<text x="659" y="452" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">RiskAgent</text>
+<text x="659" y="475" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Ciclo de</text>
+<text x="659" y="498" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">herramientas</text>
+<g transform="translate(454,527) scale(0.9166666666666666)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 9C15 3 7 3 2 6v34c7-3 15-2 22 3 7-5 15-6 22-3V6c-5-3-13-3-22 3zM24 9v34"/></g>
+<text x="476" y="593" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Skill activa</text>
+<text x="476" y="619" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">gestion_riesgos</text>
+<g transform="translate(637,527) scale(0.9166666666666666)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m24 3 18 7v14c0 12-10 19-18 23C16 43 6 36 6 24V10zM15 25l6 6 13-14"/></g>
+<text x="659" y="593" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Validaciones</text>
+<text x="659" y="619" fill="#E7E9EC" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="middle">Pydantic · referencias</text>
+<path d="M416 645H724" stroke="#455A49"/>
+<text x="570" y="681" fill="#AEB4BF" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">16 decisiones · 300 s</text>
+<text x="570" y="709" fill="#AEB4BF" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">tool_calls → Python → resultado</text>
+<g transform="translate(910,213) scale(0.8958333333333334)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="9" r="2"/><circle cx="5" cy="24" r="2"/><circle cx="5" cy="39" r="2"/><path d="M15 9h30M15 24h30M15 39h30"/></g>
+<text x="932" y="278" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="middle">6 herramientas</text>
+<text x="932" y="304" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="middle">Registro acotado</text>
+<g transform="translate(1162,213) scale(0.8958333333333334)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="21" cy="20" r="16"/><path d="m33 33 13 13"/></g>
+<text x="1184" y="278" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="middle">RAG local</text>
+<text x="1184" y="304" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="middle">TF-IDF o BM25</text>
+<g transform="translate(914,321) scale(0.7708333333333334)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="32" height="44" rx="4"/><path d="M14 9h20v9H14zM15 26h4M29 26h4M15 35h4M29 35h4"/></g>
+<text x="968" y="340" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="start">Cálculo P × I en Python</text>
+<text x="968" y="364" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="start">Matriz activa de GESTITEL</text>
+<path d="M862 382H1278" stroke="#425364"/>
+<text x="1070" y="414" fill="#C2D0E3" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">PDF OCR ISO 27701:2025 · ID + página</text>
+<g transform="translate(879,548) scale(0.875)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="8" rx="20" ry="6"/><path d="M4 8v31c0 9 40 9 40 0V8M4 23c0 9 40 9 40 0"/></g>
+<text x="948" y="570" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="start">Persistencia local · SQLite</text>
+<text x="948" y="599" fill="#E7E9EC" font-family="Helvetica" font-size="18" font-weight="normal" text-anchor="start">Resultado · fuentes · traza · revisión</text>
+<g transform="translate(939,756) scale(0.8333333333333334)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M28 2 6 28h16l-2 18 22-27H26z"/></g>
+<text x="959" y="817" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">Groq · principal</text>
+<text x="959" y="843" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">openai/gpt-oss-120b</text>
+<g transform="translate(1170,756) scale(0.8333333333333334)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M41 17A18 18 0 0 0 9 11L4 18M4 6v12h12M7 31a18 18 0 0 0 32 6l5-7M44 42V30H32"/></g>
+<text x="1190" y="817" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">Gemini</text>
+<text x="1190" y="843" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">Respaldo configurable</text>
+<g transform="translate(1048,876) scale(0.8333333333333334)" fill="none" stroke="#E7E9EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v14M34 2v14M9 16h30v8a15 15 0 0 1-30 0zM24 39v8"/></g>
+<text x="1070" y="941" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">API GESTITEL · HTTPS</text>
+<text x="1070" y="964" fill="#E7E9EC" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="middle">Contexto y matriz · lectura acotada</text>
+<path d="M750 398H785Q795 398 795 388V295Q795 285 805 285H835" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="826,280 835,285 826,290" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="759,393 750,398 759,403" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="779" y="255" fill="#AEB4BF" font-family="Helvetica" font-size="13" font-weight="normal" text-anchor="middle">tools</text>
+<path d="M750 563H835" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="826,558 835,563 826,568" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="759,558 750,563 759,568" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M750 683H785Q795 683 795 693V839Q795 849 805 849H835" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="826,844 835,849 826,854" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="759,678 750,683 759,688" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="783" y="812" fill="#AEB4BF" font-family="Helvetica" font-size="13" font-weight="normal" text-anchor="middle">LLM</text>
+<path d="M1305 292H1333Q1343 292 1343 302V908Q1343 918 1333 918H1305" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1314,913 1305,918 1314,923" fill="none" stroke="#BEC3C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1359" y="605" fill="#AEB4BF" font-family="Helvetica" font-size="13" font-weight="normal" text-anchor="middle">API</text>
+<path d="M48 1008H1352" stroke="#383C40"/>
+<text x="48" y="1041" fill="#AEB4BF" font-family="Helvetica" font-size="17" font-weight="normal" text-anchor="start">Un agente · una skill activa · seis herramientas</text>
+<text x="1352" y="1041" fill="#AEB4BF" font-family="Helvetica" font-size="16" font-weight="normal" text-anchor="end">Publicación separada: vista previa + confirmación humana</text>
+</svg>

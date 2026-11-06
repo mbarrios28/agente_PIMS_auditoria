@@ -1,40 +1,57 @@
-# Entrega EC2 — Grupo 1
+﻿# Exposición técnica y entrega EC2 — Grupo 1
 
-- `main.pdf`: hoja única para Moodle, generada con UNSAReport.
-- `main.typ`: fuente editable de la hoja.
-- `assets/arquitectura.svg` y `arquitectura.mmd`: diagrama del agente único.
-- `guion_exposicion.md`: recorrido de 12 minutos y tres de preguntas.
-- `verificacion_ec2.md`: evidencia del ensayo real y comprobaciones.
-- `informe_caso_ec2.pdf`: resultado de la ejecución real del caso.
-- `evidencia_ejecucion.json`: resultado, fuentes y traza real, sin secretos.
-- `alcance_normativo.md`: correspondencias de diseño y sus límites.
+## Material para exponer
 
-Compilar desde la raíz del repositorio:
+- `assets/arquitectura_oscura.png` / `.pdf` / `.svg`: variante con fondo oscuro,
+  iconos de trazo y bloques por componente, siguiendo la ficha visual de referencia.
+  Regenerar con `python scripts/generar_arquitectura_oscura.py` (reportlab, svglib, pymupdf).
+- `guia_exposicion.pdf`: guía de ensayo; 12 minutos de demostración y 3 de preguntas.
+- `guion_exposicion.md`: fuente editable con tiempos, archivos, acciones y frases de apoyo.
+- `assets/arquitectura.pdf`: diagrama vectorial para abrir y ampliar.
+- `assets/arquitectura.png`: imagen de alta resolución para proyectar o insertar.
+- `assets/arquitectura.svg`: versión vectorial generada con Graphviz.
+- `assets/arquitectura.dot`: fuente Graphviz editable; es la fuente vigente del diagrama.
+- `alcance_normativo.md`: referencias exclusivas de ISO/IEC 27701:2025.
+- `main.pdf` / `main.typ`: ficha de una página para entrega académica.
 
-```bash
-cd docs
-unsarep docs build entrega_ec2 --no-input
+El recorrido muestra cómo se carga la skill, cómo el modelo solicita herramientas,
+cómo se recuperan datos y fragmentos ISO, y cómo Python calcula y valida el resultado.
+Se listan las cuatro skills del repositorio y se identifica la única activa: gestion_riesgos.
+La publicación ocupa como máximo un minuto y conserva la aprobación humana.
+
+## Regenerar los gráficos y la guía
+
+Con Node.js y Python disponibles, instalar las dependencias de autoría fuera del proyecto si se desea:
+
+```powershell
+npm install --prefix "$env:TEMP/pims-graphviz" --no-audit --no-fund @viz-js/viz@3.17.0
+node scripts/render_arquitectura.mjs "$env:TEMP/pims-graphviz/node_modules/@viz-js/viz/dist/viz.js"
+python -m pip install reportlab svglib pymupdf
+python scripts/generar_material_exposicion.py
 ```
 
-La hoja debe tener exactamente una página. La plantilla y recursos se instalaron con
-`unsarep docs init @unsareport/epis-lab --report entrega_ec2 --none --no-input`.
-El membrete usa el recurso EPIS de UNSAReport y su paleta; no incluye una portada separada.
-El envío a Moodle y la presentación personal corresponden al grupo. No se publican credenciales.
+También se puede usar el CLI nativo Graphviz: `dot -Tsvg docs/entrega_ec2/assets/arquitectura.dot -o docs/entrega_ec2/assets/arquitectura.svg`.
+La exportación PDF/PNG parte del SVG; no usa capturas de Markdown ni imágenes generadas por IA.
 
-## Incorporación de ISO pendiente
+Para la ficha UNSAReport, desde `docs`: `unsarep docs build entrega_ec2 --no-input`.
 
-Cuando el grupo consiga copias autorizadas con texto:
+## Evidencia histórica y ensayo
 
-```bash
-.venv/bin/python scripts/incorporar_iso.py --norma 27001 --archivo /ruta/ISO27001.pdf
-.venv/bin/python scripts/incorporar_iso.py --norma 27002 --archivo /ruta/ISO27002.pdf
-.venv/bin/python scripts/incorporar_iso.py --norma 27005 --archivo /ruta/ISO27005.pdf
+`evidencia_ejecucion.json`, `informe_caso_ec2.pdf` y `verificacion_ec2.md` conservan
+un ensayo anterior. No se alteran sus resultados. Esa ejecución es previa al aislamiento
+normativo actual: permite explicar la traza y el cálculo, no demostrar el RAG actual.
+Identificar su fecha si se usa como respaldo durante la exposición.
+
+Ensayo nuevo: `python scripts/ensayo_ec2.py` (consulta GESTITEL y consume cuota de IA).
+No se ejecuta automáticamente al regenerar el material. Preparar credenciales antes de
+proyectar; no mostrarlas. Para validaciones locales sin IA:
+
+```powershell
+python scripts/verificar_iso_27701.py
+python scripts/mostrar_skills.py
+python -m unittest discover -s tests -p test_risk_normative_scope.py -v
 ```
 
-ISO/IEC 27701:2025 se incorpora con `--norma 27701` si se usa para ampliar el alcance de privacidad.
-El script comprueba texto, número y año; registra huella y páginas, no acredita autenticidad.
-Después hay que contrastar las correspondencias preparadas con el texto aportado. Esa revisión forma
-parte de la incorporación de las normas y no se sustituye con una ficha pública ni con el catálogo.
-
-Ensayo real reproducible: `.venv/bin/python scripts/ensayo_ec2.py` (consume cuota).
-La revisión crítica de las estimaciones se encuentra en `verificacion_ec2.md`.
+La copia completa ISO/IEC 27701:2025 ya está en el repositorio; no hace falta incorporar
+otras normas para ampliar esta exposición. Las escrituras en GESTITEL requieren revisión,
+vista previa y confirmación explícita. El envío a Moodle corresponde al grupo.

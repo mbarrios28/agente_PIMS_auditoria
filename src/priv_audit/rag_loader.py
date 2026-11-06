@@ -17,6 +17,9 @@ PUBLIC = {
     'ley_29733_peru.md': 'https://www.gob.pe/institucion/anpd/normas-legales/6554453-16-2024-jus',
 }
 
+# El resto del corpus se conserva para otros usos, fuera del agente de riesgos.
+RISK_NORMATIVE_SOURCE = 'ISO-IEC-27701-2025-OCR.pdf'
+
 
 def limpiar_texto(texto):
     return re.sub(r'\s+', ' ', texto.replace('\x00', '')).strip()
@@ -102,10 +105,13 @@ def diagnostico_documentos():
 
 
 @lru_cache(maxsize=1)
-def _retriever(signature):
+def _retriever(signature, sources=None):
     from .rag_retriever import Retriever
-    return Retriever(_load(signature)[0])
+    chunks = _load(signature)[0]
+    if sources is not None:
+        chunks = [c for c in chunks if c['fuente'] in sources]
+    return Retriever(chunks)
 
 
-def obtener_retriever():
-    return _retriever(_signature())
+def obtener_retriever(sources=None):
+    return _retriever(_signature(), tuple(sorted(sources)) if sources is not None else None)

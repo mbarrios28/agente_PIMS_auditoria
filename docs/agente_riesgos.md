@@ -15,8 +15,11 @@ El historial muestra solo ejecuciones de riesgos; los registros de funciones ant
 
 ## Metodología
 
-El diseño toma como referencia el alcance público de ISO/IEC 27001 y 27005. No contiene el texto
-completo de estas normas ni demuestra conformidad. P×I coincide con Anexo 04 del profesor, páginas PDF 6 y 10;
+La base normativa exclusiva es ISO/IEC 27701:2025, segunda edición. Se conserva la copia
+original y un derivado OCR completo en `ISOS/`. La búsqueda del agente y su catálogo documental
+se restringen al PDF OCR de esta edición; las demás fuentes permanecen fuera de su recuperación.
+Ver `docs/integridad_iso_27701.md` para la comprobación de cobertura y sus límites.
+Esto no demuestra conformidad. P×I coincide con Anexo 04 del profesor, páginas PDF 6 y 10;
 esta documentación no prueba la versión desplegada en el servidor externo. La matriz activa, escalas y rangos se recuperan de GESTITEL;
 no pueden sustituirse desde el cliente. Sin matriz compatible no se ofrecen cálculos.
 El servidor valida rangos y calcula el nivel; el modelo justifica los valores como estimaciones.
