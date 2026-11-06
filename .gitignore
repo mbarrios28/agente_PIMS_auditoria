@@ -8,3 +8,5 @@ __pycache__/
 !.env.example
 
 data/
+# Copias normativas aportadas para el corpus local.
+ISOS/*-aportada.pdf

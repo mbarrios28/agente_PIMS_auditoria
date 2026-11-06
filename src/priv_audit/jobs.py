@@ -4,8 +4,7 @@ from copy import deepcopy
 from threading import Lock
 from time import monotonic
 from uuid import uuid4
-from .agent import PrivacyAgent, AgentError
-from .service import audit
+from .agent import RiskAgent, AgentError
 from . import history
 import logging
 
@@ -23,6 +22,8 @@ class RunStore:
                 del self.runs[key]
 
     def start(self, payload):
+        if payload.get('tarea') != 'riesgos':
+            raise ValueError('Solo está disponible el agente de riesgos.')
         with self.lock:
             self._prune()
             if sum(r['estado'] in ('pendiente', 'ejecutando') for r in self.runs.values()) >= self.workers:
@@ -48,11 +49,9 @@ class RunStore:
                 self.runs[key]['traza'].append(deepcopy(event))
                 self.runs[key]['_updated'] = monotonic()
         try:
-            if payload['tarea'] == 'auditoria':
-                result = audit(payload['sql'], 'ai', payload['dialect'], payload['objetivo'], on_event)
-            else:
-                result = PrivacyAgent(task=payload['tarea'], objective=payload['objetivo'], on_event=on_event).run()
-            history.save(payload['tarea'], payload['objetivo'] or 'Auditoría SQL', result, key=key)
+            result = RiskAgent(task=payload['tarea'], objective=payload['objetivo'],
+                               on_event=on_event, risk_input=payload.get('risk_input')).run()
+            history.save(payload['tarea'], payload['objetivo'] or 'Evaluación de riesgos', result, key=key)
             self._update(key, estado='completado', resultado=result)
         except (AgentError, ValueError) as exc:
             self._save_error(key, payload, str(exc))
@@ -62,7 +61,7 @@ class RunStore:
     def _save_error(self, key, payload, error):
         result = dict(error=error, traza=self.get(key)['traza'])
         try:
-            history.save(payload['tarea'], payload['objetivo'] or 'Auditoría SQL', result, status='error', key=key)
+            history.save(payload['tarea'], payload['objetivo'] or 'Evaluación de riesgos', result, status='error', key=key)
         except Exception:
             logging.exception('No se pudo guardar la ejecución en el historial')
         self._update(key, estado='error', error=error)

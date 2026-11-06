@@ -68,33 +68,18 @@ def local_findings(tables):
 
 
 def audit(sql, mode='local', dialect='mysql', objective='', on_event=None):
-    if mode not in ('local', 'ai'):
+    if mode != 'local':
         raise ValueError('Selecciona un modo de análisis válido.')
     tables = parse_schema(sql, dialect)
     findings = local_findings(tables)
     steps = ['Entrada validada', f'{len(tables)} tablas interpretadas', 'Reglas locales aplicadas']
     sources = []
-    if mode == 'ai':
-        if not os.getenv('GROQ_API_KEY'):
-            raise ValueError('Configura GROQ_API_KEY en .env para utilizar el análisis con IA.')
-        from .agent import PrivacyAgent
-        agent_result = PrivacyAgent(sql=sql, dialect=dialect, objective=objective, on_event=on_event).run()
-        findings = agent_result['hallazgos']
-        summary = agent_result['resumen_ejecutivo']
-        sources = agent_result['fuentes']
-        steps = ['Entrada validada', f'{len(tables)} tablas interpretadas',
-                 f"Agente: {agent_result['turnos']} pasos de ejecución",
-                 'Borrador y evidencias validados']
-    else:
-        summary = (f'Se revisaron {len(tables)} tablas y se identificaron {len(findings)} observaciones mediante reglas locales. '
-                   'Los niveles indican prioridad de revisión, no incumplimientos confirmados. '
-                   'Este análisis no evalúa la configuración del servidor ni los procesos de la organización.')
+    summary = (f'Se revisaron {len(tables)} tablas y se identificaron {len(findings)} observaciones de estructura. '
+               'La revisión local histórica no verifica registros ni controles de la organización.')
     counts = {level: sum(h['nivel_riesgo'] == level for h in findings) for level in ('ALTO','MEDIO','BAJO')}
     steps.append('Informe preparado para revisión humana')
     result = dict(id=str(uuid4()), fecha=datetime.now(timezone.utc).isoformat(), modo=mode,
                 tablas=tables, hallazgos=findings, resumen_ejecutivo=summary, conteo=counts,
                 pasos=steps, fuentes=sources, estado='Pendiente de revisión humana')
 
-    if mode == 'ai':
-        result.update({key: agent_result[key] for key in ('traza', 'skills', 'modelo', 'uso', 'turnos', 'autonomia', 'preguntas_pendientes', 'tablas_revisadas', 'borrador_id', 'solicitudes', 'respaldo')})
     return result

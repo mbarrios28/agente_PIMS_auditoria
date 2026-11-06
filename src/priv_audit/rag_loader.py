@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[2]
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 150
 PUBLIC = {
+    'iso_27001_alcance.md': 'https://www.iso.org/standard/27001',
+    'iso_27005_alcance.md': 'https://www.iso.org/standard/80585.html',
     'iso_27701_2025.md': 'https://www.iso.org/standard/27701',
     'iso_42001_2023.md': 'https://www.iso.org/standard/42001',
     'ley_29733_peru.md': 'https://www.gob.pe/institucion/anpd/normas-legales/6554453-16-2024-jus',
@@ -58,8 +60,14 @@ def _load(signature):
     chunks, documents = [], []
     for path in archivos_corpus():
         error = None
+        info = manifest.get(path.name, {})
+        replacement = info.get('sustituido_por')
+        replaced = bool(replacement and (path.parent / replacement).is_file())
         try:
-            if path.name == 'Ley Nº 29733.pdf.pdf' and (ROOT / 'ISOS/ley_29733_smv_2025.pdf').exists():
+            if replaced:
+                extracted = []
+                error = 'Original conservado. Texto consultable en ' + replacement
+            elif path.name == 'Ley Nº 29733.pdf.pdf' and (ROOT / 'ISOS/ley_29733_smv_2025.pdf').exists():
                 extracted = []
             else:
                 extracted = cargar_pdf(path) if path.suffix.lower() == '.pdf' else cargar_markdown(path)
@@ -71,6 +79,8 @@ def _load(signature):
             error = 'Copia histórica excluida: se consulta el texto SMV y el nuevo reglamento oficial.'
         info = manifest.get(path.name, {})
         url = info.get('url') or PUBLIC.get(path.name)
+        if info.get('tipo_fuente') == 'norma_aportada_ocr':
+            error = 'Texto OCR: verificar citas y tablas contra la imagen original.'
         kind = info.get('tipo_fuente', 'ficha_publica' if path.name in PUBLIC else 'sin_verificar')
         for index, chunk in enumerate(extracted):
             identity = f"{path.name}:{chunk.get('pagina', 0)}:{index}:{chunk['texto']}"

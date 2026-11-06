@@ -22,5 +22,33 @@
     "descargado": "2026-10-28T01:49:07.954665+00:00",
     "sha256": "5e3b2357ff942e1a0e084ae4af3327011a651cf1f155d108065c70af369e24ac",
     "paginas": 86
+  },
+  "gestitel_metodologia.md": {
+    "titulo": "Síntesis técnica de metodología documentada de GESTITEL",
+    "tipo_fuente": "documentacion_tecnica",
+    "archivo_origen": "profesor/Anexo_04_Procedimientos_SQL_y_Scripts.pdf",
+    "paginas_origen": [
+      6,
+      10
+    ],
+    "sha256_origen": "a8fd0a4b79e78d9130b7e62c1795cae569046e0dad890c2ee232aeda9dee960a",
+    "nota": "Documentación de una versión; no verifica código desplegado ni normativa ISO."
+  },
+  "ISO 27701-2025.pdf": {
+    "titulo": "ISO/IEC 27701:2025 — original escaneado aportado",
+    "tipo_fuente": "norma_aportada",
+    "sustituido_por": "ISO-IEC-27701-2025-OCR.pdf",
+    "sha256": "9b8ff0ac47ac854ccb7079158fc9f9acaac6fee6ef86895cc417a228efc46e79"
+  },
+  "ISO-IEC-27701-2025-OCR.pdf": {
+    "titulo": "ISO/IEC 27701:2025 — copia aportada con OCR",
+    "tipo_fuente": "norma_aportada_ocr",
+    "url": "https://www.iso.org/standard/27701",
+    "sha256": "72bd2bca60a6265f6abd452a18b4460a3f2dd3e6e6beaa7c2814c3791668a6e1",
+    "sha256_original": "9b8ff0ac47ac854ccb7079158fc9f9acaac6fee6ef86895cc417a228efc46e79",
+    "archivo_original": "ISO 27701-2025.pdf",
+    "paginas": 72,
+    "metadatos_ocr": "ISO-IEC-27701-2025-OCR.ocr.json",
+    "advertencia": "Texto reconocido por OCR; verificar citas y tablas contra la imagen del original. No acredita autenticidad ni conformidad."
   }
 }

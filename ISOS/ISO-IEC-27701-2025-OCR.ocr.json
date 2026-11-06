@@ -1,0 +1,456 @@
+{
+  "original": "ISO 27701-2025.pdf",
+  "sha256_original": "9b8ff0ac47ac854ccb7079158fc9f9acaac6fee6ef86895cc417a228efc46e79",
+  "archivo_ocr": "ISO-IEC-27701-2025-OCR.pdf",
+  "sha256_ocr": "72bd2bca60a6265f6abd452a18b4460a3f2dd3e6e6beaa7c2814c3791668a6e1",
+  "creado_en": "2026-11-05T19:15:02.823884+00:00",
+  "dpi": 220,
+  "idiomas": "eng+spa",
+  "tesseract": "tesseract 5.5.3",
+  "modelos": {
+    "eng": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2",
+    "spa": "6f2e04d02774a18f01bed44b1111f2cd7f3ba7ac9dc4373cd3f898a40ea6b464"
+  },
+  "paginas": [
+    {
+      "pagina_pdf": 1,
+      "caracteres": 410,
+      "palabras": 54,
+      "confianza_media": 95.02
+    },
+    {
+      "pagina_pdf": 2,
+      "caracteres": 730,
+      "palabras": 113,
+      "confianza_media": 94.94
+    },
+    {
+      "pagina_pdf": 3,
+      "caracteres": 1859,
+      "palabras": 228,
+      "confianza_media": 81.73
+    },
+    {
+      "pagina_pdf": 4,
+      "caracteres": 452,
+      "palabras": 65,
+      "confianza_media": 82.89
+    },
+    {
+      "pagina_pdf": 5,
+      "caracteres": 3140,
+      "palabras": 446,
+      "confianza_media": 95.63
+    },
+    {
+      "pagina_pdf": 6,
+      "caracteres": 1854,
+      "palabras": 271,
+      "confianza_media": 95.73
+    },
+    {
+      "pagina_pdf": 7,
+      "caracteres": 2372,
+      "palabras": 331,
+      "confianza_media": 95.68
+    },
+    {
+      "pagina_pdf": 8,
+      "caracteres": 2719,
+      "palabras": 435,
+      "confianza_media": 96.22
+    },
+    {
+      "pagina_pdf": 9,
+      "caracteres": 2157,
+      "palabras": 327,
+      "confianza_media": 95.69
+    },
+    {
+      "pagina_pdf": 10,
+      "caracteres": 2566,
+      "palabras": 395,
+      "confianza_media": 95.9
+    },
+    {
+      "pagina_pdf": 11,
+      "caracteres": 2974,
+      "palabras": 430,
+      "confianza_media": 94.26
+    },
+    {
+      "pagina_pdf": 12,
+      "caracteres": 2261,
+      "palabras": 299,
+      "confianza_media": 95.45
+    },
+    {
+      "pagina_pdf": 13,
+      "caracteres": 1890,
+      "palabras": 269,
+      "confianza_media": 94.86
+    },
+    {
+      "pagina_pdf": 14,
+      "caracteres": 1926,
+      "palabras": 279,
+      "confianza_media": 94.78
+    },
+    {
+      "pagina_pdf": 15,
+      "caracteres": 2500,
+      "palabras": 382,
+      "confianza_media": 94.57
+    },
+    {
+      "pagina_pdf": 16,
+      "caracteres": 1911,
+      "palabras": 276,
+      "confianza_media": 94.37
+    },
+    {
+      "pagina_pdf": 17,
+      "caracteres": 2105,
+      "palabras": 294,
+      "confianza_media": 94.54
+    },
+    {
+      "pagina_pdf": 18,
+      "caracteres": 1964,
+      "palabras": 278,
+      "confianza_media": 95.49
+    },
+    {
+      "pagina_pdf": 19,
+      "caracteres": 2009,
+      "palabras": 274,
+      "confianza_media": 94.58
+    },
+    {
+      "pagina_pdf": 20,
+      "caracteres": 2011,
+      "palabras": 297,
+      "confianza_media": 95.39
+    },
+    {
+      "pagina_pdf": 21,
+      "caracteres": 3006,
+      "palabras": 467,
+      "confianza_media": 91.38
+    },
+    {
+      "pagina_pdf": 22,
+      "caracteres": 4082,
+      "palabras": 624,
+      "confianza_media": 91.8
+    },
+    {
+      "pagina_pdf": 23,
+      "caracteres": 3839,
+      "palabras": 571,
+      "confianza_media": 91.34
+    },
+    {
+      "pagina_pdf": 24,
+      "caracteres": 3787,
+      "palabras": 562,
+      "confianza_media": 91.75
+    },
+    {
+      "pagina_pdf": 25,
+      "caracteres": 4060,
+      "palabras": 572,
+      "confianza_media": 90.1
+    },
+    {
+      "pagina_pdf": 26,
+      "caracteres": 1953,
+      "palabras": 273,
+      "confianza_media": 91.65
+    },
+    {
+      "pagina_pdf": 27,
+      "caracteres": 2055,
+      "palabras": 299,
+      "confianza_media": 95.54
+    },
+    {
+      "pagina_pdf": 28,
+      "caracteres": 3011,
+      "palabras": 455,
+      "confianza_media": 95.86
+    },
+    {
+      "pagina_pdf": 29,
+      "caracteres": 2862,
+      "palabras": 429,
+      "confianza_media": 95.86
+    },
+    {
+      "pagina_pdf": 30,
+      "caracteres": 2386,
+      "palabras": 362,
+      "confianza_media": 94.34
+    },
+    {
+      "pagina_pdf": 31,
+      "caracteres": 2906,
+      "palabras": 448,
+      "confianza_media": 95.43
+    },
+    {
+      "pagina_pdf": 32,
+      "caracteres": 2849,
+      "palabras": 432,
+      "confianza_media": 95.8
+    },
+    {
+      "pagina_pdf": 33,
+      "caracteres": 3013,
+      "palabras": 448,
+      "confianza_media": 95.86
+    },
+    {
+      "pagina_pdf": 34,
+      "caracteres": 2890,
+      "palabras": 428,
+      "confianza_media": 95.96
+    },
+    {
+      "pagina_pdf": 35,
+      "caracteres": 2442,
+      "palabras": 352,
+      "confianza_media": 96.1
+    },
+    {
+      "pagina_pdf": 36,
+      "caracteres": 3203,
+      "palabras": 469,
+      "confianza_media": 95.53
+    },
+    {
+      "pagina_pdf": 37,
+      "caracteres": 2449,
+      "palabras": 358,
+      "confianza_media": 95.69
+    },
+    {
+      "pagina_pdf": 38,
+      "caracteres": 2748,
+      "palabras": 391,
+      "confianza_media": 96.1
+    },
+    {
+      "pagina_pdf": 39,
+      "caracteres": 2549,
+      "palabras": 373,
+      "confianza_media": 95.99
+    },
+    {
+      "pagina_pdf": 40,
+      "caracteres": 2844,
+      "palabras": 416,
+      "confianza_media": 95.87
+    },
+    {
+      "pagina_pdf": 41,
+      "caracteres": 2282,
+      "palabras": 322,
+      "confianza_media": 95.9
+    },
+    {
+      "pagina_pdf": 42,
+      "caracteres": 3100,
+      "palabras": 480,
+      "confianza_media": 96.16
+    },
+    {
+      "pagina_pdf": 43,
+      "caracteres": 2657,
+      "palabras": 388,
+      "confianza_media": 95.78
+    },
+    {
+      "pagina_pdf": 44,
+      "caracteres": 2762,
+      "palabras": 404,
+      "confianza_media": 95.97
+    },
+    {
+      "pagina_pdf": 45,
+      "caracteres": 3243,
+      "palabras": 482,
+      "confianza_media": 95.96
+    },
+    {
+      "pagina_pdf": 46,
+      "caracteres": 2963,
+      "palabras": 420,
+      "confianza_media": 95.25
+    },
+    {
+      "pagina_pdf": 47,
+      "caracteres": 2604,
+      "palabras": 367,
+      "confianza_media": 95.73
+    },
+    {
+      "pagina_pdf": 48,
+      "caracteres": 3376,
+      "palabras": 483,
+      "confianza_media": 96.06
+    },
+    {
+      "pagina_pdf": 49,
+      "caracteres": 2933,
+      "palabras": 417,
+      "confianza_media": 95.19
+    },
+    {
+      "pagina_pdf": 50,
+      "caracteres": 2975,
+      "palabras": 452,
+      "confianza_media": 95.45
+    },
+    {
+      "pagina_pdf": 51,
+      "caracteres": 3126,
+      "palabras": 427,
+      "confianza_media": 95.51
+    },
+    {
+      "pagina_pdf": 52,
+      "caracteres": 3116,
+      "palabras": 437,
+      "confianza_media": 96.07
+    },
+    {
+      "pagina_pdf": 53,
+      "caracteres": 2815,
+      "palabras": 420,
+      "confianza_media": 95.86
+    },
+    {
+      "pagina_pdf": 54,
+      "caracteres": 3617,
+      "palabras": 540,
+      "confianza_media": 96.09
+    },
+    {
+      "pagina_pdf": 55,
+      "caracteres": 2605,
+      "palabras": 382,
+      "confianza_media": 95.32
+    },
+    {
+      "pagina_pdf": 56,
+      "caracteres": 2702,
+      "palabras": 381,
+      "confianza_media": 96.21
+    },
+    {
+      "pagina_pdf": 57,
+      "caracteres": 2590,
+      "palabras": 357,
+      "confianza_media": 94.34
+    },
+    {
+      "pagina_pdf": 58,
+      "caracteres": 2394,
+      "palabras": 313,
+      "confianza_media": 94.24
+    },
+    {
+      "pagina_pdf": 59,
+      "caracteres": 1886,
+      "palabras": 289,
+      "confianza_media": 71.94
+    },
+    {
+      "pagina_pdf": 60,
+      "caracteres": 1881,
+      "palabras": 268,
+      "confianza_media": 69.18
+    },
+    {
+      "pagina_pdf": 61,
+      "caracteres": 1330,
+      "palabras": 166,
+      "confianza_media": 71.52
+    },
+    {
+      "pagina_pdf": 62,
+      "caracteres": 1783,
+      "palabras": 286,
+      "confianza_media": 89.09
+    },
+    {
+      "pagina_pdf": 63,
+      "caracteres": 782,
+      "palabras": 128,
+      "confianza_media": 85.59
+    },
+    {
+      "pagina_pdf": 64,
+      "caracteres": 2242,
+      "palabras": 302,
+      "confianza_media": 94.34
+    },
+    {
+      "pagina_pdf": 65,
+      "caracteres": 2086,
+      "palabras": 269,
+      "confianza_media": 94.95
+    },
+    {
+      "pagina_pdf": 66,
+      "caracteres": 2142,
+      "palabras": 287,
+      "confianza_media": 93.68
+    },
+    {
+      "pagina_pdf": 67,
+      "caracteres": 2043,
+      "palabras": 280,
+      "confianza_media": 94.43
+    },
+    {
+      "pagina_pdf": 68,
+      "caracteres": 2328,
+      "palabras": 293,
+      "confianza_media": 94.2
+    },
+    {
+      "pagina_pdf": 69,
+      "caracteres": 1306,
+      "palabras": 156,
+      "confianza_media": 93.09
+    },
+    {
+      "pagina_pdf": 70,
+      "caracteres": 1955,
+      "palabras": 255,
+      "confianza_media": 94.71
+    },
+    {
+      "pagina_pdf": 71,
+      "caracteres": 0,
+      "palabras": 0,
+      "confianza_media": null
+    },
+    {
+      "pagina_pdf": 72,
+      "caracteres": 80,
+      "palabras": 14,
+      "confianza_media": 94.72
+    }
+  ],
+  "advertencia": "La confianza OCR no acredita corrección normativa. Verificar las citas contra la imagen original.",
+  "optimizacion": "Ghostscript pdfwrite /ebook; preservación comprobada de páginas y texto clave.",
+  "paginas_revisadas_visualmente": [
+    1,
+    14,
+    21,
+    25
+  ]
+}

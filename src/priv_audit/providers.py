@@ -22,8 +22,9 @@ def fallback_eligible(exc):
 
 
 class ProviderRouter:
-    def __init__(self, primary=None, backup=None, on_switch=None):
+    def __init__(self, primary=None, backup=None, on_switch=None, defer_quota=False):
         self.primary, self.backup = primary, backup
+        self.defer_quota = defer_quota
         self.on_switch = on_switch
         self.provider, self.model = 'groq', GROQ_MODEL
         self.used_providers = []
@@ -99,6 +100,8 @@ class ProviderRouter:
                 if not message.content and not message.tool_calls:
                     raise EmptyProviderResponse()
         except Exception as exc:
+            if self.defer_quota and getattr(exc, 'status_code', None) == 429:
+                raise
             if not os.getenv('GEMINI_API_KEY') or not fallback_eligible(exc):
                 raise
             self.primary_tool_ids = {call['id'] for message in kwargs.get('messages', [])

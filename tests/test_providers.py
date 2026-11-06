@@ -141,14 +141,16 @@ class FallbackTests(TestCase):
 
     @patch('src.priv_audit.rag_loader.diagnostico_documentos', return_value=[])
     def test_agent_completes_using_backup_and_reports_provider(self, _):
-        from src.priv_audit.agent import PrivacyAgent
+        from src.priv_audit.agent import RiskAgent
         from tests.test_agent import response, call, REASON
         backup=client(side_effect=[
-            response(call('cargar_skill',dict(REASON,nombre='consulta_pims'))),
-            response(call('finalizar_consulta',dict(REASON,estado='fuera_de_alcance',conclusiones=[],limitaciones=['Tema ajeno al dominio.'])))])
+            response(call('cargar_skill',dict(REASON,nombre='gestion_riesgos'))),
+            response(call('preparar_contexto_riesgos',dict(REASON))),
+            response(call('finalizar_riesgos',dict(REASON,estado='evidencia_insuficiente',riesgos=[],limitaciones=['Sin activos.'])))])
         router=ProviderRouter(client(side_effect=Failure(503)),backup)
-        result=PrivacyAgent(task='consulta',objective='Receta de cocina',client=router).run()
+        with patch('src.priv_audit.gestitel.GestitelClient.read',return_value=dict(modulo='assets',pagina=1,total=0,consultado_en='2026-11-05',fragmentos=[])):
+            result=RiskAgent(objective='Revisar riesgos',client=router).run()
         self.assertEqual(result['respaldo']['proveedor_actual'],'gemini')
-        self.assertEqual(result['respaldo']['llamadas_gemini'],2)
+        self.assertEqual(result['respaldo']['llamadas_gemini'],3)
         self.assertEqual(result['modelo'],'gemini-3.5-flash-lite')
-        self.assertEqual(result['estado_respuesta'],'fuera_de_alcance')
+        self.assertEqual(result['estado_respuesta'],'evidencia_insuficiente')
